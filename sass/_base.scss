@@ -1,0 +1,17 @@
+@use "vars" as v;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: v.$font-sans;
+  margin: 0;
+}
+header,
+footer {
+  padding: v.$space-2;
+}
+nav a {
+  margin-right: v.$space-2;
+}

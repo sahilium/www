@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ page.title | default(value=config.title) }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ get_url(path='site.css') }}">
+  <script type="module" src="{{ get_url(path='js/index.js') }}"></script>
+</head>
+
+<body data-page-type="{{ page.slug | default(value='home') }}">
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+    </nav>
+  </header>
+
+  <main id="page" data-page>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <small>© Eugene</small>
+  </footer>
+</body>
+</html>

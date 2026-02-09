@@ -1,0 +1,17 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $font-sans;
+}
+
+header,
+footer {
+  padding: $space-2;
+}
+
+nav a {
+  margin-right: $space-2;
+}

@@ -1,0 +1,25 @@
+base_url = "https://sahil.im"
+title = ""
+description = ""
+author = "Sahil"
+
+# Switches
+compile_sass = true
+build_search_index = true
+minify_html = true
+generate_feeds = true
+generate_sitemap = true
+generate_robots_txt = true
+
+feed_filenames = ["atom.xml", "rss.xml"]
+
+
+[markdown]
+
+smart_punctuation = true
+definition_list = true
+bottom_footnotes = true
+
+[markdown.highlighting]
+
+theme = "catppuccin-mocha"

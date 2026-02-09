@@ -1,0 +1,5 @@
+@use "vars" as v;
+
+@mixin transition($props...) {
+  transition: $props v.$dur-fast v.$ease-out;
+}

@@ -1,0 +1,20 @@
+@use "vars";
+@use "mixins";
+@use "base";
+
+[data-page] {
+  padding: vars.$space-3;
+  opacity: 1;
+  transform: translateY(0);
+  @include mixins.transition(opacity, transform);
+}
+
+[data-page].is-exiting {
+  opacity: 0;
+  transform: translateY(vars.$exit-offset);
+}
+
+[data-page].is-entering {
+  opacity: 0;
+  transform: translateY(vars.$enter-offset);
+}
