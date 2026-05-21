@@ -8,8 +8,8 @@ _site
 *.gem
 *.sublime-project
 *.sublime-workspace
+*.pid
+*.map
 codekit-config.json
-Gemfile.lock
-*.lock
 node_modules
 npm-debug.log*

@@ -16,7 +16,10 @@
 
     @if $yiq-debug { @debug $yiq, $threshold; }
 
-    @return if($yiq >= $threshold, true, false);
+    @if $yiq >= $threshold {
+      @return true;
+    }
+    @return false;
   }
 
   @function yiq-contrast-color(
@@ -25,7 +28,10 @@
     $light: $yiq-contrasted-light-default,
     $threshold: $yiq-contrasted-threshold
   ) {
-    @return if(yiq-is-light($color, $threshold), $yiq-contrasted-dark-default, $yiq-contrasted-light-default);
+    @if yiq-is-light($color, $threshold) {
+      @return $yiq-contrasted-dark-default;
+    }
+    @return $yiq-contrasted-light-default;
   }
 
   @mixin yiq-contrasted(
