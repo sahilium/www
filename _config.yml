@@ -1,18 +1,17 @@
 skin: "/assets/css/skins/light.css"
 locale: en-US
-title: "*saahil"
+title: "Sahil A."
 source: src
 layouts_dir: layouts
 data_dir: data
 includes_dir: includes
 baseurl:
-url: "https://ptrto.me/"
+url: "https://sahil.im/"
 logo: /assets/images/avatar.jpg
 date_format: "%B %-d, %Y"
 sitemap: true
 read_time: true
 words_per_minute: 150
-exclude: ["Gemfile.lock"]
 verbose: false
 mathjax: false
 search_full_content: true
@@ -20,7 +19,7 @@ search_full_content: true
 author:
   name: nonomino
   picture: /assets/images/avatar.jpg
-  email: nonomino@perso.be
+  email: hello@sahil.im
   motto: here be dragons
 
 sass:
@@ -62,13 +61,13 @@ defaults:
 
 footer_links:
   - title: email
-    url: mailto:nonomino@perso.be
+    url: mailto:hello@sahil.im
     icon: icon mail-out
   - title: Linkedin
     url: https://likedin.com/in/nonomino
     icon: icon linkedin
   - title: GitHub
-    url: https://github.com/nonomino
+    url: https://github.com/sahilium
     icon: icon github
   - title: Duolingo
     url: https://duolingo.com/profile/nonominox
