@@ -9,7 +9,7 @@ import avatar from "@/assets/images/avatar.jpg";
     </div>
     <div class="hero-content">
         <h1 class="hero-name">Sahil A.</h1>
-        <p class="hero-greeting" id="greeting"></p>
+        <p class="hero-greeting" id="greeting"><span class="cursor-blink">|</span></p>
         <p class="hero-tagline">Curious about how things work, and why people do.</p>
     </div>
 </div>
@@ -19,8 +19,8 @@ import avatar from "@/assets/images/avatar.jpg";
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
-        padding: 1.5rem 1rem 1rem;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem 0.5rem;
         text-align: center;
     }
 
@@ -57,6 +57,8 @@ import avatar from "@/assets/images/avatar.jpg";
         flex-direction: column;
         align-items: center;
         gap: 0.25rem;
+        position: relative;
+        z-index: 1;
     }
 
     .hero-name {
@@ -73,6 +75,17 @@ import avatar from "@/assets/images/avatar.jpg";
         min-height: 1.5rem;
     }
 
+    .cursor-blink {
+        animation: cursor-blink 0.7s step-end infinite;
+        font-weight: 300;
+        color: var(--primary);
+    }
+
+    @keyframes cursor-blink {
+        0%, 50% { opacity: 1; }
+        51%, 100% { opacity: 0; }
+    }
+
     .hero-tagline {
         font-size: 0.85rem;
         color: var(--muted-foreground);
@@ -84,8 +97,8 @@ import avatar from "@/assets/images/avatar.jpg";
 
     @media (min-width: 640px) {
         .hero {
-            padding: 2rem 2rem 1.5rem;
-            gap: 1.25rem;
+            padding: 1rem 2rem 0.75rem;
+            gap: 0.75rem;
         }
         .hero-avatar {
             width: 88px;
@@ -101,46 +114,70 @@ import avatar from "@/assets/images/avatar.jpg";
 </style>
 
 <script>
-    function changeText(paragraph, greetings) {
-        let currentIndex = 0;
-        return function () {
-            paragraph.textContent = greetings[currentIndex];
-            currentIndex = (currentIndex + 1) % greetings.length;
-        };
-    }
-
-    const paragraph = document.getElementById('greeting');
-    if (paragraph) {
+    const el = document.getElementById('greeting');
+    if (el) {
         const greetings = [
-            'Hello, world!',       // English
-            'Χάρηκα',               // Greek
-            '¿Cómo estás?',         // Spanish
-            'Bonjour le monde',     // French
-            'Hallo Welt',           // German
-            'Ciao mondo',           // Italian
-            'Olá mundo',            // Portuguese
-            'Hej världen',          // Swedish
-            'Hei maailma',          // Finnish
-            'Hallo wereld',         // Dutch
-            'Witaj świecie',        // Polish
-            'Привет, мир',          // Russian
-            'Ahoj světe',           // Czech
-            'Buna lume',            // Romanian
-            'Merhaba dünya',        // Turkish
-            'Salam, dünya',         // Azerbaijani
-            '你好，世界',            // Chinese
-            'こんにちは世界',        // Japanese
-            '안녕하세요',            // Korean
-            'Xin chào',             // Vietnamese
-            'Halō',                 // Hawaiian
-            'Dia duit',             // Irish
-            'Halo dunia',           // Indonesian
-            'Salamu, Dunia',        // Swahili
-            'Kumusta mundo',        // Filipino
+            'Hello, world!',
+            'Χάρηκα',
+            '¿Cómo estás?',
+            'Bonjour le monde',
+            'Hallo Welt',
+            'Ciao mondo',
+            'Olá mundo',
+            'Hej världen',
+            'Hei maailma',
+            'Hallo wereld',
+            'Witaj świecie',
+            'Привет, мир',
+            'Ahoj světe',
+            'Buna lume',
+            'Merhaba dünya',
+            'Salam, dünya',
+            '你好，世界',
+            'こんにちは世界',
+            '안녕하세요',
+            'Xin chào',
+            'Halō',
+            'Dia duit',
+            'Halo dunia',
+            'Salamu, Dunia',
+            'Kumusta mundo',
         ];
 
-        const updateGreeting = changeText(paragraph, greetings);
-        updateGreeting();
-        setInterval(updateGreeting, 3000);
+        let idx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+        let cursor = el.querySelector('.cursor-blink');
+
+        function tick() {
+            const text = greetings[idx];
+
+            if (!isDeleting) {
+                charIdx++;
+                const display = text.slice(0, charIdx);
+                el.innerHTML = display + (cursor ? cursor.outerHTML : '|');
+
+                if (charIdx === text.length) {
+                    setTimeout(() => { isDeleting = true; tick(); }, 2000);
+                    return;
+                }
+                setTimeout(tick, 60 + Math.random() * 80);
+            } else {
+                charIdx--;
+                const display = text.slice(0, charIdx);
+                el.innerHTML = display + (cursor ? cursor.outerHTML : '|');
+
+                if (charIdx === 0) {
+                    isDeleting = false;
+                    idx = (idx + 1) % greetings.length;
+                    setTimeout(tick, 300);
+                    return;
+                }
+                setTimeout(tick, 30 + Math.random() * 40);
+            }
+        }
+
+        tick();
     }
+
 </script>

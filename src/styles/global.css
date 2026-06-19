@@ -68,6 +68,9 @@
 /* additions */
 @theme {
     --spacing-page: 68rem;
+    --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-serif: "Source Serif 4", ui-serif, Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 /* replaces */
@@ -170,6 +173,25 @@
     transform: translateY(-100%);
 }
 
+/* grain texture */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.02;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 300px 300px;
+}
+
+/* magnetic buttons */
+[data-magnetic] {
+    transition: transform 0.2s ease-out;
+    will-change: transform;
+}
+
 /* command palette */
 .palette-item {
     display: flex;
@@ -198,7 +220,8 @@
     }
 
     body {
-        @apply bg-background text-foreground font-sans;
+        @apply bg-background text-foreground font-serif;
+        line-height: 1.5;
     }
     h1,
     h2,
@@ -206,7 +229,17 @@
     h4,
     h5,
     h6 {
-        @apply font-bold tracking-tight;
+        @apply font-bold tracking-tight font-sans;
+        line-height: 1.2;
+    }
+    code,
+    pre,
+    kbd,
+    samp {
+        @apply font-mono;
+    }
+    p {
+        line-height: 1.5;
     }
 }
 
@@ -260,22 +293,23 @@
         user-select: none;
     }
     .prose-blog {
-        @apply text-foreground leading-relaxed;
-        font-size: 18px;
-        line-height: 1.75;
+        @apply text-foreground;
+        font-size: 16px;
+        line-height: 1.45;
         max-width: 68ch;
     }
     .prose-blog p {
-        @apply mb-6;
+        @apply mb-3;
         text-wrap: pretty;
+        line-height: 1.45;
     }
     .prose-blog h2 {
         font-size: clamp(1.5rem, 4vw, 2rem);
-        @apply mt-12 mb-4;
+        @apply mt-8 mb-3;
     }
     .prose-blog h3 {
         font-size: clamp(1.25rem, 3vw, 1.5rem);
-        @apply mt-10 mb-3;
+        @apply mt-6 mb-2;
     }
     .prose-blog a {
         @apply text-accent underline decoration-accent/30 underline-offset-2 hover:decoration-accent transition-colors;

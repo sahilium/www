@@ -1,159 +1,58 @@
-# Serene Ink
+<p align="center">
+  <img src="src/assets/images/avatar.jpg" width="100" height="100" style="border-radius: 50%;" alt="Sahil A."/>
+</p>
 
-Serene Ink is a minimalist, elegant, and blazing-fast Astro blog template designed for developers, writers, and creators. It features a clean UI, dark/light mode toggle, and MDX support out of the box, ensuring you can focus entirely on your writing.
+<h1 align="center">Sahil A. · nonomino</h1>
 
-## 🚀 Features
+<p align="center">
+  <em>Curious about how things work, and why people do.</em>
+</p>
 
-- **Modern Stack:** Built with Astro, MDX, and Tailwind CSS v4 for ultimate developer experience and performance (100/100 Lighthouse scores).
-- **Rich Blogging:** Includes tags, pagination, related posts, draft support, expressive code snippets, and a variety of custom MDX components out of the box.
-- **Premium UX/UI:** Dark/light mode toggle with view transitions, Cmd+K search, smooth custom cursor, reading progress bar, and a dynamic Table of Contents.
-- **SEO & Analytics:** Fully configured with RSS, canonical URLs, Open Graph, sitemaps, structured data, and a ready-to-use Umami analytics integration.
-- **Centralized Config:** Easily personalize the entire site from a single `src/config.ts` file without digging into component code.
+<p align="center">
+  <a href="https://sahil.im"><img src="https://img.shields.io/badge/sahil.im-12100E?style=flat&logo=astro&logoColor=white" alt="Website"></a>
+  <a href="https://github.com/sahilium"><img src="https://img.shields.io/badge/GitHub-sahilium-12100E?style=flat&logo=github" alt="GitHub"></a>
+  <a href="https://linkedin.com/in/sahilium"><img src="https://img.shields.io/badge/LinkedIn-sahilium-12100E?style=flat&logo=linkedin" alt="LinkedIn"></a>
+  <br>
+  <img src="https://img.shields.io/badge/Astro-6-FF5D01?style=flat&logo=astro&logoColor=white" alt="Astro">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/MDX-2-1B1F24?style=flat&logo=mdx&logoColor=white" alt="MDX">
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Deployed_on-Cloudflare_Pages-F38020?style=flat&logo=cloudflarepages&logoColor=white" alt="Cloudflare Pages">
+</p>
 
-## 🧞 Setting Up
+---
 
-1. **Clone the repository** (or use the template):
-   ```sh
-   git clone https://github.com/your-username/serene-ink.git my-blog
-   cd my-blog
-   ```
+Personal website built with [Astro](https://astro.build). Features a minimal design, multilingual greeting, floating avatar, command palette navigation, dark/light mode, and RSS.
 
-2. **Install dependencies**:
-   ```sh
-   pnpm install
-   ```
+## Stack
 
-3. **Start the local development server**:
-   ```sh
-   pnpm dev
-   ```
-   Open `localhost:4321` in your browser.
+- **Framework:** [Astro](https://astro.build) 6
+- **Styling:** [Tailwind CSS](https://tailwindcss.com) 4
+- **Content:** MDX with custom UI components
+- **Icons:** Lucide
+- **Hosting:** Cloudflare Pages
 
-## ✍️ Personalization
-
-### Quick Start — `src/config.ts`
-
-This is the **primary configuration file**. Open it and update these values to make the template yours:
-
-```ts
-export const siteConfig = {
-  title: "Your Blog Name",
-  description: "Your blog description.",
-  siteUrl: "https://your-domain.com",
-  author: {
-    name: "Your Name",
-    bio: "A short bio about yourself.",
-  },
-  nav: [
-    { label: "Writing", href: "/" },
-    { label: "About", href: "/about" },
-  ],
-  socials: {
-    github: "https://github.com/your-username",
-    twitter: "",     // leave empty to hide
-    linkedin: "",    // leave empty to hide
-  },
-  postsPerPage: 5,
-  analytics: {
-    umami: {
-      websiteId: "", // e.g., "a1b2c3d4-..."
-      src: "",       // e.g., "https://cloud.umami.is/script.js"
-    },
-  },
-  rss: {
-    title: "Your Blog",
-    description: "Your RSS feed description.",
-  },
-};
-```
-
-### Additional Personalization
-
-1. **Domain config:** Open `astro.config.mjs` and update `site` to match your production URL.
-2. **Author Profile & Projects:** Open `src/components/Author.astro` to customize the About page — timeline, projects, activity cards, and introductory text.
-3. **Favicon:** Replace `/public/favicon.svg` and `/public/favicon.ico` with your brand's icon.
-
-## 📝 Adding New Blogs
-
-All content lives in the `src/posts/` folder.
-To create a new blog post, use the built-in command:
+## Local dev
 
 ```sh
-pnpm run new-post "Your Awesome Catchy Title"
+bun install
+bun run dev
 ```
 
-Alternatively, create a new `.mdx` file and include the following frontmatter:
+## Structure
 
-```mdx
----
-title: "Your Awesome Catchy Title"
-date: "03/12/2024"
-frontmatter: "A short description or summary of your post."
-tags: ["astro", "learning", "random"]
-draft: false
-image: ""
----
-
-Your content goes here...
+```
+src/
+├── assets/       images
+├── components/   UI components
+├── layouts/      Layout.astro
+├── pages/        routes
+├── posts/        blog content (.mdx)
+├── styles/       global.css
+├── config.ts     site config
+└── content.config.ts
 ```
 
-### Frontmatter Fields
+## License
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `title` | string | ✅ | The post title |
-| `date` | string | ✅ | Publish date in `MM/DD/YYYY` format |
-| `frontmatter` | string | ✅ | Short summary (used on listing, RSS, and search) |
-| `tags` | string[] | ✅ | Array of tags for categorization |
-| `draft` | boolean | ❌ | Set to `true` to hide from all listings (default: `false`) |
-| `updatedDate` | string | ❌ | Last updated date in `MM/DD/YYYY` format |
-| `image` | string | ❌ | Path to a cover image (relative to `src/assets/`) |
-
-### Organizing Posts
-
-You can organize your posts into subdirectories inside `src/posts/` (e.g., `src/posts/2024/tutorials/my-post.mdx`). Astro will automatically generate the corresponding URL structure (`/posts/2024/tutorials/my-post`).
-
-When nesting posts, use the `@/` alias to comfortably import out-of-the-box components without worrying about relative path depths:
-
-```mdx
-import Callout from '@/components/ui/Callout.astro';
-```
-
-*(Note that the `image` frontmatter property still requires relative paths like `../../../assets/images/cover.webp` when deeply nested.)*
-
-## 📊 Analytics
-
-Serene Ink supports [Umami](https://umami.is/) analytics out of the box. To enable it:
-
-1. Create a free account at [umami.is](https://umami.is/) (or self-host).
-2. Add your website and get your **Website ID** and **Script URL**.
-3. Update `src/config.ts`:
-   ```ts
-   analytics: {
-     umami: {
-       websiteId: "your-website-id",
-       src: "https://cloud.umami.is/script.js",
-     },
-   },
-   ```
-
-When both fields are empty, no analytics script is injected.
-
-## 🌐 Deployment
-
-This template is configured as a static site, compatible with hosts like **Cloudflare Pages**, **Vercel**, and **Netlify**.
-
-**Deploying to Cloudflare Pages:**
-1. Push your code to a GitHub or GitLab repository.
-2. Log in to your Cloudflare dashboard → **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**.
-3. Select your repository and configure:
-   - **Framework preset:** Astro
-   - **Build command:** `pnpm run build`
-   - **Build output directory:** `dist`
-4. Click **Save and Deploy**.
-
-*(Don't forget to update your `site` URL in `astro.config.mjs` once deployed!)*
-
-## 📜 License
-
-This project is open-source and released under the [MIT License](LICENSE). Feel free to use it for personal or commercial projects.
+MIT
