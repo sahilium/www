@@ -1,6 +1,13 @@
 ---
 import "../styles/global.css";
-import { Moon, Sun, Braces, Search, Rss, MousePointer2 } from "@lucide/astro";
+import {
+    Moon,
+    Sun,
+    Braces,
+    Search,
+    MousePointer2,
+    Command,
+} from "@lucide/astro";
 import { ClientRouter } from "astro:transitions";
 import { siteConfig } from "@/config";
 import Footer from "@/components/Footer.astro";
@@ -29,8 +36,6 @@ const normalize = (p: string) => p.replace(/\/+$/, "") || "/";
 
 const isOnCurrentPath = (path: string) => {
     const currentPath = normalize(Astro.url.pathname);
-    // treat paginated listing pages as part of the home route so the
-    // home navigation item remains active on `/page/...` archive pages.
     if (path === "/" && currentPath.startsWith("/page/")) return true;
     return currentPath === normalize(path);
 };
@@ -126,31 +131,34 @@ const isOnCurrentPath = (path: string) => {
             id="main-nav"
             class="px-5 py-5 flex justify-between sticky top-0 z-50"
         >
-            <Braces />
+            <a href="/" class="flex items-center" aria-label="Home">
+                <Braces />
+            </a>
 
             <ul class="flex items-center gap-4">
-                {
-                    siteConfig.nav.map((link) => (
-                        <li>
-                            <a
-                                href={link.href}
-                                class={
-                                    isOnCurrentPath(link.href) ? "active" : ""
-                                }
-                            >
-                                <span
-                                    class={
-                                        isOnCurrentPath(link.href)
-                                            ? ""
-                                            : "nav-link"
-                                    }
-                                >
-                                    {link.label}
-                                </span>
-                            </a>
-                        </li>
-                    ))
-                }
+                <li>
+                    <a href="/" class={isOnCurrentPath("/") ? "active" : ""}>
+                        <span class={isOnCurrentPath("/") ? "" : "nav-link"}>
+                            home
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <button
+                        id="palette-toggle"
+                        type="button"
+                        aria-label="Open command palette"
+                        class="flex items-center cursor-pointer text-muted-foreground hover:text-foreground transition-colors gap-1.5 px-2 py-1 rounded-md border border-border hover:bg-secondary"
+                    >
+                        <Command size={16} />
+                        <span class="text-xs hidden sm:inline">Explore</span>
+                        <kbd
+                            class="text-[10px] text-muted-foreground hidden md:inline ml-1 border border-border rounded px-1 py-0.5"
+                        >
+                            ^P
+                        </kbd>
+                    </button>
+                </li>
                 <li>
                     <button
                         id="theme-toggle"
@@ -172,25 +180,6 @@ const isOnCurrentPath = (path: string) => {
                         <MousePointer2 size={16} />
                     </button>
                 </li>
-                <li>
-                    <a
-                        href="/feed.xml"
-                        aria-label="RSS feed"
-                        class="flex items-center"
-                    >
-                        <Rss size={16} />
-                    </a>
-                </li>
-                <li>
-                    <button
-                        id="search-toggle"
-                        type="button"
-                        aria-label="Open search"
-                        class="flex items-center cursor-pointer"
-                    >
-                        <Search size={16} />
-                    </button>
-                </li>
             </ul>
         </nav>
         <div class="flex-1">
@@ -198,52 +187,52 @@ const isOnCurrentPath = (path: string) => {
         </div>
         <Footer />
         <BackToTop />
+
+        <!-- Command Palette Overlay -->
         <div
-            id="search-overlay"
+            id="palette-overlay"
             class="fixed inset-0 z-100 bg-background/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-start justify-center pt-20 sm:pt-32 px-4 disable-select"
             aria-hidden="true"
             inert
         >
             <div
-                id="search-modal"
+                id="palette-modal"
                 class="bg-card w-full max-w-xl rounded-xl border border-border shadow-2xl scale-95 transition-transform duration-300 flex flex-col overflow-hidden max-h-[80vh]"
             >
+                <!-- Input -->
                 <div
                     class="flex items-center px-4 py-3 border-b border-border gap-3"
                 >
-                    <Search class="text-muted-foreground" size={18} />
+                    <Search class="text-muted-foreground shrink-0" size={18} />
                     <input
                         type="text"
-                        id="search-input"
+                        id="palette-input"
                         class="flex-1 bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground"
-                        placeholder="Search posts... (Cmd+K)"
+                        placeholder="Type a command or search..."
                         autocomplete="off"
                     />
                     <button
-                        id="search-close"
-                        class="text-xs text-muted-foreground bg-secondary px-2 py-1 rounded hidden sm:block cursor-pointer"
+                        id="palette-close"
+                        class="text-xs text-muted-foreground bg-secondary px-2 py-1 rounded hidden sm:block cursor-pointer shrink-0"
                         >ESC</button
                     >
                 </div>
+
+                <!-- Results -->
                 <div
-                    id="search-results"
-                    class="overflow-y-auto p-2 flex flex-col gap-1"
+                    id="palette-results"
+                    class="overflow-y-auto p-2 flex flex-col gap-0.5"
                 >
                 </div>
                 <div
-                    id="search-empty"
+                    id="palette-empty"
                     class="py-14 text-center text-sm text-muted-foreground hidden"
                 >
                     No results found.
                 </div>
-                <div
-                    id="search-initial"
-                    class="py-10 text-center text-sm text-muted-foreground"
-                >
-                    Type to start searching.
-                </div>
             </div>
         </div>
+
         <div
             id="cursor"
             class="bg-primary mix-blend-hard-light opacity-0 size-3 rounded-full pointer-events-none z-9999 fixed top-0 left-0"
@@ -255,15 +244,46 @@ const isOnCurrentPath = (path: string) => {
             import type { SearchItem } from "../types";
 
             let onThemeToggleClick: ((e: MouseEvent) => void) | null = null;
-            let onSearchToggleClick: ((e: MouseEvent) => void) | null = null;
-            let onSearchCloseClick: ((e: MouseEvent) => void) | null = null;
-            let onSearchOverlayClick: ((e: MouseEvent) => void) | null = null;
-            let onSearchKeydown: ((e: KeyboardEvent) => void) | null = null;
-            let onSearchInputRaw: ((e: Event) => void) | null = null;
+            let onPaletteToggleClick: ((e: MouseEvent) => void) | null = null;
+            let onPaletteCloseClick: ((e: MouseEvent) => void) | null = null;
+            let onPaletteOverlayClick: ((e: MouseEvent) => void) | null = null;
+            let onPaletteKeydown: ((e: KeyboardEvent) => void) | null = null;
+            let onPaletteInput: ((e: Event) => void) | null = null;
+            let onPaletteKeyNav: ((e: KeyboardEvent) => void) | null = null;
             let searchData: SearchItem[] | null = null;
 
             let onNavScroll: (() => void) | null = null;
             let lastScrollY = 0;
+
+            const navCommands = [
+                { label: "/home", href: "/", description: "Go to home" },
+                { label: "/about", href: "/about", description: "About me" },
+                {
+                    label: "/portfolio",
+                    href: "/portfolio",
+                    description: "My projects",
+                },
+                { label: "/blog", href: "/blog", description: "Blog archive" },
+                {
+                    label: "/now",
+                    href: "/now",
+                    description: "What I'm doing now",
+                },
+                { label: "/uses", href: "/uses", description: "My setup" },
+            ];
+
+            const moonSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
+            const rssSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>`;
+
+            const actionCommands = [
+                { id: "theme", label: "Toggle dark mode", icon: moonSvg },
+                {
+                    id: "rss",
+                    label: "Subscribe to RSS",
+                    href: "/feed.xml",
+                    icon: rssSvg,
+                },
+            ];
 
             document.addEventListener("astro:before-swap", () => {
                 const themeToggle = document.getElementById("theme-toggle");
@@ -275,36 +295,40 @@ const isOnCurrentPath = (path: string) => {
                     onThemeToggleClick = null;
                 }
 
-                const searchToggle = document.getElementById("search-toggle");
-                const searchClose = document.getElementById("search-close");
-                const searchOverlay = document.getElementById("search-overlay");
-                const searchInput = document.getElementById("search-input");
+                const paletteToggle = document.getElementById("palette-toggle");
+                const paletteClose = document.getElementById("palette-close");
+                const paletteOverlay =
+                    document.getElementById("palette-overlay");
+                const paletteInput = document.getElementById("palette-input");
 
-                if (onSearchToggleClick && searchToggle)
-                    searchToggle.removeEventListener(
+                if (onPaletteToggleClick && paletteToggle)
+                    paletteToggle.removeEventListener(
                         "click",
-                        onSearchToggleClick,
+                        onPaletteToggleClick,
                     );
-                if (onSearchCloseClick && searchClose)
-                    searchClose.removeEventListener(
+                if (onPaletteCloseClick && paletteClose)
+                    paletteClose.removeEventListener(
                         "click",
-                        onSearchCloseClick,
+                        onPaletteCloseClick,
                     );
-                if (onSearchOverlayClick && searchOverlay)
-                    searchOverlay.removeEventListener(
+                if (onPaletteOverlayClick && paletteOverlay)
+                    paletteOverlay.removeEventListener(
                         "click",
-                        onSearchOverlayClick,
+                        onPaletteOverlayClick,
                     );
-                if (onSearchInputRaw && searchInput)
-                    searchInput.removeEventListener("input", onSearchInputRaw);
-                if (onSearchKeydown)
-                    document.removeEventListener("keydown", onSearchKeydown);
+                if (onPaletteInput && paletteInput)
+                    paletteInput.removeEventListener("input", onPaletteInput);
+                if (onPaletteKeyNav)
+                    document.removeEventListener("keydown", onPaletteKeyNav);
+                if (onPaletteKeydown)
+                    document.removeEventListener("keydown", onPaletteKeydown);
 
-                onSearchToggleClick = null;
-                onSearchCloseClick = null;
-                onSearchOverlayClick = null;
-                onSearchInputRaw = null;
-                onSearchKeydown = null;
+                onPaletteToggleClick = null;
+                onPaletteCloseClick = null;
+                onPaletteOverlayClick = null;
+                onPaletteInput = null;
+                onPaletteKeyNav = null;
+                onPaletteKeydown = null;
 
                 if (onNavScroll) {
                     window.removeEventListener("scroll", onNavScroll);
@@ -337,12 +361,9 @@ const isOnCurrentPath = (path: string) => {
 
                     const x = event.clientX;
                     const y = event.clientY;
-                    // compute radius required to cover the entire viewport
-                    // finds distance from click point to the farthest corner;
-                    // hypot for calculating straight line distance
                     const endRadius = Math.hypot(
-                        Math.max(x, innerWidth - x), // furthest horiz dist
-                        Math.max(y, innerHeight - y), // furthest vert dist
+                        Math.max(x, innerWidth - x),
+                        Math.max(y, innerHeight - y),
                     );
 
                     document.documentElement.classList.add("theme-transition");
@@ -358,19 +379,15 @@ const isOnCurrentPath = (path: string) => {
                         ];
 
                         document.documentElement.animate(
-                            {
-                                clipPath: clipPath,
-                            },
+                            { clipPath: clipPath },
                             {
                                 duration: 500,
                                 easing: "ease-in-out",
-                                // targets the "new" snapshot layer created by the transition
                                 pseudoElement: "::view-transition-new(root)",
                             },
                         );
                     });
 
-                    // cleanup
                     transition.finished.finally(() => {
                         document.documentElement.classList.remove(
                             "theme-transition",
@@ -380,31 +397,210 @@ const isOnCurrentPath = (path: string) => {
 
                 themeToggle.addEventListener("click", onThemeToggleClick);
 
-                const searchToggle = document.getElementById("search-toggle");
-                const searchClose = document.getElementById("search-close");
-                const searchOverlay = document.getElementById("search-overlay");
-                const searchModal = document.getElementById("search-modal");
-                const searchInput = document.getElementById(
-                    "search-input",
+                // --- Command Palette Logic ---
+
+                const paletteToggle = document.getElementById("palette-toggle");
+                const paletteClose = document.getElementById("palette-close");
+                const paletteOverlay =
+                    document.getElementById("palette-overlay");
+                const paletteModal = document.getElementById("palette-modal");
+                const paletteInput = document.getElementById(
+                    "palette-input",
                 ) as HTMLInputElement;
                 const resultsContainer =
-                    document.getElementById("search-results");
-                const emptyState = document.getElementById("search-empty");
-                const initialState = document.getElementById("search-initial");
+                    document.getElementById("palette-results");
+                const emptyState = document.getElementById("palette-empty");
 
-                const openSearch = async () => {
-                    if (!searchOverlay || !searchModal || !searchInput) return;
-                    searchOverlay.removeAttribute("inert");
-                    searchOverlay.setAttribute("aria-hidden", "false");
-                    searchOverlay.classList.remove(
+                const renderPalette = (query: string) => {
+                    if (!resultsContainer || !emptyState) return;
+
+                    const q = query.trim().toLowerCase();
+
+                    // Filter nav commands
+                    const filteredNav = navCommands.filter(
+                        (cmd) =>
+                            !q ||
+                            cmd.label.toLowerCase().includes(q) ||
+                            cmd.description.toLowerCase().includes(q),
+                    );
+
+                    // Filter action commands
+                    const filteredActions = actionCommands.filter(
+                        (cmd) => !q || cmd.label.toLowerCase().includes(q),
+                    );
+
+                    // Search posts
+                    let filteredPosts: SearchItem[] = [];
+                    if (q && searchData) {
+                        filteredPosts = searchData.filter(
+                            (post) =>
+                                post.title.toLowerCase().includes(q) ||
+                                post.frontmatter.toLowerCase().includes(q) ||
+                                post.tags.some((tag) =>
+                                    tag.toLowerCase().includes(q),
+                                ),
+                        );
+                    }
+
+                    const hasResults =
+                        filteredNav.length > 0 ||
+                        filteredActions.length > 0 ||
+                        filteredPosts.length > 0;
+
+                    if (!hasResults && q) {
+                        resultsContainer.classList.add("hidden");
+                        emptyState.classList.remove("hidden");
+                        return;
+                    }
+
+                    emptyState.classList.add("hidden");
+                    resultsContainer.classList.remove("hidden");
+
+                    let html = "";
+
+                    // Nav commands section
+                    if (filteredNav.length > 0) {
+                        html += `<div class="text-[10px] uppercase tracking-widest text-muted-foreground px-3 py-2 font-medium">Navigate</div>`;
+                        for (const cmd of filteredNav) {
+                            html += `
+                                <a href="${cmd.href}" class="palette-item">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-muted-foreground text-xs w-16 shrink-0 font-mono">${cmd.label}</span>
+                                        <span class="text-sm">${cmd.description}</span>
+                                    </div>
+                                </a>
+                            `;
+                        }
+                    }
+
+                    // Action commands section
+                    if (filteredActions.length > 0) {
+                        html += `<div class="text-[10px] uppercase tracking-widest text-muted-foreground px-3 py-2 mt-1 font-medium">Actions</div>`;
+                        for (const cmd of filteredActions) {
+                            if (cmd.id === "theme") {
+                                html += `
+                                    <button class="palette-item w-full text-left" data-action="theme">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xs">${cmd.icon}</span>
+                                            <span class="text-sm">${cmd.label}</span>
+                                        </div>
+                                    </button>
+                                `;
+                            } else {
+                                html += `
+                                    <a href="${cmd.href}" class="palette-item">
+                                        <div class="flex items-center gap-3">
+                                            <span class="text-xs">${cmd.icon}</span>
+                                            <span class="text-sm">${cmd.label}</span>
+                                        </div>
+                                    </a>
+                                `;
+                            }
+                        }
+                    }
+
+                    // Search results section
+                    if (filteredPosts.length > 0) {
+                        html += `<div class="text-[10px] uppercase tracking-widest text-muted-foreground px-3 py-2 mt-1 font-medium">Posts</div>`;
+                        for (const post of filteredPosts) {
+                            html += `
+                                <a href="${post.link}" class="palette-item">
+                                    <div class="flex flex-col gap-0.5 w-full">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-sm font-medium">${post.title}</span>
+                                            <span class="text-[10px] text-muted-foreground shrink-0 ml-4">${post.readTime} min · ${post.date}</span>
+                                        </div>
+                                        <span class="text-xs text-muted-foreground line-clamp-1">${post.frontmatter}</span>
+                                    </div>
+                                </a>
+                            `;
+                        }
+                    }
+
+                    resultsContainer.innerHTML = html;
+
+                    // Bind click handlers for action buttons
+                    resultsContainer
+                        .querySelectorAll("[data-action='theme']")
+                        .forEach((btn) => {
+                            btn.addEventListener("click", () => {
+                                closePalette();
+                                setTimeout(() => themeToggle?.click(), 50);
+                            });
+                        });
+                };
+
+                const renderInitialCommands = () => {
+                    if (!resultsContainer || !emptyState) return;
+                    emptyState.classList.add("hidden");
+                    resultsContainer.classList.remove("hidden");
+
+                    let html = "";
+
+                    html += `<div class="text-[10px] uppercase tracking-widest text-muted-foreground px-3 py-2 font-medium">Navigate</div>`;
+                    for (const cmd of navCommands) {
+                        html += `
+                            <a href="${cmd.href}" class="palette-item">
+                                <div class="flex items-center gap-3">
+                                    <span class="text-muted-foreground text-xs w-16 shrink-0 font-mono">${cmd.label}</span>
+                                    <span class="text-sm">${cmd.description}</span>
+                                </div>
+                            </a>
+                        `;
+                    }
+
+                    html += `<div class="text-[10px] uppercase tracking-widest text-muted-foreground px-3 py-2 mt-1 font-medium">Actions</div>`;
+                    for (const cmd of actionCommands) {
+                        if (cmd.id === "theme") {
+                            html += `
+                                <button class="palette-item w-full text-left" data-action="theme">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-xs">${cmd.icon}</span>
+                                        <span class="text-sm">${cmd.label}</span>
+                                    </div>
+                                </button>
+                            `;
+                        } else {
+                            html += `
+                                <a href="${cmd.href}" class="palette-item">
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-xs">${cmd.icon}</span>
+                                        <span class="text-sm">${cmd.label}</span>
+                                    </div>
+                                </a>
+                            `;
+                        }
+                    }
+
+                    resultsContainer.innerHTML = html;
+
+                    resultsContainer
+                        .querySelectorAll("[data-action='theme']")
+                        .forEach((btn) => {
+                            btn.addEventListener("click", () => {
+                                closePalette();
+                                setTimeout(() => themeToggle?.click(), 50);
+                            });
+                        });
+                };
+
+                const openPalette = async () => {
+                    if (!paletteOverlay || !paletteModal || !paletteInput)
+                        return;
+                    paletteOverlay.removeAttribute("inert");
+                    paletteOverlay.setAttribute("aria-hidden", "false");
+                    paletteOverlay.classList.remove(
                         "opacity-0",
                         "pointer-events-none",
                     );
-                    searchOverlay.classList.add("opacity-100");
-                    searchModal.classList.remove("scale-95");
-                    searchModal.classList.add("scale-100");
+                    paletteOverlay.classList.add("opacity-100");
+                    paletteModal.classList.remove("scale-95");
+                    paletteModal.classList.add("scale-100");
                     document.body.style.overflow = "hidden";
-                    setTimeout(() => searchInput.focus(), 50);
+                    setTimeout(() => paletteInput.focus(), 50);
+
+                    if (paletteInput) paletteInput.value = "";
+                    renderInitialCommands();
 
                     if (!searchData) {
                         try {
@@ -416,95 +612,126 @@ const isOnCurrentPath = (path: string) => {
                     }
                 };
 
-                const closeSearch = () => {
-                    if (!searchOverlay || !searchModal) return;
-                    searchOverlay.setAttribute("inert", "");
-                    searchOverlay.setAttribute("aria-hidden", "true");
-                    searchOverlay.classList.add(
+                const closePalette = () => {
+                    if (!paletteOverlay || !paletteModal) return;
+                    paletteOverlay.setAttribute("inert", "");
+                    paletteOverlay.setAttribute("aria-hidden", "true");
+                    paletteOverlay.classList.add(
                         "opacity-0",
                         "pointer-events-none",
                     );
-                    searchOverlay.classList.remove("opacity-100");
-                    searchModal.classList.add("scale-95");
-                    searchModal.classList.remove("scale-100");
+                    paletteOverlay.classList.remove("opacity-100");
+                    paletteModal.classList.add("scale-95");
+                    paletteModal.classList.remove("scale-100");
                     document.body.style.overflow = "";
                 };
 
-                const renderResults = (query: string) => {
-                    if (!resultsContainer || !emptyState || !initialState)
+                // Palette keyboard navigation
+                let activeIndex = -1;
+
+                const updateActiveItem = (index: number) => {
+                    const items =
+                        resultsContainer?.querySelectorAll(".palette-item");
+                    if (!items) return;
+                    items.forEach((el, i) => {
+                        if (i === index) {
+                            el.classList.add("palette-item-active");
+                            el.scrollIntoView({ block: "nearest" });
+                        } else {
+                            el.classList.remove("palette-item-active");
+                        }
+                    });
+                };
+
+                onPaletteKeyNav = (e: KeyboardEvent) => {
+                    if (
+                        !paletteOverlay ||
+                        paletteOverlay.getAttribute("inert") !== null
+                    )
                         return;
-                    if (!query.trim()) {
-                        resultsContainer.classList.add("hidden");
-                        emptyState.classList.add("hidden");
-                        initialState.classList.remove("hidden");
-                        return;
-                    }
-                    initialState.classList.add("hidden");
-                    if (!searchData) return;
 
-                    const q = query.toLowerCase();
-                    const filtered = searchData.filter(
-                        (post: SearchItem) =>
-                            post.title.toLowerCase().includes(q) ||
-                            post.frontmatter.toLowerCase().includes(q) ||
-                            post.tags.some((tag: string) =>
-                                tag.toLowerCase().includes(q),
-                            ),
-                    );
+                    const items =
+                        resultsContainer?.querySelectorAll(".palette-item");
+                    if (!items || items.length === 0) return;
 
-                    if (filtered.length === 0) {
-                        resultsContainer.classList.add("hidden");
-                        emptyState.classList.remove("hidden");
-                    } else {
-                        emptyState.classList.add("hidden");
-                        resultsContainer.classList.remove("hidden");
-
-                        resultsContainer.innerHTML = filtered
-                            .map(
-                                (post: SearchItem) => `
-                            <a href="${post.link}" class="flex flex-col gap-1 p-3 rounded-lg hover:bg-secondary transition-colors group">
-                                <div class="flex justify-between items-center bg-transparent">
-                                    <span class="text-foreground font-medium group-hover:text-primary transition-colors line-clamp-1">${post.title}</span>
-                                    <span class="text-xs text-muted-foreground whitespace-nowrap ml-4">${post.readTime} min · ${post.date}</span>
-                                </div>
-                                <span class="text-sm text-muted-foreground line-clamp-1">${post.frontmatter}</span>
-                            </a>
-                        `,
-                            )
-                            .join("");
+                    if (e.key === "ArrowDown") {
+                        e.preventDefault();
+                        activeIndex = Math.min(
+                            activeIndex + 1,
+                            items.length - 1,
+                        );
+                        updateActiveItem(activeIndex);
+                    } else if (e.key === "ArrowUp") {
+                        e.preventDefault();
+                        activeIndex = Math.max(activeIndex - 1, 0);
+                        updateActiveItem(activeIndex);
+                    } else if (e.key === "Enter") {
+                        e.preventDefault();
+                        if (activeIndex >= 0 && activeIndex < items.length) {
+                            const el = items[activeIndex] as HTMLElement;
+                            if (el.tagName === "A") {
+                                closePalette();
+                                const href = el.getAttribute("href");
+                                if (href) window.location.href = href;
+                            } else if (el.dataset.action === "theme") {
+                                closePalette();
+                                setTimeout(() => themeToggle?.click(), 50);
+                            }
+                        }
                     }
                 };
 
-                onSearchToggleClick = () => openSearch();
-                onSearchCloseClick = () => closeSearch();
-                onSearchOverlayClick = (e: MouseEvent) => {
-                    if (e.target === searchOverlay) closeSearch();
+                document.addEventListener("keydown", onPaletteKeyNav);
+
+                onPaletteToggleClick = () => {
+                    activeIndex = -1;
+                    openPalette();
                 };
-                onSearchInputRaw = (e: Event) => {
-                    const target = e.target as HTMLInputElement;
-                    renderResults(target.value);
+                onPaletteCloseClick = () => closePalette();
+                onPaletteOverlayClick = (e: MouseEvent) => {
+                    if (e.target === paletteOverlay) {
+                        activeIndex = -1;
+                        closePalette();
+                    }
                 };
-                onSearchKeydown = (e: KeyboardEvent) => {
+                onPaletteInput = () => {
+                    activeIndex = -1;
+                    renderPalette(paletteInput?.value || "");
+                };
+                onPaletteKeydown = (e: KeyboardEvent) => {
                     if ((e.metaKey || e.ctrlKey) && e.key === "k") {
                         e.preventDefault();
-                        openSearch();
+                        activeIndex = -1;
+                        openPalette();
+                    } else if (
+                        (e.metaKey || e.ctrlKey) &&
+                        e.shiftKey &&
+                        (e.key === "p" || e.key === "P")
+                    ) {
+                        e.preventDefault();
+                        activeIndex = -1;
+                        openPalette();
                     } else if (e.key === "Escape") {
-                        closeSearch();
+                        activeIndex = -1;
+                        closePalette();
                     }
                 };
 
-                if (searchToggle)
-                    searchToggle.addEventListener("click", onSearchToggleClick);
-                if (searchClose)
-                    searchClose.addEventListener("click", onSearchCloseClick);
-                if (searchOverlay)
-                    searchOverlay.addEventListener(
+                if (paletteToggle)
+                    paletteToggle.addEventListener(
                         "click",
-                        onSearchOverlayClick,
+                        onPaletteToggleClick,
                     );
-                if (searchInput)
-                    searchInput.addEventListener("input", onSearchInputRaw);
-                document.addEventListener("keydown", onSearchKeydown);
+                if (paletteClose)
+                    paletteClose.addEventListener("click", onPaletteCloseClick);
+                if (paletteOverlay)
+                    paletteOverlay.addEventListener(
+                        "click",
+                        onPaletteOverlayClick,
+                    );
+                if (paletteInput)
+                    paletteInput.addEventListener("input", onPaletteInput);
+                document.addEventListener("keydown", onPaletteKeydown);
 
                 // scroll-aware navbar
                 const nav = document.getElementById("main-nav");

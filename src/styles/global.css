@@ -170,6 +170,26 @@
     transform: translateY(-100%);
 }
 
+/* command palette */
+.palette-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    color: var(--foreground);
+    text-decoration: none;
+}
+.palette-item:hover,
+.palette-item-active {
+    background-color: var(--secondary);
+}
+.palette-item-active {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+}
+
 @layer base {
     * {
         @apply border-border;
