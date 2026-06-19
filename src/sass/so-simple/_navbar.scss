@@ -1,7 +1,7 @@
 // _navbar.scss
 .navbar {
   background: none;
-  padding: 1rem 0;
+  padding: 0.6rem 0;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -10,15 +10,16 @@
 
   // Scrolled state
   &.scrolled {
-    padding: 0.5rem 0;
+    padding: 0;
 
     .navbar-container {
-      max-width: none;
-      padding: 0 2rem;
+      max-width: 100%;
+      padding: 0;
     }
 
     .navbar-row {
-      border-radius: 12px; // Maintain rounded corners when scrolled
+      border-radius: 0;
+      padding: 0.5rem 2rem;
     }
 
     // Only show current page indicator when scrolled
@@ -55,7 +56,7 @@
     align-items: center;
     justify-content: space-between;
     border-radius: 12px;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     transition: all 0.3s ease;
   }
 
@@ -216,10 +217,8 @@
   }
 }
 
-// Desktop navigation below
+// Desktop navigation inline
 .desktop-nav {
-  margin-top: 1rem;
-  margin-left: 0.125rem;
   display: none;
 
   @media (min-width: 641px) {
@@ -232,10 +231,11 @@
     margin: 0;
     padding: 0;
     gap: 1.25rem;
+    align-items: center;
 
     .nav-link {
       text-decoration: none;
-      padding: 0.5rem 0;
+      padding: 0.35rem 0;
       transition: color 0.3s ease;
     }
   }

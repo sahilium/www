@@ -577,11 +577,11 @@ figure.highlight {
 .navbar {
   // Scrolled state colors
   &.scrolled {
-    background: $navbar-scrolled-bg;
-    box-shadow: 0 2px 8px $shadow-light;
+    background: none;
 
     .navbar-row {
       background: $brand-bg-light;
+      box-shadow: 0 2px 8px $shadow-light;
     }
 
     .navbar-brand {
@@ -679,7 +679,11 @@ figure.highlight {
 [data-theme="dark"] {
   .navbar {
     &.scrolled {
-      background: color.mix(#000, $background-color, 20%);
+      background: none;
+
+      .navbar-row {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
     }
 
     .current-page {

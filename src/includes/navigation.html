@@ -13,6 +13,24 @@
 				</div>
 			</div>
 
+			<!-- Desktop Navigation -->
+			<nav class="desktop-nav">
+				<ul class="nav-links">
+					{% if site.data.navigation %}
+					{% for link in site.data.navigation %}
+					{% if link.url contains '://' %}
+					{% assign url = link.url %}
+					{% else %}
+					{% assign url = link.url | relative_url %}
+					{% endif %}
+					<li>
+						<a href="{{ url }}" class="nav-link">{{ link.title }}</a>
+					</li>
+					{% endfor %}
+					{% endif %}
+				</ul>
+			</nav>
+
 			<!-- Controls -->
 			<div class="navbar-controls">
 				<!-- Search -->
@@ -69,23 +87,5 @@
 				</nav>
 			</div>
 		</div>
-
-		<!-- Desktop Navigation -->
-		<nav class="desktop-nav">
-			<ul class="nav-links">
-				{% if site.data.navigation %}
-				{% for link in site.data.navigation %}
-				{% if link.url contains '://' %}
-				{% assign url = link.url %}
-				{% else %}
-				{% assign url = link.url | relative_url %}
-				{% endif %}
-				<li>
-					<a href="{{ url }}" class="nav-link">{{ link.title }}</a>
-				</li>
-				{% endfor %}
-				{% endif %}
-			</ul>
-		</nav>
 	</div>
 </header>
