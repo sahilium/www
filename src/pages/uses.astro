@@ -1,0 +1,44 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="/uses | Sahil A.">
+    <main class="page flex flex-col space-y-10">
+        <section class="relative flex flex-col items-start gap-4">
+            <span class="text-accent uppercase text-xs">// uses</span>
+            <h1 class="text-5xl">My dev setup and specs</h1>
+            <p class="text-sm text-muted-foreground">
+                <a href="https://uses.tech" target="_blank" rel="noreferrer" class="hover:text-primary">What is this?</a>
+                <br />
+                Updated: September 22, 2024
+            </p>
+        </section>
+
+        <section class="prose-blog max-w-none">
+            <h3>Hardware</h3>
+
+            <p>I, for now, have a very modest Lenovo E480 and use it for almost everything. I also code a lot on the go on my Android devices.</p>
+
+            <ul>
+                <li>Processor: Intel i3 8th gen</li>
+                <li>GPU: Intel Integrated Graphics</li>
+                <li>RAM: 8GB</li>
+                <li>SSD: NIL</li>
+                <li>HDD: 1TB</li>
+            </ul>
+
+            <h4>Software</h4>
+
+            <p>Now this part is much more interesting!</p>
+
+            <ul>
+                <li>OS: A well-riced Debian GNU/Linux 12, dotfiles <a href="https://github.com/sahilium/dotfiles" target="_blank" rel="noreferrer">here</a>!</li>
+                <li>Browser: <a href="https://floorp.app" target="_blank" rel="noreferrer"><code>floorp</code></a></li>
+                <li>Editor: <code>neovim</code></li>
+                <li>Terminal: <code>kitty</code></li>
+                <li>Shell: <code>fish</code></li>
+                <li>Devtools management: <a href="https://mise.jdx.dev/" target="_blank" rel="noreferrer"><code>mise</code></a></li>
+            </ul>
+        </section>
+    </main>
+</Layout>

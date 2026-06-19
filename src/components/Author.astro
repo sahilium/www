@@ -1,0 +1,270 @@
+---
+import { getCollection } from "astro:content";
+import {
+    Terminal,
+    GitMerge,
+    Rocket,
+    Cog,
+    PenTool,
+    Book,
+    Sparkles,
+    Mail,
+} from "@lucide/astro";
+
+import Separator from "./ui/Separator.astro";
+import ActivityCard from "./about/ActivityCard.astro";
+import DecorativeKanji from "./about/DecorativeKanji.astro";
+import ProjectCard from "./ProjectCard.astro";
+import Timeline from "./about/Timeline.astro";
+import { siteConfig } from "@/config";
+
+import mhrImage from "../assets/images/mhr.webp";
+import frierenImage from "../assets/images/frieren.webp";
+import pomImage from "../assets/images/pom.webp";
+import neffexImage from "../assets/images/neffex.webp";
+
+const timeline = [
+    {
+        year: "2023",
+        title: "Wrote first line of code",
+        description: "Hello, World — the classic beginning",
+        icon: Terminal,
+    },
+    {
+        year: "2024",
+        title: "Built this site",
+        description: "Moved from Jekyll to Astro",
+        icon: Cog,
+    },
+    {
+        year: "2024",
+        title: "Started blogging",
+        description: "Writing about ricing, programming, and philosophy",
+        icon: Book,
+    },
+    {
+        year: "Now",
+        title: "Building what's next",
+        description: "Always learning, always shipping",
+        icon: Sparkles,
+    },
+];
+
+const projects = [
+    {
+        title: "CalypsoDB",
+        description:
+            "A NoSQL database system designed for large-scale storage with high availability, combining elements of NoSQL and SQL for flexible data modeling.",
+        link: "https://github.com/CalypsoDB",
+        techStack: ["Go"],
+    },
+    {
+        title: "newsmatic",
+        description:
+            "A RAG system using LLMs for real-time news aggregation, summarization, and categorization via NLP.",
+        link: "https://github.com/sahilium/newsmatic",
+        techStack: ["Python", "PyTorch", "LangChain"],
+    },
+    {
+        title: "Reamer",
+        description:
+            "A cloud storage system with end-to-end encryption, multi-region support, and a user-friendly interface.",
+        link: "https://github.com/sahilium/reamer",
+        techStack: ["Ruby on Rails", "HAML", "SQLite"],
+    },
+    {
+        title: "MerryStaff",
+        description:
+            "A staff management system for employee scheduling, time tracking, and payroll processing.",
+        link: "https://github.com/sahilium/merrystaff",
+        techStack: ["Spring Boot", "Thymeleaf", "MySQL"],
+    },
+];
+
+const entries = await getCollection("post");
+
+let postsPerYear = 0;
+if (entries.length > 0) {
+    const years = entries.map((entry) => {
+        const [, , y] = entry.data.date.split("/");
+        return Number(y);
+    });
+    const minYear = Math.min(...years);
+    const maxYear = Math.max(...years);
+    const activeYears = Math.max(1, maxYear - minYear + 1);
+    postsPerYear = Math.ceil(entries.length / activeYears);
+}
+---
+
+<main class="page flex flex-col space-y-10">
+    <section class="relative flex flex-col items-start gap-4">
+        <span class="text-accent uppercase text-xs">// about the author</span>
+        <h1 class="text-5xl">Sahil A.</h1>
+        <p>
+            {siteConfig.author.bio}
+        </p>
+
+        <div class="flex items-center gap-4">
+            {siteConfig.socials.email && (
+                <a
+                    href={siteConfig.socials.email}
+                    aria-label="Email"
+                    class="text-muted-foreground hover:text-primary transition-colors"
+                >
+                    <Mail size={20} />
+                </a>
+            )}
+            {siteConfig.socials.linkedin && (
+                <a
+                    href={siteConfig.socials.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                    class="text-muted-foreground hover:text-primary transition-colors"
+                >
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                </a>
+            )}
+            {siteConfig.socials.github && (
+                <a
+                    href={siteConfig.socials.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="GitHub"
+                    class="text-muted-foreground hover:text-primary transition-colors"
+                >
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                </a>
+            )}
+        </div>
+
+        <span
+            class="text-secondary -z-1 opacity-70 text-[10rem] absolute -top-16 -left-4 disable-select"
+            aria-hidden="true">匠</span
+        >
+    </section>
+
+    <section
+        class="grid grid-cols-2 md:grid-cols-4 w-full border-l border-t border-border"
+    >
+        <DecorativeKanji title="2+" subTitle="Years of exp" kanji="歴" />
+        <DecorativeKanji
+            title={projects.length.toString()}
+            subTitle="Projects Shipped"
+            kanji="造"
+        />
+        <DecorativeKanji title="4" subTitle="Languages" kanji="語" />
+        <DecorativeKanji
+            title={`~${postsPerYear}`}
+            subTitle="Posts / year"
+            kanji="筆"
+        />
+    </section>
+
+    <div class="w-full h-1 bg-foreground"></div>
+
+    <section>
+        <section class="flex justify-between">
+            <div class="size-5 border border-b-0 border-r-0 border-foreground">
+            </div>
+            <div
+                class="size-5 border border-b-0 border-r-0 border-foreground rotate-90"
+            >
+            </div>
+        </section>
+        <section class="px-5 space-y-5">
+            <p>
+                Heyy 🖖 this is Saahil and welcome to my TED Talk!
+            </p>
+            <p>
+                Professionally, I'm a freshly baked software developer, just beginning to wrap my head
+                around the intricacies of the field. My interests span backend development, Linux,
+                programming language design, and similar areas — basically, all the stuff that sounds
+                impressive at parties but leaves most people scratching their heads.
+            </p>
+            <p>
+                Unprofessionally, I'm your standard-issue nerd. I spend my free time tinkering with
+                projects that range from "could be useful" to "why did I build this again?" I also
+                have a habit of getting lost in fiction — often more than I intend — and dabbling in
+                long-forgotten languages like Old Norse, because nothing says fun like reviving
+                ancient grammar rules!
+            </p>
+        </section>
+
+        <section class="flex justify-between">
+            <div
+                class="size-5 border border-b-0 border-r-0 border-foreground -rotate-90"
+            >
+            </div>
+            <div
+                class="size-5 border border-b-0 border-r-0 border-foreground rotate-180"
+            >
+            </div>
+        </section>
+    </section>
+
+    <Separator title="Currently" />
+
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+        <ActivityCard
+            imageSrc={mhrImage}
+            imageAlt="Monster Hunter Rise wallpaper"
+            label="Learning"
+            title="Ελληνικά"
+            subtitle="Greek (A2)"
+        />
+        <ActivityCard
+            imageSrc={frierenImage}
+            imageAlt="Illustration of a chibi Frieren looking up"
+            label="Reading"
+            title="Spinning Silver"
+            subtitle="by Naomi Novik"
+        />
+        <ActivityCard
+            imageSrc={pomImage}
+            imageAlt="Illustration of a brain shaped paper bills"
+            label="Learning"
+            title="Bahasa Indonesia"
+            subtitle="(A1)"
+        />
+        <ActivityCard
+            imageSrc={neffexImage}
+            imageAlt="Logo of NEFFEX"
+            label="Learning"
+            title="Suomi"
+            subtitle="Finnish (A1)"
+        />
+    </section>
+
+    <Separator title="Projects" />
+
+    <section class="flex flex-col gap-4">
+        {
+            projects.map((project) => (
+                <ProjectCard
+                    title={project.title}
+                    description={project.description}
+                    url={project.link}
+                    techStack={project.techStack}
+                />
+            ))
+        }
+    </section>
+
+    <Separator title="Journey" />
+
+    <Timeline items={timeline} />
+
+    <div
+        class="flex items-center justify-center gap-4 text-muted-foreground text-sm pt-10 pb-4"
+    >
+        <div class="h-px w-full bg-foreground/10"></div>
+        <span class="whitespace-nowrap uppercase tracking-widest">終 - fin</span
+        >
+        <div class="h-px w-full bg-foreground/10"></div>
+    </div>
+</main>
