@@ -1,0 +1,146 @@
+---
+import { Image } from "astro:assets";
+import avatar from "@/assets/images/avatar.jpg";
+---
+
+<div class="hero">
+    <div class="hero-avatar-wrap">
+        <Image src={avatar} alt="Sahil A." class="hero-avatar" />
+    </div>
+    <div class="hero-content">
+        <h1 class="hero-name">Sahil A.</h1>
+        <p class="hero-greeting" id="greeting"></p>
+        <p class="hero-tagline">Curious about how things work, and why people do.</p>
+    </div>
+</div>
+
+<style>
+    .hero {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.5rem 1rem 1rem;
+        text-align: center;
+    }
+
+    .hero-avatar-wrap {
+        flex-shrink: 0;
+    }
+
+    .hero-avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        object-fit: cover;
+        animation: float 6s ease-in-out infinite;
+        box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    @keyframes float {
+        0% {
+            box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.3);
+            transform: translateY(0px);
+        }
+        50% {
+            box-shadow: 0 25px 15px 0px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px);
+        }
+        100% {
+            box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.3);
+            transform: translateY(0px);
+        }
+    }
+
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .hero-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    .hero-greeting {
+        font-size: 0.95rem;
+        color: var(--muted-foreground);
+        margin: 0;
+        min-height: 1.5rem;
+    }
+
+    .hero-tagline {
+        font-size: 0.85rem;
+        color: var(--muted-foreground);
+        font-style: italic;
+        margin: 0.25rem 0 0;
+        max-width: 32ch;
+        opacity: 0.8;
+    }
+
+    @media (min-width: 640px) {
+        .hero {
+            padding: 2rem 2rem 1.5rem;
+            gap: 1.25rem;
+        }
+        .hero-avatar {
+            width: 88px;
+            height: 88px;
+        }
+        .hero-name {
+            font-size: 1.75rem;
+        }
+        .hero-greeting {
+            font-size: 1rem;
+        }
+    }
+</style>
+
+<script>
+    function changeText(paragraph, greetings) {
+        let currentIndex = 0;
+        return function () {
+            paragraph.textContent = greetings[currentIndex];
+            currentIndex = (currentIndex + 1) % greetings.length;
+        };
+    }
+
+    const paragraph = document.getElementById('greeting');
+    if (paragraph) {
+        const greetings = [
+            'Hello, world!',       // English
+            'Χάρηκα',               // Greek
+            '¿Cómo estás?',         // Spanish
+            'Bonjour le monde',     // French
+            'Hallo Welt',           // German
+            'Ciao mondo',           // Italian
+            'Olá mundo',            // Portuguese
+            'Hej världen',          // Swedish
+            'Hei maailma',          // Finnish
+            'Hallo wereld',         // Dutch
+            'Witaj świecie',        // Polish
+            'Привет, мир',          // Russian
+            'Ahoj světe',           // Czech
+            'Buna lume',            // Romanian
+            'Merhaba dünya',        // Turkish
+            'Salam, dünya',         // Azerbaijani
+            '你好，世界',            // Chinese
+            'こんにちは世界',        // Japanese
+            '안녕하세요',            // Korean
+            'Xin chào',             // Vietnamese
+            'Halō',                 // Hawaiian
+            'Dia duit',             // Irish
+            'Halo dunia',           // Indonesian
+            'Salamu, Dunia',        // Swahili
+            'Kumusta mundo',        // Filipino
+        ];
+
+        const updateGreeting = changeText(paragraph, greetings);
+        updateGreeting();
+        setInterval(updateGreeting, 3000);
+    }
+</script>
