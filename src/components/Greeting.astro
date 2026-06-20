@@ -1,0 +1,81 @@
+---
+import greetings from "@/data/greetings.json";
+---
+
+<div
+    class="greeting"
+    id="greeting-root"
+    data-greetings={JSON.stringify(greetings)}
+>
+    <span class="greeting-hello" id="greeting-hello"></span>
+    <span class="greeting-language" id="greeting-language"></span>
+</div>
+
+<script>
+    const root = document.getElementById('greeting-root');
+    const list = JSON.parse(root?.dataset.greetings || '[]');
+
+    const helloEl = document.getElementById('greeting-hello');
+    const langEl = document.getElementById('greeting-language');
+
+    if (helloEl && langEl && list.length) {
+        const i = Math.floor(Math.random() * list.length);
+        const entry = list[i];
+
+        helloEl.textContent = entry.hello + ' 👋';
+
+        const a = document.createElement('a');
+        a.href = entry.about || '#';
+        a.target = '_blank';
+        a.rel = 'noreferrer';
+        a.textContent = entry.language;
+        a.className = 'greeting-link';
+        langEl.appendChild(a);
+    }
+</script>
+
+<style>
+    .greeting {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.1rem;
+    }
+
+    .greeting-hello {
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        font-family: var(--font-sans, "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif);
+    }
+
+    .greeting-language {
+        font-size: 0.75rem;
+    }
+
+    .greeting-link {
+        color: var(--accent);
+        position: relative;
+        text-decoration: none;
+    }
+
+    .greeting-link::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--accent);
+        transform: scaleX(1);
+    }
+
+    @media (min-width: 640px) {
+        .greeting-hello {
+            font-size: 2rem;
+        }
+        .greeting-language {
+            font-size: 0.8rem;
+        }
+    }
+</style>

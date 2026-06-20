@@ -1,25 +1,40 @@
 ---
 import { Image } from "astro:assets";
 import avatar from "@/assets/images/avatar.jpg";
+import statuses from "@/data/statuses.json";
 ---
 
-<div class="hero">
+<div class="hero" id="hero-root" data-statuses={JSON.stringify(statuses)}>
     <div class="hero-avatar-wrap">
         <Image src={avatar} alt="Sahil A." class="hero-avatar" />
     </div>
-    <div class="hero-content">
-        <h1 class="hero-name">Sahil A.</h1>
-        <p class="hero-greeting" id="greeting"><span class="cursor-blink">|</span></p>
-        <p class="hero-tagline">Curious about how things work, and why people do.</p>
+    <div class="hero-status" id="hero-status">
+        <span class="status-name">Sahil</span>
+        <span class="status-verb" id="status-verb"></span>
+        <span class="status-sentence" id="status-sentence"></span>
     </div>
 </div>
+
+<script>
+    const root = document.getElementById('hero-root');
+    const statuses = JSON.parse(root?.dataset.statuses || '[]');
+
+    const verbEl = document.getElementById('status-verb');
+    const sentenceEl = document.getElementById('status-sentence');
+
+    if (verbEl && sentenceEl && statuses.length) {
+        const i = Math.floor(Math.random() * statuses.length);
+        verbEl.textContent = statuses[i].verb;
+        sentenceEl.textContent = statuses[i].sentence;
+    }
+</script>
 
 <style>
     .hero {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.75rem;
         padding: 0.75rem 1rem 0.5rem;
         text-align: center;
     }
@@ -52,132 +67,52 @@ import avatar from "@/assets/images/avatar.jpg";
         }
     }
 
-    .hero-content {
+    .hero-status {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.25rem;
-        position: relative;
-        z-index: 1;
+        gap: 0.15rem;
     }
 
-    .hero-name {
+    .status-name {
         font-size: 1.5rem;
         font-weight: 700;
         line-height: 1.2;
-        margin: 0;
+        font-family: var(--font-sans, "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif);
     }
 
-    .hero-greeting {
+    .status-verb {
+        font-size: 0.85rem;
+        color: var(--primary);
+        font-weight: 500;
+        text-transform: lowercase;
+        letter-spacing: 0.05em;
+    }
+
+    .status-sentence {
         font-size: 0.95rem;
         color: var(--muted-foreground);
-        margin: 0;
-        min-height: 1.5rem;
-    }
-
-    .cursor-blink {
-        animation: cursor-blink 0.7s step-end infinite;
-        font-weight: 300;
-        color: var(--primary);
-    }
-
-    @keyframes cursor-blink {
-        0%, 50% { opacity: 1; }
-        51%, 100% { opacity: 0; }
-    }
-
-    .hero-tagline {
-        font-size: 0.85rem;
-        color: var(--muted-foreground);
         font-style: italic;
-        margin: 0.25rem 0 0;
         max-width: 32ch;
-        opacity: 0.8;
     }
 
     @media (min-width: 640px) {
         .hero {
             padding: 1rem 2rem 0.75rem;
-            gap: 0.75rem;
+            gap: 1rem;
         }
         .hero-avatar {
             width: 88px;
             height: 88px;
         }
-        .hero-name {
+        .status-name {
             font-size: 1.75rem;
         }
-        .hero-greeting {
+        .status-verb {
+            font-size: 0.9rem;
+        }
+        .status-sentence {
             font-size: 1rem;
         }
     }
 </style>
-
-<script>
-    const el = document.getElementById('greeting');
-    if (el) {
-        const greetings = [
-            'Hello, world!',
-            'Χάρηκα',
-            '¿Cómo estás?',
-            'Bonjour le monde',
-            'Hallo Welt',
-            'Ciao mondo',
-            'Olá mundo',
-            'Hej världen',
-            'Hei maailma',
-            'Hallo wereld',
-            'Witaj świecie',
-            'Привет, мир',
-            'Ahoj světe',
-            'Buna lume',
-            'Merhaba dünya',
-            'Salam, dünya',
-            '你好，世界',
-            'こんにちは世界',
-            '안녕하세요',
-            'Xin chào',
-            'Halō',
-            'Dia duit',
-            'Halo dunia',
-            'Salamu, Dunia',
-            'Kumusta mundo',
-        ];
-
-        let idx = 0;
-        let charIdx = 0;
-        let isDeleting = false;
-        let cursor = el.querySelector('.cursor-blink');
-
-        function tick() {
-            const text = greetings[idx];
-
-            if (!isDeleting) {
-                charIdx++;
-                const display = text.slice(0, charIdx);
-                el.innerHTML = display + (cursor ? cursor.outerHTML : '|');
-
-                if (charIdx === text.length) {
-                    setTimeout(() => { isDeleting = true; tick(); }, 2000);
-                    return;
-                }
-                setTimeout(tick, 60 + Math.random() * 80);
-            } else {
-                charIdx--;
-                const display = text.slice(0, charIdx);
-                el.innerHTML = display + (cursor ? cursor.outerHTML : '|');
-
-                if (charIdx === 0) {
-                    isDeleting = false;
-                    idx = (idx + 1) % greetings.length;
-                    setTimeout(tick, 300);
-                    return;
-                }
-                setTimeout(tick, 30 + Math.random() * 40);
-            }
-        }
-
-        tick();
-    }
-
-</script>

@@ -6,9 +6,10 @@ import { calcReadTime } from "@/utils/reading-time";
 
 interface Props {
     page?: number;
+    preview?: boolean;
 }
 
-const { page = 1 } = Astro.props;
+const { page = 1, preview = false } = Astro.props;
 
 const entries = await getCollection("post");
 const allPosts = entries
@@ -51,149 +52,182 @@ const grouped = posts.reduce(
     {} as Record<string, Record<string, MappedPost[]>>,
 );
 
-const pageUrl = (p: number) => (p === 1 ? "/" : `/page/${p}`);
+const pageUrl = (p: number) => (p === 1 ? "/blog" : `/page/${p}`);
 ---
 
-<main class="page">
-    <span class="uppercase text-primary font-medium tracking-widest"
-        >/blog</span
-    >
+{
+    preview ? (
+        <section class="flex flex-col gap-2 my-3">
+            {allPosts.slice(0, 3).map((post, i) => (
+                <section
+                    class="flex flex-col gap-1 group hover:bg-muted px-3 py-3 rounded-md transition-all duration-300 relative overflow-hidden fade-in-section"
+                    style={`transition-delay: ${i * 80}ms`}
+                >
+                    <div class="flex flex-col md:flex-row gap-2 md:justify-between md:items-start">
+                        <a href={`/posts/${post.slug}`}>
+                            <h2 class="text-lg group-hover:text-primary leading-tight font-sans">
+                                {post.title}
+                            </h2>
+                        </a>
+                        <span class="text-muted-foreground text-xs shrink-0 whitespace-nowrap md:mt-1 md:text-right text-left mt-1">
+                            {post.readTime} min read
+                        </span>
+                    </div>
+                    <p class="text-sm text-muted-foreground">
+                        {post.frontmatter}
+                    </p>
+                </section>
+            ))}
+            <a
+                href="/blog"
+                class="text-sm text-accent hover:underline mt-2"
+            >
+                View all posts &rarr;
+            </a>
+        </section>
+    ) : (
+        <main class="page">
+            <span class="uppercase text-primary font-medium tracking-widest"
+                >/blog</span
+            >
 
-    <h1 class="text-2xl mt-6">Posts</h1>
-    <p class="text-sm max-w-122 text-muted-foreground mt-1">
-        Things I've written.
-    </p>
+            <h1 class="text-2xl mt-6">Posts</h1>
+            <p class="text-sm max-w-122 text-muted-foreground mt-1">
+                Things I've written.
+            </p>
 
-    <section class="mt-6 my-3">
-        {
-            Object.keys(grouped)
-                .sort((a, b) => Number(b) - Number(a))
-                .map((year) => (
-                    <section>
-                        <h2 class="text-xl">{year}</h2>
-                        {Object.entries(grouped[year]).map(
-                            ([month, monthPosts]) => (
-                                <section>
-                                    <h3 class="text-sm text-muted-foreground uppercase font-medium tracking-widest">
-                                        {month} {dateRange(monthPosts)}
-                                    </h3>
-                                    <hr class="mt-1" />
-                                    <section class="flex flex-col gap-2 my-3">
-                                        {monthPosts.map((post, i) => (
-                                            <section
-                                                class="flex flex-col gap-1 group hover:bg-muted px-3 py-4 rounded-md transition-all duration-300 relative overflow-hidden fade-in-section"
-                                                style={`transition-delay: ${i * 80}ms`}
-                                            >
-                                                <div class="flex flex-col md:flex-row gap-2 md:justify-between md:items-start">
-                                                    <a
-                                                        href={`/posts/${post.slug}`}
+            <section class="mt-6 my-3">
+                {
+                    Object.keys(grouped)
+                        .sort((a, b) => Number(b) - Number(a))
+                        .map((year) => (
+                            <section>
+                                <h2 class="text-xl">{year}</h2>
+                                {Object.entries(grouped[year]).map(
+                                    ([month, monthPosts]) => (
+                                        <section>
+                                            <h3 class="text-sm text-muted-foreground uppercase font-medium tracking-widest">
+                                                {month} {dateRange(monthPosts)}
+                                            </h3>
+                                            <hr class="mt-1" />
+                                            <section class="flex flex-col gap-2 my-3">
+                                                {monthPosts.map((post, i) => (
+                                                    <section
+                                                        class="flex flex-col gap-1 group hover:bg-muted px-3 py-4 rounded-md transition-all duration-300 relative overflow-hidden fade-in-section"
+                                                        style={`transition-delay: ${i * 80}ms`}
                                                     >
-                                                        <h2 class="text-2xl group-hover:text-primary leading-tight">
-                                                            {post.title}
-                                                        </h2>
-                                                    </a>
-                                                    <span class="text-muted-foreground text-xs shrink-0 whitespace-nowrap md:mt-1 md:text-right text-left mt-1">
-                                                        {post.readTime} min read
-                                                    </span>
-                                                </div>
-                                                <p class="text-muted-foreground">
-                                                    {post.frontmatter}
-                                                </p>
-                                                <section class="flex gap-2 flex-wrap">
-                                                    {post.tags.map((tag) => (
-                                                        <Badge
-                                                            content={tag}
-                                                            href={`/tags/${tag}`}
-                                                        />
-                                                    ))}
-                                                </section>
+                                                        <div class="flex flex-col md:flex-row gap-2 md:justify-between md:items-start">
+                                                            <a
+                                                                href={`/posts/${post.slug}`}
+                                                            >
+                                                                <h2 class="text-2xl group-hover:text-primary leading-tight">
+                                                                    {post.title}
+                                                                </h2>
+                                                            </a>
+                                                            <span class="text-muted-foreground text-xs shrink-0 whitespace-nowrap md:mt-1 md:text-right text-left mt-1">
+                                                                {post.readTime} min read
+                                                            </span>
+                                                        </div>
+                                                        <p class="text-muted-foreground">
+                                                            {post.frontmatter}
+                                                        </p>
+                                                        <section class="flex gap-2 flex-wrap">
+                                                            {post.tags.map((tag) => (
+                                                                <Badge
+                                                                    content={tag}
+                                                                    href={`/tags/${tag}`}
+                                                                />
+                                                            ))}
+                                                        </section>
+                                                    </section>
+                                                ))}
                                             </section>
-                                        ))}
-                                    </section>
-                                </section>
+                                        </section>
+                                    ),
+                                )}
+                            </section>
+                        ))
+                }
+            </section>
+
+            {
+                totalPages > 1 && (
+                    <nav
+                        class="flex items-center justify-center gap-2 mt-16 mb-10"
+                        aria-label="Pagination"
+                    >
+                        {page > 1 && (
+                            <a
+                                href={pageUrl(page - 1)}
+                                class="text-sm text-muted-foreground hover:text-primary transition-colors px-3 py-2"
+                                aria-label="Previous page"
+                            >
+                                ←
+                            </a>
+                        )}
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                            (p) => (
+                                <a
+                                    href={pageUrl(p)}
+                                    class={`text-sm px-3 py-2 rounded-md transition-colors ${
+                                        p === page
+                                            ? "bg-primary text-primary-foreground font-medium"
+                                            : "text-muted-foreground hover:text-primary hover:bg-muted"
+                                    }`}
+                                    aria-current={p === page ? "page" : undefined}
+                                >
+                                    {p}
+                                </a>
                             ),
                         )}
-                    </section>
-                ))
-        }
-    </section>
+                        {page < totalPages && (
+                            <a
+                                href={pageUrl(page + 1)}
+                                class="text-sm text-muted-foreground hover:text-primary transition-colors px-3 py-2"
+                                aria-label="Next page"
+                            >
+                                →
+                            </a>
+                        )}
+                    </nav>
+                )
+            }
+        </main>
+    )
+}
 
-    <style>
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    </style>
+<style>
+    .fade-in-section {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-section.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
 
-    <script>
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
+<script>
+    const observer = new IntersectionObserver(
+        (entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
                 }
-            },
-            { threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
-        );
+            }
+        },
+        { threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
+    );
 
-        document.querySelectorAll('.fade-in-section').forEach((el) => {
+    document.querySelectorAll('.fade-in-section').forEach((el) => {
+        observer.observe(el);
+    });
+
+    document.addEventListener('astro:after-swap', () => {
+        document.querySelectorAll('.fade-in-section:not(.is-visible)').forEach((el) => {
             observer.observe(el);
         });
-
-        document.addEventListener('astro:after-swap', () => {
-            document.querySelectorAll('.fade-in-section:not(.is-visible)').forEach((el) => {
-                observer.observe(el);
-            });
-        });
-    </script>
-
-    {
-        totalPages > 1 && (
-            <nav
-                class="flex items-center justify-center gap-2 mt-16 mb-10"
-                aria-label="Pagination"
-            >
-                {page > 1 && (
-                    <a
-                        href={pageUrl(page - 1)}
-                        class="text-sm text-muted-foreground hover:text-primary transition-colors px-3 py-2"
-                        aria-label="Previous page"
-                    >
-                        ←
-                    </a>
-                )}
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (p) => (
-                        <a
-                            href={pageUrl(p)}
-                            class={`text-sm px-3 py-2 rounded-md transition-colors ${
-                                p === page
-                                    ? "bg-primary text-primary-foreground font-medium"
-                                    : "text-muted-foreground hover:text-primary hover:bg-muted"
-                            }`}
-                            aria-current={p === page ? "page" : undefined}
-                        >
-                            {p}
-                        </a>
-                    ),
-                )}
-                {page < totalPages && (
-                    <a
-                        href={pageUrl(page + 1)}
-                        class="text-sm text-muted-foreground hover:text-primary transition-colors px-3 py-2"
-                        aria-label="Next page"
-                    >
-                        →
-                    </a>
-                )}
-            </nav>
-        )
-    }
-</main>
+    });
+</script>

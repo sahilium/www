@@ -1,0 +1,22 @@
+[
+    { "verb": "is", "sentence": "hungry right now" },
+    { "verb": "is", "sentence": "tired but coding" },
+    { "verb": "is", "sentence": "deep in thought" },
+    { "verb": "is", "sentence": "procrastinating" },
+    { "verb": "wants", "sentence": "cheesecake" },
+    { "verb": "wants", "sentence": "a new project" },
+    { "verb": "wants", "sentence": "coffee number three" },
+    { "verb": "wants", "sentence": "more RAM" },
+    { "verb": "needs", "sentence": "better documentation" },
+    { "verb": "needs", "sentence": "a nap" },
+    { "verb": "needs", "sentence": "to touch grass" },
+    { "verb": "stares at", "sentence": "the void staring back" },
+    { "verb": "stares at", "sentence": "a terminal somewhere" },
+    { "verb": "has", "sentence": "way too many tabs open" },
+    { "verb": "contemplates", "sentence": "the perfect font" },
+    { "verb": "contemplates", "sentence": "a rabbit hole" },
+    { "verb": "questions", "sentence": "everything" },
+    { "verb": "refactors", "sentence": "for the fifth time" },
+    { "verb": "listens to", "sentence": "the same song on repeat" },
+    { "verb": "reads", "sentence": "documentation instead of coding" }
+]

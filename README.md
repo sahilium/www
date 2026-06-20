@@ -2,7 +2,7 @@
   <img src="src/assets/images/avatar.jpg" width="100" height="100" style="border-radius: 50%;" alt="Sahil A."/>
 </p>
 
-<h1 align="center">Sahil A. · nonomino</h1>
+<h1 align="center">Sahil A.</h1>
 
 <p align="center">
   <em>Curious about how things work, and why people do.</em>
@@ -45,6 +45,9 @@ bun run dev
 src/
 ├── assets/       images
 ├── components/   UI components
+├── data/         JSON data files
+│   ├── greetings.json   multilingual greetings (84 languages)
+│   └── statuses.json    "Sahil is/verb/sentence" status pairs
 ├── layouts/      Layout.astro
 ├── pages/        routes
 ├── posts/        blog content (.mdx)
@@ -52,6 +55,16 @@ src/
 ├── config.ts     site config
 └── content.config.ts
 ```
+
+## Data
+
+### `src/data/greetings.json`
+Array of `{ language, hello, about }` objects. A random entry is shown on every page load below the hero — the greeting text with a wave emoji, and the language name linked to its Wikipedia page.
+
+### `src/data/statuses.json`
+Array of `{ verb, sentence }` pairs displayed in the hero status line as "Sahil *verb* *sentence*". Randomly picked on each refresh.
+
+Have a quirky status idea? Open a PR adding yours to `statuses.json`. Keep it short, maybe funny, and ideally self-deprecating.
 
 ## License
 
