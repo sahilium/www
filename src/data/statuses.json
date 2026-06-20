@@ -1,22 +1,138 @@
 [
-    { "verb": "is", "sentence": "hungry right now" },
-    { "verb": "is", "sentence": "tired but coding" },
-    { "verb": "is", "sentence": "deep in thought" },
-    { "verb": "is", "sentence": "procrastinating" },
-    { "verb": "wants", "sentence": "cheesecake" },
-    { "verb": "wants", "sentence": "a new project" },
-    { "verb": "wants", "sentence": "coffee number three" },
-    { "verb": "wants", "sentence": "more RAM" },
-    { "verb": "needs", "sentence": "better documentation" },
-    { "verb": "needs", "sentence": "a nap" },
-    { "verb": "needs", "sentence": "to touch grass" },
-    { "verb": "stares at", "sentence": "the void staring back" },
-    { "verb": "stares at", "sentence": "a terminal somewhere" },
-    { "verb": "has", "sentence": "way too many tabs open" },
-    { "verb": "contemplates", "sentence": "the perfect font" },
-    { "verb": "contemplates", "sentence": "a rabbit hole" },
-    { "verb": "questions", "sentence": "everything" },
-    { "verb": "refactors", "sentence": "for the fifth time" },
-    { "verb": "listens to", "sentence": "the same song on repeat" },
-    { "verb": "reads", "sentence": "documentation instead of coding" }
+  { "verb": "is", "sentence": "building something unnecessary" },
+  { "verb": "is", "sentence": "deep in a rabbit hole" },
+  { "verb": "is", "sentence": "learning a new language" },
+  { "verb": "is", "sentence": "debugging yesterday's success" },
+  { "verb": "is", "sentence": "thinking about distributed systems" },
+  { "verb": "is", "sentence": "optimizing something that was already fast" },
+  { "verb": "is", "sentence": "trying not to overengineer it" },
+  { "verb": "is", "sentence": "writing about what he learned" },
+
+  { "verb": "builds", "sentence": "tools for fun" },
+  { "verb": "builds", "sentence": "databases nobody asked for" },
+  { "verb": "builds", "sentence": "side projects instead of sleeping" },
+
+  { "verb": "learns", "sentence": "Turkish one word at a time" },
+  { "verb": "learns", "sentence": "how things work under the hood" },
+  { "verb": "learns", "sentence": "a little bit of everything" },
+
+  { "verb": "reads", "sentence": "documentation voluntarily" },
+  { "verb": "reads", "sentence": "about systems and languages" },
+  { "verb": "reads", "sentence": "things far outside his field" },
+
+  { "verb": "listens to", "sentence": "something on repeat" },
+  { "verb": "listens to", "sentence": "more ambient music than expected" },
+  { "verb": "listens to", "sentence": "whatever helps him focus" },
+
+  { "verb": "explores", "sentence": "yet another rabbit hole" },
+  { "verb": "explores", "sentence": "old languages and new ideas" },
+  { "verb": "explores", "sentence": "curiosity-driven detours" },
+
+  { "verb": "maintains", "sentence": "too many personal projects" },
+  { "verb": "maintains", "sentence": "a collection of strange ideas" },
+
+  {
+    "verb": "self-hosts",
+    "sentence": "things that probably didn't need self-hosting"
+  },
+
+  { "verb": "stares at", "sentence": "a terminal somewhere" },
+  { "verb": "stares at", "sentence": "an open tab he forgot about" },
+
+  { "verb": "identifies", "sentence": "birds when he should be working" },
+
+  { "verb": "collects", "sentence": "unfinished ideas" },
+  { "verb": "collects", "sentence": "interesting problems" },
+
+  { "verb": "wonders", "sentence": "how far curiosity can go" },
+  { "verb": "wonders", "sentence": "why simple things become complicated" },
+
+  { "verb": "occasionally", "sentence": "touches grass" },
+
+  { "verb": "currently fights", "sentence": "a build system" },
+  { "verb": "currently fights", "sentence": "a cache somewhere" },
+  { "verb": "currently fights", "sentence": "his own abstractions" },
+  { "verb": "believes", "sentence": "one more refactor will fix everything" },
+  { "verb": "believes", "sentence": "this side project is different" },
+  { "verb": "claims", "sentence": "he only opened one browser tab" },
+  { "verb": "has", "sentence": "a concerning number of ideas" },
+  { "verb": "has", "sentence": "more projects than free time" },
+  { "verb": "has", "sentence": "strong opinions about keyboards" },
+  { "verb": "owns", "sentence": "too many unfinished experiments" },
+
+  { "verb": "waits for", "sentence": "the compiler to deliver wisdom" },
+  { "verb": "waits for", "sentence": "motivation to arrive naturally" },
+
+  { "verb": "suspects", "sentence": "the bug is judging him" },
+  { "verb": "suspects", "sentence": "the solution was obvious all along" },
+
+  { "verb": "tries", "sentence": "to keep the project simple" },
+  { "verb": "tries", "sentence": "not to start another side project" },
+  { "verb": "tries", "sentence": "to justify buying another domain" },
+
+  { "verb": "accidentally starts", "sentence": "new hobbies" },
+  { "verb": "accidentally starts", "sentence": "research projects" },
+
+  { "verb": "dreams of", "sentence": "perfect documentation" },
+  { "verb": "dreams of", "sentence": "instant deployment" },
+
+  { "verb": "would rather discuss", "sentence": "databases than small talk" },
+
+  { "verb": "still thinks about", "sentence": "that one weird bug from 2025" },
+
+  {
+    "verb": "maintains",
+    "sentence": "an unhealthy relationship with rabbit holes"
+  },
+
+  { "verb": "insists", "sentence": "the rewrite was necessary" },
+  { "verb": "insists", "sentence": "the architecture makes sense" },
+
+  { "verb": "is waiting for", "sentence": "the next hyperfixation" },
+
+  { "verb": "occasionally remembers", "sentence": "he has a blog" },
+
+  {
+    "verb": "is one convincing argument away from",
+    "sentence": "building a database again"
+  },
+
+  {
+    "verb": "has not financially recovered from",
+    "sentence": "buying another keyboard"
+  },
+
+  {
+    "verb": "is conducting research on",
+    "sentence": "whether birds are funnier than cats"
+  },
+
+  {
+    "verb": "continues to investigate",
+    "sentence": "why npm installs 1400 packages"
+  },
+
+  {
+    "verb": "is professionally distracted by",
+    "sentence": "interesting ideas"
+  },
+
+  { "verb": "would like to know", "sentence": "who approved JavaScript dates" },
+
+  {
+    "verb": "is still waiting for",
+    "sentence": "flying cars and affordable housing"
+  },
+
+  { "verb": "has", "sentence": "a crush on Lily James" },
+
+  {
+    "verb": "has",
+    "sentence": "questions about distributed systems and period dramas"
+  },
+
+  {
+    "verb": "considers",
+    "sentence": "watching Pride and Prejudice a valid debugging strategy"
+  }
 ]

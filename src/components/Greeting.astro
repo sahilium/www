@@ -12,26 +12,32 @@ import greetings from "@/data/greetings.json";
 </div>
 
 <script>
-    const root = document.getElementById('greeting-root');
-    const list = JSON.parse(root?.dataset.greetings || '[]');
+    function setGreeting() {
+        const root = document.getElementById('greeting-root');
+        const list = JSON.parse(root?.dataset.greetings || '[]');
 
-    const helloEl = document.getElementById('greeting-hello');
-    const langEl = document.getElementById('greeting-language');
+        const helloEl = document.getElementById('greeting-hello');
+        const langEl = document.getElementById('greeting-language');
 
-    if (helloEl && langEl && list.length) {
-        const i = Math.floor(Math.random() * list.length);
-        const entry = list[i];
+        if (helloEl && langEl && list.length) {
+            const i = Math.floor(Math.random() * list.length);
+            const entry = list[i];
 
-        helloEl.textContent = entry.hello + ' 👋';
+            helloEl.textContent = entry.hello + ' 👋';
 
-        const a = document.createElement('a');
-        a.href = entry.about || '#';
-        a.target = '_blank';
-        a.rel = 'noreferrer';
-        a.textContent = entry.language;
-        a.className = 'greeting-link';
-        langEl.appendChild(a);
+            langEl.innerHTML = '';
+            const a = document.createElement('a');
+            a.href = entry.about || '#';
+            a.target = '_blank';
+            a.rel = 'noreferrer';
+            a.textContent = entry.language;
+            a.className = 'greeting-link';
+            langEl.appendChild(a);
+        }
     }
+
+    setGreeting();
+    document.addEventListener('astro:page-load', setGreeting);
 </script>
 
 <style>

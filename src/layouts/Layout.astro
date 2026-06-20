@@ -188,10 +188,12 @@ const isOnCurrentPath = (path: string) => {
                 </li>
             </ul>
         </nav>
-        <div class="flex-1">
+        <div class="flex-1" style="view-transition-name: main-content;">
             <slot />
         </div>
-        <Footer />
+        <div style="view-transition-name: page-footer;">
+            <Footer />
+        </div>
         <BackToTop />
 
         <!-- Command Palette Overlay -->
@@ -343,6 +345,23 @@ const isOnCurrentPath = (path: string) => {
             });
 
             document.addEventListener("astro:page-load", () => {
+                // back/forward navigation detection for view transitions
+                if (navigation) {
+                    navigation.addEventListener('navigate', (e) => {
+                        if (e.navigationType === 'traverse') {
+                            document.documentElement.classList.add('back-transition');
+                        } else {
+                            document.documentElement.classList.remove('back-transition');
+                        }
+                    });
+                }
+                window.addEventListener('popstate', () => {
+                    document.documentElement.classList.add('back-transition');
+                    setTimeout(() => {
+                        document.documentElement.classList.remove('back-transition');
+                    }, 500);
+                });
+
                 const themeToggle = document.getElementById("theme-toggle");
                 if (!themeToggle) return;
 
@@ -470,9 +489,9 @@ const isOnCurrentPath = (path: string) => {
                         for (const cmd of filteredNav) {
                             html += `
                                 <a href="${cmd.href}" class="palette-item">
-                                    <div class="flex items-center gap-3">
-                                        <span class="text-muted-foreground text-xs w-16 shrink-0 font-mono">${cmd.label}</span>
-                                        <span class="text-sm">${cmd.description}</span>
+                                <div class="flex items-center justify-between w-full">
+                                        <span class="text-muted-foreground text-xs font-mono">${cmd.label}</span>
+                                        <span class="text-sm text-muted-foreground">${cmd.description}</span>
                                     </div>
                                 </a>
                             `;

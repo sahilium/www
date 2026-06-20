@@ -116,39 +116,65 @@
     }
 }
 
+@keyframes fade-in {
+    from { opacity: 0; }
+}
+
+@keyframes fade-out {
+    to { opacity: 0; }
+}
+
+@keyframes slide-from {
+    from { transform: translateX(var(--from)); }
+}
+
+@keyframes slide-to {
+    to { transform: translateX(var(--to)); }
+}
+
+::view-transition-old(main-content) {
+    --to: -30px;
+    animation:
+        90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+        300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to;
+}
+
+::view-transition-new(main-content) {
+    --from: 30px;
+    animation:
+        210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
+        300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from;
+}
+
+.back-transition::view-transition-old(main-content) {
+    --to: 30px;
+    animation-name: fade-out, slide-to;
+}
+
+.back-transition::view-transition-new(main-content) {
+    --from: -30px;
+    animation-name: fade-in, slide-from;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+    z-index: 1;
+}
+
+::view-transition-new(root) {
+    z-index: 2;
+}
+
 .theme-transition::view-transition-group(root),
 .theme-transition::view-transition-old(root),
 .theme-transition::view-transition-new(root) {
     animation: none;
     mix-blend-mode: normal;
-}
-.theme-transition::view-transition-old(root) {
-    z-index: 1;
-}
-.theme-transition::view-transition-new(root) {
-    z-index: 2;
-}
-
-@keyframes page-fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(4px);
-    }
-}
-
-@keyframes page-fade-out {
-    to {
-        opacity: 0;
-        transform: translateY(-4px);
-    }
-}
-
-::view-transition-old(root) {
-    animation: page-fade-out 180ms ease-out both;
-}
-
-::view-transition-new(root) {
-    animation: page-fade-in 180ms ease-in both;
 }
 
 /* scroll-aware navbar */

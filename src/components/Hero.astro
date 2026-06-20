@@ -16,17 +16,22 @@ import statuses from "@/data/statuses.json";
 </div>
 
 <script>
-    const root = document.getElementById('hero-root');
-    const statuses = JSON.parse(root?.dataset.statuses || '[]');
+    function setStatus() {
+        const root = document.getElementById('hero-root');
+        const statuses = JSON.parse(root?.dataset.statuses || '[]');
 
-    const verbEl = document.getElementById('status-verb');
-    const sentenceEl = document.getElementById('status-sentence');
+        const verbEl = document.getElementById('status-verb');
+        const sentenceEl = document.getElementById('status-sentence');
 
-    if (verbEl && sentenceEl && statuses.length) {
-        const i = Math.floor(Math.random() * statuses.length);
-        verbEl.textContent = statuses[i].verb;
-        sentenceEl.textContent = statuses[i].sentence;
+        if (verbEl && sentenceEl && statuses.length) {
+            const i = Math.floor(Math.random() * statuses.length);
+            verbEl.textContent = statuses[i].verb;
+            sentenceEl.textContent = statuses[i].sentence;
+        }
     }
+
+    setStatus();
+    document.addEventListener('astro:page-load', setStatus);
 </script>
 
 <style>

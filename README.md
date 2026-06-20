@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/assets/images/avatar.jpg" width="100" height="100" style="border-radius: 50%;" alt="Sahil A."/>
+  <img src="src/assets/images/avatar.jpg" width="100" height="100" style="border-radius: 100%;" alt="Sahil A."/>
 </p>
 
 <h1 align="center">Sahil A.</h1>
