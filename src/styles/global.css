@@ -116,6 +116,12 @@
     }
 }
 
+@media (pointer: coarse) {
+    #cursor-toggle {
+        display: none;
+    }
+}
+
 @keyframes fade-in {
     from { opacity: 0; }
 }

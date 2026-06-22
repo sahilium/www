@@ -20,7 +20,8 @@ export const siteConfig: SiteConfig = {
   socials: {
     github: "https://github.com/sahilium",
     twitter: "",
-    linkedin: "https://linkedin.com/in/sahilium",
+    mastodon: "https://mastodon.social/@sahilium",
+    matrix: "https://matrix.to/#/@nonomino:matrix.org",
     email: "mailto:hello@sahil.im",
   },
   postsPerPage: 10,

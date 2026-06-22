@@ -15,7 +15,8 @@ export interface NavLink {
 export interface SocialLinks {
     github: string;
     twitter: string;
-    linkedin: string;
+    mastodon: string;
+    matrix: string;
     email?: string;
 }
 
