@@ -52,6 +52,10 @@ const isOnCurrentPath = (path: string) => {
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" href="/favicon.ico" />
 
+        <link rel="me" href="https://github.com/sahilium" />
+        <link rel="me" href="mailto:contact@sahil.im" />
+        <link rel="pgpkey" href="/pgp.asc" />
+
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonicalURL.href} />
@@ -88,7 +92,10 @@ const isOnCurrentPath = (path: string) => {
             href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap"
             rel="stylesheet"
         />
-        <script defer src="https://cloud.umami.is/script.js" data-website-id="2cfd0313-7a97-4c13-8d47-4367f08ad659"></script>
+        <script
+            defer
+            src="https://cloud.umami.is/script.js"
+            data-website-id="2cfd0313-7a97-4c13-8d47-4367f08ad659"></script>
         <link
             rel="alternate"
             type="application/rss+xml"
@@ -348,18 +355,24 @@ const isOnCurrentPath = (path: string) => {
             document.addEventListener("astro:page-load", () => {
                 // back/forward navigation detection for view transitions
                 if (navigation) {
-                    navigation.addEventListener('navigate', (e) => {
-                        if (e.navigationType === 'traverse') {
-                            document.documentElement.classList.add('back-transition');
+                    navigation.addEventListener("navigate", (e) => {
+                        if (e.navigationType === "traverse") {
+                            document.documentElement.classList.add(
+                                "back-transition",
+                            );
                         } else {
-                            document.documentElement.classList.remove('back-transition');
+                            document.documentElement.classList.remove(
+                                "back-transition",
+                            );
                         }
                     });
                 }
-                window.addEventListener('popstate', () => {
-                    document.documentElement.classList.add('back-transition');
+                window.addEventListener("popstate", () => {
+                    document.documentElement.classList.add("back-transition");
                     setTimeout(() => {
-                        document.documentElement.classList.remove('back-transition');
+                        document.documentElement.classList.remove(
+                            "back-transition",
+                        );
                     }, 500);
                 });
 
@@ -760,26 +773,38 @@ const isOnCurrentPath = (path: string) => {
                 document.addEventListener("keydown", onPaletteKeydown);
 
                 // magnetic buttons
-                const magneticEls = document.querySelectorAll("[data-magnetic]");
+                const magneticEls =
+                    document.querySelectorAll("[data-magnetic]");
                 const applyMagnetic = (el, e) => {
                     const rect = el.getBoundingClientRect();
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
-                    const strength = Math.min(el.dataset.magneticStrength || 12, 20);
+                    const strength = Math.min(
+                        el.dataset.magneticStrength || 12,
+                        20,
+                    );
                     el.style.transform = `translate(${x * (strength / (rect.width / 2))}px, ${y * (strength / (rect.height / 2))}px)`;
                 };
                 const removeMagnetic = (el) => {
-                    el.style.transform = 'translate(0, 0)';
+                    el.style.transform = "translate(0, 0)";
                 };
                 magneticEls.forEach((el) => {
-                    el.addEventListener('mousemove', (e) => applyMagnetic(el, e));
-                    el.addEventListener('mouseleave', () => removeMagnetic(el));
+                    el.addEventListener("mousemove", (e) =>
+                        applyMagnetic(el, e),
+                    );
+                    el.addEventListener("mouseleave", () => removeMagnetic(el));
                 });
-                document.addEventListener('astro:after-swap', () => {
-                    document.querySelectorAll("[data-magnetic]").forEach((el) => {
-                        el.addEventListener('mousemove', (e) => applyMagnetic(el, e));
-                        el.addEventListener('mouseleave', () => removeMagnetic(el));
-                    });
+                document.addEventListener("astro:after-swap", () => {
+                    document
+                        .querySelectorAll("[data-magnetic]")
+                        .forEach((el) => {
+                            el.addEventListener("mousemove", (e) =>
+                                applyMagnetic(el, e),
+                            );
+                            el.addEventListener("mouseleave", () =>
+                                removeMagnetic(el),
+                            );
+                        });
                 });
 
                 // scroll-aware navbar
