@@ -4,7 +4,7 @@ import Layout from "@/layouts/Layout.astro";
 import Hero from "@/components/Hero.astro";
 import Greeting from "@/components/Greeting.astro";
 import { siteConfig } from "@/config";
-import { Mail, KeyRound } from "@lucide/astro";
+import { Mail, KeyRound, ArrowRight } from "@lucide/astro";
 ---
 
 <Layout image="/images/home.webp">
@@ -38,19 +38,19 @@ import { Mail, KeyRound } from "@lucide/astro";
             type="button"
             class="text-sm text-primary-foreground bg-accent rounded-md px-5 py-2.5 hover:opacity-90 transition-opacity cursor-pointer font-medium"
         >
-            Explore the site &rarr;
+            Explore the site <ArrowRight size={16} class="inline" />
             <kbd class="text-[10px] ml-2 opacity-70">^P</kbd>
         </button>
     </div>
 
-    <script>
-        const cta = document.getElementById("explore-cta");
-        if (cta) {
-            cta.addEventListener("click", () => {
+    <script is:inline>
+        document.addEventListener("click", (e) => {
+            const cta = e.target.closest("#explore-cta");
+            if (cta) {
                 const toggle = document.getElementById("palette-toggle");
                 if (toggle) toggle.click();
-            });
-        }
+            }
+        });
     </script>
 
     <section class="px-10 lg:px-20 mt-10">
