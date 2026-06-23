@@ -380,6 +380,7 @@ const isOnCurrentPath = (path: string) => {
                 if (!themeToggle) return;
 
                 onThemeToggleClick = (event: MouseEvent) => {
+                    new Audio("/audio/click.ogg").play();
                     const isDark =
                         document.documentElement.classList.contains("dark");
 
