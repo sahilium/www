@@ -2,10 +2,24 @@
 import Layout from "@/layouts/Layout.astro";
 import { allKo, getCurrentKo, getPreviousKo, getNextKo } from "@/data/ko";
 
-const current = getCurrentKo();
-const previous = getPreviousKo(current);
-const next = getNextKo(current);
+const staticCurrent = getCurrentKo();
+const staticPrevious = getPreviousKo(staticCurrent);
+const staticNext = getNextKo(staticCurrent);
 const totalKo = allKo.length;
+
+const allKoJson = JSON.stringify(
+    allKo.map((k) => ({
+        id: k.id,
+        kanji: k.kanji,
+        romaji: k.romaji,
+        en: k.en,
+        sekki: k.sekki,
+        sekkiRomaji: k.sekkiRomaji,
+        sekkiEn: k.sekkiEn,
+        startMonth: k.startMonth,
+        startDay: k.startDay,
+    })),
+);
 ---
 
 <Layout title="/koo | Sahil A.">
@@ -32,22 +46,22 @@ const totalKo = allKo.length;
                     <br />
                     in the traditional Japanese calendar is
                 </p>
-                <p class="text-2xl font-sans font-medium mt-2">
-                    {current.kanji}
+                <p class="text-2xl font-sans font-medium mt-2" id="koo-kanji">
+                    {staticCurrent.kanji}
                 </p>
-                <p class="text-muted-foreground">
-                    {current.romaji}
+                <p class="text-muted-foreground" id="koo-romaji">
+                    {staticCurrent.romaji}
                 </p>
-                <p class="text-muted-foreground">{current.en}.</p>
+                <p class="text-muted-foreground" id="koo-en">{staticCurrent.en}.</p>
                 <p class="mt-2">
                     in the division of
                     <br />
-                    <span class="font-medium">{current.sekki}</span>
+                    <span class="font-medium" id="koo-sekki">{staticCurrent.sekki}</span>
                     <span class="text-muted-foreground">
-                        ({current.sekkiRomaji})</span
+                        (<span id="koo-sekki-romaji">{staticCurrent.sekkiRomaji}</span>)</span
                     >,
                     <br />
-                    <span class="text-muted-foreground">{current.sekkiEn}.</span>
+                    <span class="text-muted-foreground" id="koo-sekki-en">{staticCurrent.sekkiEn}.</span>
                 </p>
             </div>
         </section>
@@ -57,15 +71,15 @@ const totalKo = allKo.length;
                 <span class="text-[10px] uppercase tracking-widest text-muted-foreground font-medium"
                     >Previous</span
                 >
-                <div class="mt-3 space-y-1">
-                    <p class="text-lg font-sans font-medium">{previous.kanji}</p>
+                <div class="mt-3 space-y-1" id="koo-prev">
+                    <p class="text-lg font-sans font-medium">{staticPrevious.kanji}</p>
                     <p class="text-xs text-muted-foreground">
-                        {previous.romaji}
+                        {staticPrevious.romaji}
                     </p>
-                    <p class="text-sm text-muted-foreground">{previous.en}.</p>
+                    <p class="text-sm text-muted-foreground">{staticPrevious.en}.</p>
                     <p class="text-xs text-muted-foreground mt-1">
-                        {previous.sekki} ({previous.sekkiRomaji}) &middot;
-                        {previous.sekkiEn}
+                        {staticPrevious.sekki} ({staticPrevious.sekkiRomaji}) &middot;
+                        {staticPrevious.sekkiEn}
                     </p>
                 </div>
             </div>
@@ -74,15 +88,15 @@ const totalKo = allKo.length;
                 <span class="text-[10px] uppercase tracking-widest text-muted-foreground font-medium"
                     >Next</span
                 >
-                <div class="mt-3 space-y-1">
-                    <p class="text-lg font-sans font-medium">{next.kanji}</p>
+                <div class="mt-3 space-y-1" id="koo-next">
+                    <p class="text-lg font-sans font-medium">{staticNext.kanji}</p>
                     <p class="text-xs text-muted-foreground">
-                        {next.romaji}
+                        {staticNext.romaji}
                     </p>
-                    <p class="text-sm text-muted-foreground">{next.en}.</p>
+                    <p class="text-sm text-muted-foreground">{staticNext.en}.</p>
                     <p class="text-xs text-muted-foreground mt-1">
-                        {next.sekki} ({next.sekkiRomaji}) &middot;
-                        {next.sekkiEn}
+                        {staticNext.sekki} ({staticNext.sekkiRomaji}) &middot;
+                        {staticNext.sekkiEn}
                     </p>
                 </div>
             </div>
@@ -92,9 +106,9 @@ const totalKo = allKo.length;
             <h2 class="text-sm font-sans font-medium mb-4">
                 All {totalKo} microseasons
             </h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2" id="koo-grid">
                 {allKo.map((ko) => {
-                    const isActive = ko.id === current.id;
+                    const isActive = ko.id === staticCurrent.id;
                     return (
                         <div
                             class:list={[
@@ -103,6 +117,7 @@ const totalKo = allKo.length;
                                     ? "border-accent bg-accent/10"
                                     : "border-border bg-card",
                             ]}
+                            data-ko-id={ko.id}
                         >
                             <div class="flex items-center justify-between">
                                 <span class="text-muted-foreground text-[10px] font-mono">
@@ -127,3 +142,87 @@ const totalKo = allKo.length;
         </section>
     </main>
 </Layout>
+
+<div id="koo-data" hidden>{allKoJson}</div>
+<script>
+    const allKo = JSON.parse(document.getElementById("koo-data").textContent);
+
+    const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    function dayOfYear(m, d) {
+        let doy = 0;
+        for (let i = 0; i < m - 1; i++) doy += daysInMonth[i];
+        return doy + d;
+    }
+
+    function findKo() {
+        const now = new Date();
+        const today = dayOfYear(now.getMonth() + 1, now.getDate());
+        for (let i = 0; i < allKo.length; i++) {
+            const start = dayOfYear(allKo[i].startMonth, allKo[i].startDay);
+            const end = allKo[i + 1]
+                ? dayOfYear(allKo[i + 1].startMonth, allKo[i + 1].startDay) - 1
+                : 365;
+            if (today >= start && today <= end) return allKo[i];
+        }
+        return allKo[allKo.length - 1];
+    }
+
+    function getPrev(ko) {
+        const idx = allKo.indexOf(ko);
+        return allKo[(idx - 1 + allKo.length) % allKo.length];
+    }
+
+    function getNext(ko) {
+        const idx = allKo.indexOf(ko);
+        return allKo[(idx + 1) % allKo.length];
+    }
+
+    function renderKo(ko) {
+        document.getElementById("koo-kanji").textContent = ko.kanji;
+        document.getElementById("koo-romaji").textContent = ko.romaji;
+        document.getElementById("koo-en").textContent = ko.en + ".";
+        document.getElementById("koo-sekki").textContent = ko.sekki;
+        document.getElementById("koo-sekki-romaji").textContent = ko.sekkiRomaji;
+        document.getElementById("koo-sekki-en").textContent = ko.sekkiEn + ".";
+
+        const prev = getPrev(ko);
+        const prevEl = document.getElementById("koo-prev");
+        prevEl.innerHTML = `
+            <p class="text-lg font-sans font-medium">${prev.kanji}</p>
+            <p class="text-xs text-muted-foreground">${prev.romaji}</p>
+            <p class="text-sm text-muted-foreground">${prev.en}.</p>
+            <p class="text-xs text-muted-foreground mt-1">${prev.sekki} (${prev.sekkiRomaji}) &middot; ${prev.sekkiEn}</p>
+        `;
+
+        const next = getNext(ko);
+        const nextEl = document.getElementById("koo-next");
+        nextEl.innerHTML = `
+            <p class="text-lg font-sans font-medium">${next.kanji}</p>
+            <p class="text-xs text-muted-foreground">${next.romaji}</p>
+            <p class="text-sm text-muted-foreground">${next.en}.</p>
+            <p class="text-xs text-muted-foreground mt-1">${next.sekki} (${next.sekkiRomaji}) &middot; ${next.sekkiEn}</p>
+        `;
+
+        document.querySelectorAll("#koo-grid > div").forEach((el) => {
+            const id = parseInt(el.dataset.koId);
+            const isActive = id === ko.id;
+            el.className = [
+                "border rounded-lg p-3 text-sm transition-colors",
+                isActive ? "border-accent bg-accent/10" : "border-border bg-card",
+            ].join(" ");
+            const badge = el.querySelector(".text-accent");
+            if (isActive) {
+                if (!badge) {
+                    const span = document.createElement("span");
+                    span.className = "text-[10px] text-accent uppercase font-medium";
+                    span.textContent = "active";
+                    el.querySelector(".flex.items-center.justify-between").appendChild(span);
+                }
+            } else if (badge) {
+                badge.remove();
+            }
+        });
+    }
+
+    renderKo(findKo());
+</script>

@@ -22,7 +22,7 @@
 
 ---
 
-Personal website built with [Astro](https://astro.build). Features a minimal design, multilingual greeting, floating avatar, command palette navigation, dark/light mode, and RSS.
+Personal website built with [Astro](https://astro.build). Features a minimal design, multilingual greeting, floating avatar, command palette navigation, dark/light mode, RSS, Japanese 72-microseason calendar, and IndieWeb support.
 
 ## Stack
 
@@ -31,6 +31,7 @@ Personal website built with [Astro](https://astro.build). Features a minimal des
 - **Content:** MDX with custom UI components
 - **Icons:** Lucide
 - **Hosting:** Cloudflare Pages
+- **IndieWeb:** h-card, webring membership
 
 ## Local dev
 
@@ -45,12 +46,14 @@ bun run dev
 src/
 ├── assets/       images
 ├── components/   UI components
-├── data/         JSON data files
-│   ├── greetings.json   multilingual greetings (84 languages)
-│   └── statuses.json    "Sahil is/verb/sentence" status pairs
+├── data/
+│   ├── greetings.json     multilingual greetings (84 languages)
+│   ├── statuses.json      "Sahil is/verb/sentence" status pairs
+│   └── ko.ts              all 72 Japanese microseasons with dates
 ├── layouts/      Layout.astro
 ├── pages/        routes
 ├── posts/        blog content (.mdx)
+├── scripts/      client-side JS/TS
 ├── styles/       global.css
 ├── config.ts     site config
 └── content.config.ts
@@ -65,6 +68,16 @@ Array of `{ language, hello, about }` objects. A random entry is shown on every 
 Array of `{ verb, sentence }` pairs displayed in the hero status line as "Sahil *verb* *sentence*". Randomly picked on each refresh.
 
 Have a quirky status idea? Open a PR adding yours to `statuses.json`. Keep it short, maybe funny, and ideally self-deprecating.
+
+### `src/data/ko.ts`
+All 72 Japanese microseasons (七十二候, *Shichijūnikō*) — each with kanji, romaji, English explanation, solar term (sekki) grouping, and approximate start date. Powers the `/koo` page and the footer display of the current microseason. The date algorithm resolves the current kō by day-of-year comparison. Includes `getCurrentKo()`, `getPreviousKo()`, and `getNextKo()` helpers.
+
+## IndieWeb
+
+This site participates in the [IndieWeb](https://indieweb.org):
+- **h-card** — embedded in the page source with name, nickname, photo, URL, bio, and email
+- **Webring** — linked member of the [xxiivv webring](https://xn--sr8hvo.ws) in the footer
+- **PGP key** — available at `/pgp.asc` with a `pgpkey` rel-me link
 
 ## License
 

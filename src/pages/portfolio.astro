@@ -1,66 +1,469 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import {
+    ExternalLink,
+    GraduationCap,
+    Database,
+    Cpu,
+    Cloud,
+    Globe,
+    Users,
+    Braces,
+    Atom,
+} from "@lucide/astro";
+import Separator from "@/components/ui/Separator.astro";
+import DecorativeKanji from "@/components/about/DecorativeKanji.astro";
+import Badge from "@/components/ui/Badge.astro";
+
+interface Project {
+    title: string;
+    techStack: string[];
+    description: string;
+    highlights: string[];
+    githubUrl: string;
+    demoUrl?: string;
+    icon: string;
+    featured?: boolean;
+    category: string;
+}
+
+const projects: Project[] = [
+    {
+        title: "CalypsoDB",
+        techStack: ["Go", "Bitcask", "HTMX", "SQLite", "REST API"],
+        description:
+            "Log-structured key-value database with CLI and web admin interface.",
+        highlights: [
+            "Built a Bitcask-inspired key-value store with log-structured storage, indexing, compaction, and CRC validation",
+            "Developed REST APIs, CLI tooling, and a web admin interface for database management and monitoring",
+        ],
+        githubUrl: "https://github.com/CalypsoDB",
+        demoUrl: "https://calypsodb.ptrto.me",
+        icon: "database",
+        featured: true,
+        category: "Databases & Infrastructure",
+    },
+    {
+        title: "Raptor",
+        techStack: ["Go", "MCP", "AI Agents"],
+        description:
+            "MCP-powered infrastructure control plane for conversational automation.",
+        highlights: [
+            "Built an MCP-powered control plane enabling conversational infrastructure management and automation",
+            "Designed a modular architecture supporting AI agents, tools, and backend services",
+        ],
+        githubUrl: "https://github.com/sahilium/raptor",
+        icon: "cpu",
+        featured: true,
+        category: "AI & Infrastructure",
+    },
+    {
+        title: "newsmatic",
+        techStack: ["Python", "PyTorch", "LangChain", "NLP"],
+        description:
+            "RAG system for real-time news aggregation and summarization.",
+        highlights: [
+            "Built a Retrieval-Augmented Generation system using LLMs for real-time news aggregation and summarization",
+            "Integrated with news APIs and applied NLP for categorization and insight extraction",
+        ],
+        githubUrl: "https://github.com/sahilium/newsmatic",
+        demoUrl: "https://newsmatic.ptrto.me",
+        icon: "globe",
+        featured: false,
+        category: "AI & ML",
+    },
+    {
+        title: "Reamer",
+        techStack: ["Ruby on Rails", "PostgreSQL"],
+        description:
+            "Cloud file management platform with secure document handling.",
+        highlights: [
+            "Developed a cloud file management platform with authentication, file uploads, and secure document retrieval",
+            "Implemented storage organization and access controls for multi-user environments",
+        ],
+        githubUrl: "https://github.com/sahilium/reamer",
+        demoUrl: "https://reamer.ptrto.me",
+        icon: "cloud",
+        featured: false,
+        category: "Web Apps",
+    },
+    {
+        title: "MerryStaff",
+        techStack: ["Spring Boot", "Thymeleaf", "MySQL"],
+        description: "Employee scheduling, time tracking, and payroll system.",
+        highlights: [
+            "Built a staff management system for employee scheduling, time tracking, and payroll processing",
+            "Designed a comprehensive dashboard for administrators and employees to manage workflows efficiently",
+        ],
+        githubUrl: "https://github.com/sahilium/merrystaff",
+        demoUrl: "https://merrystaff.ptrto.me",
+        icon: "users",
+        featured: false,
+        category: "Web Apps",
+    },
+];
+
+const featured = projects.filter((p) => p.featured);
+const categorized = projects.filter((p) => !p.featured);
+const categories = [...new Set(categorized.map((p) => p.category))];
+
+const projectIcons = {
+    database: Database,
+    cpu: Cpu,
+    globe: Globe,
+    cloud: Cloud,
+    users: Users,
+};
 ---
 
 <Layout title="/portfolio | Sahil A.">
     <main class="page flex flex-col space-y-10">
+        <!-- Hero -->
         <section class="relative flex flex-col items-start gap-4">
             <span class="text-accent uppercase text-xs">// portfolio</span>
-            <h1 class="text-5xl">portfolio</h1>
+            <h1 class="text-5xl">Sahil A.</h1>
+            <p class="flex items-center gap-2 text-lg text-muted-foreground">
+                <GraduationCap size={20} class="shrink-0" />
+                <span>M.Tech in Artificial Intelligence</span>
+            </p>
+            <p class="text-sm text-muted-foreground leading-relaxed">
+                Backend engineer and systems thinker with a focus on distributed
+                systems, databases, and AI infrastructure. I build tools that
+                are reliable, observable, and a pleasure to work with.
+            </p>
+            <div class="flex items-center gap-4 mt-1">
+                <a
+                    href="https://github.com/sahilium"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="GitHub"
+                    class="text-muted-foreground hover:text-primary transition-colors"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="20"
+                        height="20"
+                    >
+                        <path
+                            d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                        ></path>
+                    </svg>
+                </a>
+                <a
+                    href="https://linkedin.com/in/sahilium"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                    class="text-muted-foreground hover:text-primary transition-colors"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        width="20"
+                        height="20"
+                    >
+                        <path
+                            d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+                        ></path>
+                    </svg>
+                </a>
+            </div>
         </section>
 
-        <section class="prose-blog max-w-none">
-            <h3>Major Projects</h3>
+        <!-- Stats -->
+        <div
+            class="grid grid-cols-2 md:grid-cols-4 w-full border-l border-t border-border"
+        >
+            <DecorativeKanji title="2+" subTitle="Years building" kanji="歴" />
+            <DecorativeKanji
+                title={projects.length.toString()}
+                subTitle="Projects shipped"
+                kanji="造"
+            />
+            <DecorativeKanji
+                title="3"
+                subTitle="Programming langs"
+                kanji="語"
+            />
+            <DecorativeKanji
+                title="M.Tech"
+                subTitle="Artificial Intelligence"
+                kanji="知"
+            />
+        </div>
 
-            <h4>CalypsoDB</h4>
-
-            <p>CalypsoDB is a NoSQL database system designed to handle large-scale data storage and retrieval with high availability and fault tolerance. It utilizes a unique architecture that combines elements of both NoSQL and SQL databases, allowing for flexible data modeling.</p>
-            <ul>
-                <li><strong>Technologies</strong>: Go</li>
-                <li><strong>Features</strong>:
-                    <ul>
-                        <li>Built-in replication and sharding mechanisms</li>
-                        <li>Advanced query capabilities with a focus on performance</li>
-                        <li>Graphical user interface for database management</li>
-                    </ul>
-                </li>
-            </ul>
-            <p>Repository: <a href="https://github.com/CalypsoDB" target="_blank" rel="noreferrer">GitHub</a> | Homepage: <a href="https://calypsodb.ptrto.me" target="_blank" rel="noreferrer">Website</a></p>
-
-            <h3>Deep Learning</h3>
-
-            <h4>newsmatic</h4>
-
-            <p>Newsmatic is a RAG (Retrieval-Augmented Generation) system that uses an LLM under the hood to provide real-time news updates and insights. It integrates with various news APIs to fetch the latest articles and uses natural language processing to summarize and categorize them.</p>
-            <ul>
-                <li><strong>Technologies</strong>: Python, Pytorch, Transformers, LangChain</li>
-                <li><strong>Features</strong>:
-                    <ul>
-                        <li>Real-time news aggregation and summarization</li>
-                        <li>Customizable news categories and topics</li>
-                        <li>User-friendly interface for browsing news articles</li>
-                    </ul>
-                </li>
-            </ul>
-            <p>Repository: <a href="https://github.com/sahilium/newsmatic" target="_blank" rel="noreferrer">GitHub</a> | Demo: <a href="https://newsmatic.ptrto.me" target="_blank" rel="noreferrer">Website</a></p>
-
-            <h3>Web Apps</h3>
-
-            <h4>Reamer | Cloud Storage System</h4>
-
-            <p>Reamer is a cloud storage system that provides secure and scalable storage solutions for both personal and enterprise use. It features end-to-end encryption, multi-region support, and a user-friendly interface.</p>
-            <ul>
-                <li><strong>Technologies</strong>: Ruby on Rails, HAML, SQLite</li>
-            </ul>
-            <p>Repository: <a href="https://github.com/sahilium/reamer" target="_blank" rel="noreferrer">GitHub</a> | Demo: <a href="https://reamer.ptrto.me" target="_blank" rel="noreferrer">Website</a></p>
-
-            <h4>MerryStaff | Staff Management System</h4>
-
-            <p>MerryStaff is a staff management system designed to streamline employee scheduling, time tracking, and payroll processing. It offers a comprehensive dashboard for administrators and employees to manage their schedules and tasks efficiently.</p>
-            <ul>
-                <li><strong>Technologies</strong>: Spring Boot, Thymeleaf, MySQL</li>
-            </ul>
-            <p>Repository: <a href="https://github.com/sahilium/merrystaff" target="_blank" rel="noreferrer">GitHub</a> | Demo: <a href="https://merrystaff.ptrto.me" target="_blank" rel="noreferrer">Website</a></p>
+        <!-- Education -->
+        <section>
+            <Separator title="Education" />
+            <div
+                class="mt-6 border border-border rounded-xl p-6 bg-card hover:border-accent/50 transition-colors"
+            >
+                <div class="flex items-start justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-sans font-medium">
+                            M.Tech in Artificial Intelligence
+                        </h2>
+                        <p class="text-sm text-muted-foreground mt-1">
+                            2024 &ndash; Present
+                        </p>
+                    </div>
+                    <GraduationCap
+                        size={24}
+                        class="text-accent shrink-0 mt-1"
+                    />
+                </div>
+                <p class="text-sm text-muted-foreground mt-3 leading-relaxed">
+                    Pursuing a Master's degree focused on AI, machine learning,
+                    and intelligent systems. Research and project work spans
+                    NLP, retrieval-augmented generation, and infrastructure for
+                    AI agents.
+                </p>
+            </div>
         </section>
+
+        <!-- Featured Projects -->
+        <section>
+            <Separator title="Featured Projects" />
+            <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
+                {
+                    featured.map((project) => {
+                        const Icon = projectIcons[project.icon] || Braces;
+                        return (
+                            <article class="relative border-2 border-accent/30 rounded-xl p-6 bg-card hover:border-accent/70 transition-colors group overflow-hidden">
+                                <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-bl-full -z-0" />
+                                <div class="relative z-10">
+                                    <div class="flex items-start justify-between gap-4">
+                                        <div class="flex items-start gap-3">
+                                            <div class="size-12 rounded-xl bg-accent/15 flex items-center justify-center shrink-0 mt-0.5">
+                                                <Icon
+                                                    size={22}
+                                                    class="text-accent"
+                                                />
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <h2 class="text-xl font-sans font-medium">
+                                                        {project.title}
+                                                    </h2>
+                                                    <span class="text-[10px] uppercase tracking-wider text-accent border border-accent/30 rounded px-1.5 py-0.5">
+                                                        Featured
+                                                    </span>
+                                                </div>
+                                                <p class="text-sm text-muted-foreground mt-0.5">
+                                                    {project.description}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="mt-4 space-y-1.5">
+                                        {project.highlights.map((h) => (
+                                            <li class="text-sm text-muted-foreground leading-relaxed pl-4 relative before:content-['▹'] before:absolute before:left-0 before:text-accent">
+                                                {h}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <div class="flex flex-wrap gap-2 mt-4">
+                                        {project.techStack.map((tech) => (
+                                            <Badge content={tech} />
+                                        ))}
+                                    </div>
+                                    <div class="flex items-center gap-3 mt-5 pt-4 border-t border-border">
+                                        <a
+                                            href={project.githubUrl}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            class="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
+                                        >
+                                            <svg
+                                                viewBox="0 0 24 24"
+                                                fill="currentColor"
+                                                width="14"
+                                                height="14"
+                                            >
+                                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                            </svg>
+                                            Source
+                                        </a>
+                                        {project.demoUrl && (
+                                            <a
+                                                href={project.demoUrl}
+                                                target="_blank"
+                                                rel="noreferrer"
+                                                class="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
+                                            >
+                                                <ExternalLink size={14} />
+                                                Live demo
+                                            </a>
+                                        )}
+                                    </div>
+                                </div>
+                            </article>
+                        );
+                    })
+                }
+            </div>
+        </section>
+
+        <!-- Other Projects by Category -->
+        <section>
+            <Separator title="Other Projects" />
+            {
+                categories.map((category) => (
+                    <div class="mt-6">
+                        <h3 class="text-sm font-mono text-muted-foreground mb-3">
+                            {category}
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {categorized
+                                .filter((p) => p.category === category)
+                                .map((project) => {
+                                    const Icon =
+                                        projectIcons[project.icon] || Braces;
+                                    return (
+                                        <article class="border border-border rounded-xl p-5 bg-card hover:border-accent/40 transition-colors group">
+                                            <div class="flex items-start justify-between gap-3">
+                                                <div class="flex items-start gap-2.5">
+                                                    <div class="size-9 rounded-lg bg-accent/10 flex items-center justify-center shrink-0 mt-0.5">
+                                                        <Icon
+                                                            size={16}
+                                                            class="text-accent"
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <h3 class="text-base font-sans font-medium">
+                                                            {project.title}
+                                                        </h3>
+                                                        <p class="text-xs text-muted-foreground mt-0.5">
+                                                            {
+                                                                project.description
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ul class="mt-3 space-y-1">
+                                                {project.highlights.map((h) => (
+                                                    <li class="text-xs text-muted-foreground leading-relaxed pl-3 relative before:content-['▹'] before:absolute before:left-0 before:text-accent">
+                                                        {h}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                            <div class="flex flex-wrap gap-1.5 mt-3">
+                                                {project.techStack.map(
+                                                    (tech) => (
+                                                        <Badge content={tech} />
+                                                    ),
+                                                )}
+                                            </div>
+                                            <div class="flex items-center gap-3 mt-3 pt-3 border-t border-border">
+                                                <a
+                                                    href={project.githubUrl}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    class="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-primary transition-colors"
+                                                >
+                                                    <svg
+                                                        viewBox="0 0 24 24"
+                                                        fill="currentColor"
+                                                        width="12"
+                                                        height="12"
+                                                    >
+                                                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                                                    </svg>
+                                                    Source
+                                                </a>
+                                                {project.demoUrl && (
+                                                    <a
+                                                        href={project.demoUrl}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        class="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-primary transition-colors"
+                                                    >
+                                                        <ExternalLink
+                                                            size={12}
+                                                        />
+                                                        Demo
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </article>
+                                    );
+                                })}
+                        </div>
+                    </div>
+                ))
+            }
+        </section>
+
+        <!-- Tech Skills -->
+        <section>
+            <Separator title="Technologies" />
+            <div
+                class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+            >
+                {
+                    [
+                        {
+                            label: "Go",
+                            icon: Braces,
+                            desc: "Primary language for backend and systems",
+                        },
+                        {
+                            label: "Python",
+                            icon: Atom,
+                            desc: "ML, NLP, and scripting",
+                        },
+                        {
+                            label: "Ruby on Rails",
+                            icon: Braces,
+                            desc: "Full-stack web applications",
+                        },
+                        {
+                            label: "PostgreSQL / SQLite",
+                            icon: Database,
+                            desc: "Relational data modeling",
+                        },
+                        {
+                            label: "REST API / HTMX",
+                            icon: Globe,
+                            desc: "API design and lightweight frontends",
+                        },
+                        {
+                            label: "Docker / Linux",
+                            icon: Cpu,
+                            desc: "Containerization and deployment",
+                        },
+                    ].map((skill) => {
+                        const SkillIcon = skill.icon;
+                        return (
+                            <div class="border border-border rounded-lg p-4 bg-card flex items-start gap-3 hover:border-accent/40 transition-colors">
+                                <SkillIcon
+                                    size={18}
+                                    class="text-accent shrink-0 mt-0.5"
+                                />
+                                <div>
+                                    <span class="text-sm font-medium">
+                                        {skill.label}
+                                    </span>
+                                    <p class="text-xs text-muted-foreground mt-0.5">
+                                        {skill.desc}
+                                    </p>
+                                </div>
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        </section>
+
+        <!-- End marker -->
+        <div
+            class="flex items-center justify-center gap-4 text-muted-foreground text-sm pt-4 pb-10"
+        >
+            <div class="h-px w-full bg-foreground/10"></div>
+            <span class="whitespace-nowrap uppercase tracking-widest">fin</span>
+            <div class="h-px w-full bg-foreground/10"></div>
+        </div>
     </main>
 </Layout>

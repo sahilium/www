@@ -1,9 +1,9 @@
 ---
 import { siteConfig } from "@/config";
-import { Mail, Rss } from "@lucide/astro";
+import { Mail, Rss, ArrowLeft, ArrowRight } from "@lucide/astro";
 import { getCurrentKo } from "@/data/ko";
 
-const currentKo = getCurrentKo();
+const staticKo = getCurrentKo();
 ---
 
 <footer class="border-t border-border mt-20 py-10 px-10 lg:px-20">
@@ -16,10 +16,11 @@ const currentKo = getCurrentKo();
             <a
                 href="/koo"
                 class="text-xs text-muted-foreground hover:text-accent transition-colors flex items-center gap-1"
+                id="ko-link"
             >
-                <span>{currentKo.kanji}</span>
+                <span id="ko-kanji">{staticKo.kanji}</span>
                 <span
-                    >&middot; <span class="contact-link">{currentKo.en}</span
+                    >&middot; <span id="ko-en" class="contact-link">{staticKo.en}</span
                     ></span
                 >
             </a>
@@ -34,10 +35,10 @@ const currentKo = getCurrentKo();
             <span class="text-xs text-muted-foreground italic">
                 {siteConfig.author.motto}
             </span>
-            <span class="text-xs text-muted-foreground text-center">
-                <a href="https://xn--sr8hvo.ws/previous">←</a>
+            <span class="text-xs text-muted-foreground text-center inline-flex items-center gap-1">
+                <a href="https://xn--sr8hvo.ws/previous" class="inline-flex"><ArrowLeft size={14} /></a>
                 An <a href="https://xn--sr8hvo.ws">IndieWeb Webring</a> 🕸💍
-                <a href="https://xn--sr8hvo.ws/next">→</a>
+                <a href="https://xn--sr8hvo.ws/next" class="inline-flex"><ArrowRight size={14} /></a>
             </span>
         </div>
 
@@ -131,6 +132,8 @@ const currentKo = getCurrentKo();
         </div>
     </div>
 </footer>
+
+<script src="../scripts/ko.ts"></script>
 
 <style>
     .contact-link {
