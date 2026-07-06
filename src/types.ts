@@ -44,6 +44,7 @@ export interface SiteConfig {
     title: string;
     description: string;
     siteUrl: string;
+    apiBaseUrl: string;
     author: AuthorConfig;
     nav: NavLink[];
     socials: SocialLinks;

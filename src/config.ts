@@ -4,6 +4,7 @@ export const siteConfig: SiteConfig = {
   title: "Sahil A.",
   description: "here be dragons",
   siteUrl: "https://sahil.im",
+  apiBaseUrl: "https://api.sahil.im",
   author: {
     name: "Sahil A.",
     bio: "I am not what happened to me. I am what I choose to become.",
