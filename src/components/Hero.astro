@@ -1,10 +1,10 @@
 ---
 import { Image } from "astro:assets";
 import avatar from "@/assets/images/avatar.jpg";
-import statuses from "@/data/statuses.json";
+import { siteConfig } from "@/config";
 ---
 
-<div class="hero" id="hero-root" data-statuses={JSON.stringify(statuses)}>
+<div class="hero" id="hero-root">
     <div class="hero-avatar-wrap">
         <Image src={avatar} alt="Sahil A." class="hero-avatar" />
     </div>
@@ -15,19 +15,27 @@ import statuses from "@/data/statuses.json";
     </div>
 </div>
 
-<script>
+<script define:vars={{ prodApiBaseUrl: siteConfig.apiBaseUrl }}>
+    const apiBaseUrl = location.hostname === "localhost" || location.hostname === "127.0.0.1"
+        ? "http://localhost:8080"
+        : prodApiBaseUrl;
+
     function setStatus() {
-        const root = document.getElementById('hero-root');
-        const statuses = JSON.parse(root?.dataset.statuses || '[]');
+        fetch(`${apiBaseUrl}/api/statuses`, { signal: AbortSignal.timeout(5000) })
+            .then(r => r.ok ? r.json() : [])
+            .then(statuses => {
+                if (!statuses.length) return;
 
-        const verbEl = document.getElementById('status-verb');
-        const sentenceEl = document.getElementById('status-sentence');
+                const i = Math.floor(Math.random() * statuses.length);
 
-        if (verbEl && sentenceEl && statuses.length) {
-            const i = Math.floor(Math.random() * statuses.length);
-            verbEl.textContent = statuses[i].verb;
-            sentenceEl.textContent = statuses[i].sentence;
-        }
+                const verbEl = document.getElementById('status-verb');
+                const sentenceEl = document.getElementById('status-sentence');
+                if (!verbEl || !sentenceEl) return;
+
+                verbEl.textContent = statuses[i].verb;
+                sentenceEl.textContent = statuses[i].sentence;
+            })
+            .catch(() => {});
     }
 
     setStatus();

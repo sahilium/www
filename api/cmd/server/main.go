@@ -37,6 +37,12 @@ func main() {
 	mux.HandleFunc("GET /api/openapi.yaml", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "openapi.yaml")
 	})
+	mux.HandleFunc("GET /api/greetings", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "data/greetings.json")
+	})
+	mux.HandleFunc("GET /api/statuses", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "data/statuses.json")
+	})
 
 	wrapped := middleware.Setup(mux, cfg)
 
