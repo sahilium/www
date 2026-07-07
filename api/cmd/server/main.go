@@ -16,7 +16,7 @@ import (
 )
 
 func main() {
-	cfg := config.FromEnv()
+	cfg := config.Load()
 
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
 		Level: slog.LevelInfo,

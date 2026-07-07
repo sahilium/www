@@ -6,9 +6,17 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	"time"
 
 	"sahil-api/internal/model"
 )
+
+var letterboxdTimeFormats = []string{
+	time.RFC1123Z,
+	time.RFC1123,
+	"Mon, 2 Jan 2006 15:04:05 -0700",
+	"Mon, 2 Jan 2006 15:04:05 MST",
+}
 
 func LastMovie(username string) (*model.Movie, error) {
 	if username == "" {
@@ -31,6 +39,7 @@ func LastMovie(username string) (*model.Movie, error) {
 			Items []struct {
 				Title       string `xml:"title"`
 				Link        string `xml:"link"`
+				PubDate     string `xml:"pubDate"`
 				Description string `xml:"description"`
 			} `xml:"item"`
 		} `xml:"channel"`
@@ -45,14 +54,18 @@ func LastMovie(username string) (*model.Movie, error) {
 	}
 
 	item := feed.Channel.Items[0]
-	title := strings.Trim(item.Title, "\" ")
 
-	yearRe := regexp.MustCompile(`\((\d{4})\)`)
+	ratingRe := regexp.MustCompile(`\s+-\s+[★☆½¼¾]+$`)
+	title := ratingRe.ReplaceAllString(strings.Trim(item.Title, "\" "), "")
+
+	yearRe := regexp.MustCompile(`, (\d{4})`)
 	yearMatch := yearRe.FindStringSubmatch(item.Title)
 	year := ""
 	if len(yearMatch) > 1 {
 		year = yearMatch[1]
 	}
+
+	title = strings.TrimSuffix(title, ", "+year)
 
 	imgRe := regexp.MustCompile(`<img[^>]+src="([^"]+)"`)
 	imgMatch := imgRe.FindStringSubmatch(item.Description)
@@ -61,10 +74,21 @@ func LastMovie(username string) (*model.Movie, error) {
 		image = imgMatch[1]
 	}
 
+	var ago string
+	if item.PubDate != "" {
+		for _, f := range letterboxdTimeFormats {
+			if t, err := time.Parse(f, item.PubDate); err == nil {
+				ago = timeAgo(t)
+				break
+			}
+		}
+	}
+
 	return &model.Movie{
-		Title: title,
-		Year:  year,
-		Image: image,
-		Url:   item.Link,
+		Title:  title,
+		Year:   year,
+		Image:  image,
+		Url:    item.Link,
+		TimeAgo: ago,
 	}, nil
 }

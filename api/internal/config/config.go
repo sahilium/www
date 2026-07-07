@@ -1,21 +1,28 @@
 package config
 
 import (
+	"bufio"
 	"os"
+	"strings"
 	"time"
 )
 
 type Config struct {
-	Port          string
-	APIBaseURL    string
-	CacheTTL      time.Duration
+	Port           string
+	APIBaseURL     string
+	CacheTTL       time.Duration
 	RequestTimeout time.Duration
 
-	LastfmAPIKey  string
-	LastfmUser    string
-	AnilistUser   string
+	LastfmAPIKey   string
+	LastfmUser     string
+	AnilistUser    string
 	LetterboxdUser string
 	HardcoverToken string
+}
+
+func Load() *Config {
+	loadEnvFile(".env")
+	return FromEnv()
 }
 
 func FromEnv() *Config {
@@ -37,4 +44,29 @@ func getenv(key, fallback string) string {
 		return v
 	}
 	return fallback
+}
+
+func loadEnvFile(path string) {
+	f, err := os.Open(path)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		k, v, ok := strings.Cut(line, "=")
+		if !ok || k == "" {
+			continue
+		}
+		k = strings.TrimSpace(k)
+		v = strings.TrimSpace(v)
+		if os.Getenv(k) == "" {
+			os.Setenv(k, v)
+		}
+	}
 }

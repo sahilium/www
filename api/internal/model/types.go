@@ -14,22 +14,26 @@ type Song struct {
 	Image    string `json:"image"`
 	Url      string `json:"url"`
 	PlayedAt string `json:"playedAt"`
+	TimeAgo  string `json:"timeAgo"`
 }
 
 type Book struct {
-	Title  string `json:"title"`
-	Author string `json:"author"`
-	Cover  string `json:"cover"`
-	Url    string `json:"url"`
-	Rating int    `json:"rating"`
+	Title   string `json:"title"`
+	Author  string `json:"author"`
+	Cover   string `json:"cover"`
+	Url     string `json:"url"`
+	Rating  int    `json:"rating"`
+	TimeAgo string `json:"timeAgo"`
 }
 
 type Anime struct {
-	Title     string `json:"title"`
-	Image     string `json:"image"`
-	Url       string `json:"url"`
-	Status    string `json:"status"`
-	UpdatedAt string `json:"updatedAt"`
+	Title         string `json:"title"`
+	Image         string `json:"image"`
+	Url           string `json:"url"`
+	Status        string `json:"status"`
+	Episode       int    `json:"episode"`
+	TotalEpisodes int    `json:"totalEpisodes"`
+	UpdatedAt     string `json:"updatedAt"`
 }
 
 type Movie struct {
@@ -38,6 +42,7 @@ type Movie struct {
 	Image  string `json:"image"`
 	Url    string `json:"url"`
 	Rating string `json:"rating"`
+	TimeAgo string `json:"timeAgo"`
 }
 
 type ErrorResponse struct {

@@ -128,6 +128,9 @@ components:
           type: string
           format: date-time
           example: "2026-07-07T12:00:00Z"
+        timeAgo:
+          type: string
+          example: "2 hours ago"
     Book:
       type: object
       properties:
@@ -148,6 +151,9 @@ components:
         rating:
           type: integer
           example: 5
+        timeAgo:
+          type: string
+          example: "3 days ago"
     Anime:
       type: object
       properties:
@@ -166,6 +172,12 @@ components:
           type: string
           enum: [watching, completed]
           example: "watching"
+        episode:
+          type: integer
+          example: 12
+        totalEpisodes:
+          type: integer
+          example: 28
         updatedAt:
           type: string
           format: date-time
@@ -190,3 +202,6 @@ components:
         rating:
           type: string
           example: ""
+        timeAgo:
+          type: string
+          example: "5 days ago"

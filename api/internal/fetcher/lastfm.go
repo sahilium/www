@@ -67,10 +67,16 @@ func LastSong(apiKey, username string) (*model.Song, error) {
 		}
 	}
 
+	var ts int64
 	var playedAt string
+	var ago string
 	if track.Date.Uts != "" {
-		ts, _ := strconv.ParseInt(track.Date.Uts, 10, 64)
-		playedAt = time.Unix(ts, 0).Format(time.RFC3339)
+		ts, _ = strconv.ParseInt(track.Date.Uts, 10, 64)
+		t := time.Unix(ts, 0)
+		playedAt = t.Format(time.RFC3339)
+		ago = timeAgo(t)
+	} else {
+		ago = "listening now"
 	}
 
 	return &model.Song{
@@ -80,5 +86,6 @@ func LastSong(apiKey, username string) (*model.Song, error) {
 		Image:    imageURL,
 		Url:      track.URL,
 		PlayedAt: playedAt,
+		TimeAgo:  ago,
 	}, nil
 }

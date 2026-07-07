@@ -9,7 +9,12 @@ import { siteConfig } from "@/config";
             <span class="text-accent uppercase text-xs">// now</span>
             <h1 class="text-5xl">What I'm doing <em>now</em></h1>
             <p class="text-sm text-muted-foreground">
-                <a href="https://nownownow.com" target="_blank" rel="noreferrer" class="hover:text-primary">What is this?</a>
+                <a
+                    href="https://nownownow.com"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="hover:text-primary">What is this?</a
+                >
                 <br />
                 Updated: <span id="now-updated">...</span>
             </p>
@@ -21,41 +26,133 @@ import { siteConfig } from "@/config";
                 <div id="now-grid" class="now-grid">
                     <div class="now-card skeleton" id="card-song">
                         <div class="now-card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                ><path d="M9 18V5l12-2v13"></path><circle
+                                    cx="6"
+                                    cy="18"
+                                    r="3"></circle><circle cx="18" cy="16" r="3"
+                                ></circle></svg
+                            >
                         </div>
                         <div class="now-card-content">
                             <span class="now-card-label">Last listened</span>
-                            <span class="skeleton-line skeleton-line--short">&nbsp;</span>
+                            <span class="skeleton-line skeleton-line--short"
+                                >&nbsp;</span
+                            >
                             <span class="skeleton-line">&nbsp;</span>
                         </div>
                     </div>
                     <div class="now-card skeleton" id="card-book">
                         <div class="now-card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                ><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
+                                ></path><path
+                                    d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+                                ></path></svg
+                            >
                         </div>
                         <div class="now-card-content">
                             <span class="now-card-label">Last read</span>
-                            <span class="skeleton-line skeleton-line--short">&nbsp;</span>
+                            <span class="skeleton-line skeleton-line--short"
+                                >&nbsp;</span
+                            >
                             <span class="skeleton-line">&nbsp;</span>
                         </div>
                     </div>
                     <div class="now-card skeleton" id="card-movie">
                         <div class="now-card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/><line x1="17" y1="17" x2="22" y2="17"/></svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                ><rect
+                                    x="2"
+                                    y="2"
+                                    width="20"
+                                    height="20"
+                                    rx="2.18"
+                                    ry="2.18"></rect><line
+                                    x1="7"
+                                    y1="2"
+                                    x2="7"
+                                    y2="22"></line><line
+                                    x1="17"
+                                    y1="2"
+                                    x2="17"
+                                    y2="22"></line><line
+                                    x1="2"
+                                    y1="12"
+                                    x2="22"
+                                    y2="12"></line><line
+                                    x1="2"
+                                    y1="7"
+                                    x2="7"
+                                    y2="7"></line><line
+                                    x1="2"
+                                    y1="17"
+                                    x2="7"
+                                    y2="17"></line><line
+                                    x1="17"
+                                    y1="7"
+                                    x2="22"
+                                    y2="7"></line><line
+                                    x1="17"
+                                    y1="17"
+                                    x2="22"
+                                    y2="17"></line></svg
+                            >
                         </div>
                         <div class="now-card-content">
                             <span class="now-card-label">Last watched</span>
-                            <span class="skeleton-line skeleton-line--short">&nbsp;</span>
+                            <span class="skeleton-line skeleton-line--short"
+                                >&nbsp;</span
+                            >
                             <span class="skeleton-line">&nbsp;</span>
                         </div>
                     </div>
                     <div class="now-card skeleton" id="card-anime">
                         <div class="now-card-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                ><polygon points="23 7 16 12 23 17 23 7"
+                                ></polygon><rect
+                                    x="1"
+                                    y="5"
+                                    width="15"
+                                    height="14"
+                                    rx="2"
+                                    ry="2"></rect></svg
+                            >
                         </div>
                         <div class="now-card-content">
                             <span class="now-card-label">Last anime</span>
-                            <span class="skeleton-line skeleton-line--short">&nbsp;</span>
+                            <span class="skeleton-line skeleton-line--short"
+                                >&nbsp;</span
+                            >
                             <span class="skeleton-line">&nbsp;</span>
                         </div>
                     </div>
@@ -66,9 +163,24 @@ import { siteConfig } from "@/config";
 
             <ul>
                 <li>Working on building this site</li>
-                <li>I'm relearning everything about computers and programming to get a better and deeper grasp of concepts, track my progress <a href="https://github.com/sahilium/learn" target="_blank" rel="noreferrer">here</a></li>
-                <li>Finding and connecting with professional developers and other awesome people from the tech world</li>
-                <li>Oogling at <a href="https://www.fontsquirrel.com/fonts/comfortaa" target="_blank" rel="noreferrer">this</a> font, yes I'm crazy, I'm in love with a font, of all things!</li>
+                <li>
+                    I'm relearning everything about computers and programming to
+                    get a better and deeper grasp of concepts, track my progress <a
+                        href="https://github.com/sahilium/learn"
+                        target="_blank"
+                        rel="noreferrer">here</a>
+                </li>
+                <li>
+                    Finding and connecting with professional developers and
+                    other awesome people from the tech world
+                </li>
+                <li>
+                    Oogling at <a
+                        href="https://www.fontsquirrel.com/fonts/comfortaa"
+                        target="_blank"
+                        rel="noreferrer">this</a
+                    > font, yes I'm crazy, I'm in love with a font, of all things!
+                </li>
             </ul>
 
             <h2>Learning</h2>
@@ -81,154 +193,195 @@ import { siteConfig } from "@/config";
                 <li>Bahasa Indonesia 🇮🇩 (A1)</li>
                 <li>Suomi 🇫🇮 (A1)</li>
             </ul>
-
-            <h2>Reading</h2>
-
-            <h3>I've recently read</h3>
-
-            <ul>
-                <li><a href="https://www.goodreads.com/book/show/36896898-spinning-silver" target="_blank" rel="noreferrer">Naomi Novik, Spinning Silver (2018)</a></li>
-                <li><a href="https://www.goodreads.com/book/show/2994399-list-your-self" target="_blank" rel="noreferrer">List Your Self (2008)</a></li>
-            </ul>
         </section>
     </main>
 </Layout>
 
-<script define:vars={{ apiBaseUrl: siteConfig.apiBaseUrl }}>
-const nowGrid = document.getElementById("now-grid");
-if (nowGrid) {
-  const updateDate = document.getElementById("now-updated");
-  updateDate && (updateDate.textContent = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+<script define:vars={{ prodApiBaseUrl: siteConfig.apiBaseUrl }}>
+    const nowGrid = document.getElementById("now-grid");
+    if (nowGrid) {
+        const apiBaseUrl =
+            location.hostname === "localhost" ||
+            location.hostname === "127.0.0.1"
+                ? "http://localhost:8080"
+                : prodApiBaseUrl;
 
-  fetch(`${apiBaseUrl}/api/now`, { signal: AbortSignal.timeout(8000) })
-    .then(r => r.ok ? r.json() : null)
-    .then(data => {
-      if (!data) throw new Error("empty");
+        const updateDate = document.getElementById("now-updated");
+        updateDate &&
+            (updateDate.textContent = new Date().toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+            }));
 
-      const cards = {
-        song: ["song", "song"],
-        book: ["book", "book"],
-        movie: ["movie", "movie"],
-        anime: ["anime", "anime"],
-      };
+        fetch(`${apiBaseUrl}/api/now`, { signal: AbortSignal.timeout(8000) })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((data) => {
+                if (!data) throw new Error("empty");
 
-      for (const [key, item] of Object.entries(cards)) {
-        const entry = data[`last${key.charAt(0).toUpperCase() + key.slice(1)}`];
-        const el = document.getElementById(`card-${key}`);
-        if (!el) continue;
-        el.classList.remove("skeleton");
-        const content = el.querySelector(".now-card-content");
-        if (!content) continue;
-        if (!entry) {
-          content.innerHTML = `<span class="now-card-label">Last ${item[0]}</span><span class="now-card-title">—</span>`;
-          continue;
-        }
-        const title = entry.title || "—";
-        const subtitle = entry.artist || entry.author || (entry.year ? `(${entry.year})` : "");
-        content.innerHTML = `
+                const cards = {
+                    song: ["song", "song"],
+                    book: ["book", "book"],
+                    movie: ["movie", "movie"],
+                    anime: ["anime", "anime"],
+                };
+
+                for (const [key, item] of Object.entries(cards)) {
+                    const entry =
+                        data[
+                            `last${key.charAt(0).toUpperCase() + key.slice(1)}`
+                        ];
+                    const el = document.getElementById(`card-${key}`);
+                    if (!el) continue;
+                    el.classList.remove("skeleton");
+                    const content = el.querySelector(".now-card-content");
+                    if (!content) continue;
+                    if (!entry) {
+                        content.innerHTML = `<span class="now-card-label">Last ${item[0]}</span><span class="now-card-title">—</span>`;
+                        continue;
+                    }
+                    const title = entry.title || "—";
+                    let meta =
+                        entry.artist ||
+                        entry.author ||
+                        (entry.year ? `(${entry.year})` : "");
+                    if (key === "anime" && entry.status) {
+                        const prog = entry.totalEpisodes
+                            ? `ep ${entry.episode}/${entry.totalEpisodes}`
+                            : `ep ${entry.episode}`;
+                        meta =
+                            entry.status === "completed" ? "completed" : prog;
+                    }
+                    content.innerHTML = `
           <span class="now-card-label">Last ${item[0]}</span>
           <a href="${entry.url || "#"}" target="_blank" rel="noreferrer" class="now-card-title">${title}</a>
-          ${subtitle ? `<span class="now-card-subtitle">${subtitle}</span>` : ""}
+          ${meta ? `<span class="now-card-meta">${meta}</span>` : ""}
+          ${entry.timeAgo ? `<span class="now-card-subtitle">${entry.timeAgo}</span>` : ""}
         `;
-        if (entry.image) {
-          el.style.setProperty("--card-image", `url(${JSON.stringify(entry.image)})`);
-        }
-      }
-    })
-    .catch(() => {
-      document.querySelectorAll(".now-card.skeleton").forEach(el => {
-        el.classList.remove("skeleton");
-        const content = el.querySelector(".now-card-content");
-        if (content) content.innerHTML = `<span class="now-card-label">—</span><span class="now-card-title">Unavailable</span>`;
-      });
-    });
-}
+                    if (entry.image) {
+                        el.style.setProperty(
+                            "--card-image",
+                            `url(${JSON.stringify(entry.image)})`,
+                        );
+                    }
+                }
+            })
+            .catch(() => {
+                document
+                    .querySelectorAll(".now-card.skeleton")
+                    .forEach((el) => {
+                        el.classList.remove("skeleton");
+                        const content = el.querySelector(".now-card-content");
+                        if (content)
+                            content.innerHTML = `<span class="now-card-label">—</span><span class="now-card-title">Unavailable</span>`;
+                    });
+            });
+    }
 </script>
 
 <style is:global>
-.now-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-.now-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1rem;
-  border: 1px solid var(--border-color, #e2e8f0);
-  border-radius: 0.5rem;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-  overflow: hidden;
-}
-.now-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--card-image, none);
-  background-size: cover;
-  background-position: center;
-  opacity: 0.08;
-  pointer-events: none;
-}
-.now-card-icon {
-  flex-shrink: 0;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0.375rem;
-  background: var(--accent, #6b7280);
-  color: #fff;
-  position: relative;
-  z-index: 1;
-}
-.now-card-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.125rem;
-  min-width: 0;
-  position: relative;
-  z-index: 1;
-}
-.now-card-label {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted-foreground, #64748b);
-}
-.now-card-title {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--foreground, #0f172a);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.now-card-subtitle {
-  font-size: 0.75rem;
-  color: var(--muted-foreground, #64748b);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.now-card.skeleton .skeleton-line {
-  display: block;
-  height: 0.75rem;
-  border-radius: 0.25rem;
-  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-.now-card.skeleton .skeleton-line--short {
-  width: 40%;
-}
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
+    .now-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .now-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 1rem;
+        border: 1px solid var(--border-color, #e2e8f0);
+        border-radius: 0.5rem;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .now-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--card-image, none);
+        background-size: cover;
+        background-position: center;
+        opacity: 0.08;
+        pointer-events: none;
+    }
+    .now-card-icon {
+        flex-shrink: 0;
+        width: 2rem;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.375rem;
+        background: var(--accent, #6b7280);
+        color: #fff;
+        position: relative;
+        z-index: 1;
+    }
+    .now-card-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.125rem;
+        min-width: 0;
+        position: relative;
+        z-index: 1;
+    }
+    .now-card-label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--muted-foreground, #64748b);
+    }
+    .now-card-title {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--foreground, #0f172a);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .now-card-meta {
+        font-size: 0.75rem;
+        color: var(--foreground, #0f172a);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        opacity: 0.75;
+    }
+    .now-card-subtitle {
+        font-size: 0.7rem;
+        color: var(--muted-foreground, #64748b);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+    .now-card.skeleton .skeleton-line {
+        display: block;
+        height: 0.75rem;
+        border-radius: 0.25rem;
+        background: linear-gradient(
+            90deg,
+            #e2e8f0 25%,
+            #f1f5f9 50%,
+            #e2e8f0 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+    .now-card.skeleton .skeleton-line--short {
+        width: 40%;
+    }
+    @keyframes shimmer {
+        0% {
+            background-position: 200% 0;
+        }
+        100% {
+            background-position: -200% 0;
+        }
+    }
 </style>
