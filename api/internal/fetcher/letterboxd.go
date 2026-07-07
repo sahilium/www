@@ -1,19 +1,16 @@
-package handlers
+package fetcher
 
 import (
 	"encoding/xml"
 	"fmt"
 	"net/http"
-	"os"
 	"regexp"
 	"strings"
-	"sahil-api/cache"
 
-	"sahil-api/models"
+	"sahil-api/internal/model"
 )
 
-func FetchLastMovie() (*models.Movie, error) {
-	username := os.Getenv("LETTERBOXD_USERNAME")
+func LastMovie(username string) (*model.Movie, error) {
 	if username == "" {
 		return nil, nil
 	}
@@ -24,7 +21,7 @@ func FetchLastMovie() (*models.Movie, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("letterboxd request: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -40,7 +37,7 @@ func FetchLastMovie() (*models.Movie, error) {
 	}
 
 	if err := xml.NewDecoder(resp.Body).Decode(&feed); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("letterboxd decode: %w", err)
 	}
 
 	if len(feed.Channel.Items) == 0 {
@@ -64,26 +61,10 @@ func FetchLastMovie() (*models.Movie, error) {
 		image = imgMatch[1]
 	}
 
-	return &models.Movie{
+	return &model.Movie{
 		Title: title,
 		Year:  year,
 		Image: image,
 		Url:   item.Link,
 	}, nil
-}
-
-func LetterboxdHandler(c *cache.Cache) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if cached, ok := c.Get("letterboxd"); ok {
-			respondJSON(w, http.StatusOK, cached)
-			return
-		}
-		movie, err := FetchLastMovie()
-		if err != nil {
-			respondError(w, http.StatusBadGateway, err.Error())
-			return
-		}
-		c.Set("letterboxd", movie)
-		respondJSON(w, http.StatusOK, movie)
-	}
 }

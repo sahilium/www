@@ -1,37 +1,33 @@
-package handlers
+package fetcher
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
-	"sahil-api/cache"
 
-	"sahil-api/models"
+	"sahil-api/internal/model"
 )
 
 const hardcoverEndpoint = "https://api.hardcover.app/v1/graphql"
 
-func FetchLastBook() (*models.Book, error) {
-	apiKey := os.Getenv("HARDCOVER_API_KEY")
-	userID := os.Getenv("HARDCOVER_USER_ID")
-	if apiKey == "" || userID == "" {
+func LastBook(token string) (*model.Book, error) {
+	if token == "" {
 		return nil, nil
 	}
 
-	query := fmt.Sprintf(`{
-		"query": "query { readingLogs(where: {user_id: {_eq: %s}, status: {_eq: \\\"read\\\"}}, order_by: {updated_at: desc}, limit: 1) { book { title image { url(transform: {quality: medium}) } slug } rating } }"
-	}`, userID)
+	query := `{
+		"query": "query { readingLogs(where: {status: {_eq: \\\"read\\\"}}, order_by: {updated_at: desc}, limit: 1) { book { title image { url(transform: {quality: medium}) } slug } rating } }"
+	}`
 
 	body := bytes.NewReader([]byte(query))
 	req, _ := http.NewRequest(http.MethodPost, hardcoverEndpoint, body)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Authorization", "Bearer "+apiKey)
+	req.Header.Set("Authorization", "Bearer "+token)
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("hardcover request: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -39,7 +35,7 @@ func FetchLastBook() (*models.Book, error) {
 		Data struct {
 			ReadingLogs []struct {
 				Book struct {
-					Title string `json:"title"`
+					Title string  `json:"title"`
 					Image *struct {
 						URL string `json:"url"`
 					} `json:"image"`
@@ -51,7 +47,7 @@ func FetchLastBook() (*models.Book, error) {
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("hardcover decode: %w", err)
 	}
 
 	if len(result.Data.ReadingLogs) == 0 {
@@ -69,27 +65,11 @@ func FetchLastBook() (*models.Book, error) {
 		rating = *log.Rating
 	}
 
-	return &models.Book{
+	return &model.Book{
 		Title:  log.Book.Title,
 		Author: "",
 		Cover:  coverURL,
 		Url:    fmt.Sprintf("https://hardcover.app/books/%s", log.Book.Slug),
 		Rating: rating,
 	}, nil
-}
-
-func HardcoverHandler(c *cache.Cache) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if cached, ok := c.Get("hardcover"); ok {
-			respondJSON(w, http.StatusOK, cached)
-			return
-		}
-		book, err := FetchLastBook()
-		if err != nil {
-			respondError(w, http.StatusBadGateway, err.Error())
-			return
-		}
-		c.Set("hardcover", book)
-		respondJSON(w, http.StatusOK, book)
-	}
 }

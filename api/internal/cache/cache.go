@@ -6,8 +6,8 @@ import (
 )
 
 type Item struct {
-	Value      interface{}
-	ExpiresAt  time.Time
+	Value     interface{}
+	ExpiresAt time.Time
 }
 
 type Cache struct {

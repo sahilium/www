@@ -1,39 +1,30 @@
-package handlers
+package fetcher
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
-	"os"
 	"strconv"
 	"time"
-	"sahil-api/cache"
 
-	"sahil-api/models"
+	"sahil-api/internal/model"
 )
 
-func parseInt64(s string) int64 {
-	n, _ := strconv.ParseInt(s, 10, 64)
-	return n
-}
-
-func FetchLastSong() (*models.Song, error) {
-	apiKey := os.Getenv("LASTFM_API_KEY")
-	username := os.Getenv("LASTFM_USERNAME")
+func LastSong(apiKey, username string) (*model.Song, error) {
 	if apiKey == "" || username == "" {
 		return nil, nil
 	}
 
 	u := fmt.Sprintf(
-		"http://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&user=%s&api_key=%s&format=json&limit=1",
+		"https://ws.audioscrobbler.com/2.0/?method=user.getRecentTracks&user=%s&api_key=%s&format=json&limit=1",
 		url.QueryEscape(username),
 		url.QueryEscape(apiKey),
 	)
 
 	resp, err := http.Get(u)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("lastfm request: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -60,7 +51,7 @@ func FetchLastSong() (*models.Song, error) {
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(&raw); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("lastfm decode: %w", err)
 	}
 
 	if len(raw.RecentTracks.Track) == 0 {
@@ -78,10 +69,11 @@ func FetchLastSong() (*models.Song, error) {
 
 	var playedAt string
 	if track.Date.Uts != "" {
-		playedAt = time.Unix(parseInt64(track.Date.Uts), 0).Format(time.RFC3339)
+		ts, _ := strconv.ParseInt(track.Date.Uts, 10, 64)
+		playedAt = time.Unix(ts, 0).Format(time.RFC3339)
 	}
 
-	return &models.Song{
+	return &model.Song{
 		Title:    track.Name,
 		Artist:   track.Artist.Content,
 		Album:    track.Album.Content,
@@ -89,20 +81,4 @@ func FetchLastSong() (*models.Song, error) {
 		Url:      track.URL,
 		PlayedAt: playedAt,
 	}, nil
-}
-
-func LastFMHandler(c *cache.Cache) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if cached, ok := c.Get("lastfm"); ok {
-			respondJSON(w, http.StatusOK, cached)
-			return
-		}
-		song, err := FetchLastSong()
-		if err != nil {
-			respondError(w, http.StatusBadGateway, err.Error())
-			return
-		}
-		c.Set("lastfm", song)
-		respondJSON(w, http.StatusOK, song)
-	}
 }

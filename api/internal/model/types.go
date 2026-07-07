@@ -1,4 +1,4 @@
-package models
+package model
 
 type NowResponse struct {
 	LastSong  *Song  `json:"lastSong,omitempty"`
@@ -38,4 +38,8 @@ type Movie struct {
 	Image  string `json:"image"`
 	Url    string `json:"url"`
 	Rating string `json:"rating"`
+}
+
+type ErrorResponse struct {
+	Error string `json:"error"`
 }

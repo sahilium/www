@@ -1,0 +1,192 @@
+openapi: "3.0.3"
+info:
+  title: sahil-api
+  description: |
+    Live "now" data aggregator for sahil.im.
+    Fetches current activity from Last.fm, AniList, Letterboxd, and Hardcover.
+  version: "1.0.0"
+  contact:
+    name: Sahil A.
+    url: https://sahil.im
+servers:
+  - url: https://api.sahil.im
+    description: Production
+  - url: http://localhost:8080
+    description: Development
+paths:
+  /health:
+    get:
+      summary: Health check
+      operationId: health
+      responses:
+        "200":
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /api/now:
+    get:
+      summary: Get all live data
+      description: |
+        Aggregates the latest song, book, anime, and movie in a single response.
+        Each service is fetched concurrently with a 5-minute cache.
+      operationId: getNow
+      responses:
+        "200":
+          description: Aggregated now data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NowResponse"
+        "502":
+          description: Upstream service error
+  /api/lastfm:
+    get:
+      summary: Get last played song
+      operationId: getLastSong
+      responses:
+        "200":
+          description: Last played track or empty response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Song"
+  /api/anilist:
+    get:
+      summary: Get last updated anime
+      operationId: getLastAnime
+      responses:
+        "200":
+          description: Last anime entry (watching or completed)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Anime"
+  /api/letterboxd:
+    get:
+      summary: Get last watched movie
+      operationId: getLastMovie
+      responses:
+        "200":
+          description: Last movie diary entry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Movie"
+  /api/hardcover:
+    get:
+      summary: Get last read book
+      operationId: getLastBook
+      responses:
+        "200":
+          description: Last completed book
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [ok]
+    NowResponse:
+      type: object
+      properties:
+        lastSong:
+          $ref: "#/components/schemas/Song"
+        lastBook:
+          $ref: "#/components/schemas/Book"
+        lastAnime:
+          $ref: "#/components/schemas/Anime"
+        lastMovie:
+          $ref: "#/components/schemas/Movie"
+    Song:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Feel Good"
+        artist:
+          type: string
+          example: "Syn Cole"
+        album:
+          type: string
+          example: "Feel Good"
+        image:
+          type: string
+          format: uri
+          example: "https://lastfm.freetls.fastly.net/i/u/300x300/abc.jpg"
+        url:
+          type: string
+          format: uri
+          example: "https://www.last.fm/music/Syn+Cole/_/Feel+Good"
+        playedAt:
+          type: string
+          format: date-time
+          example: "2026-07-07T12:00:00Z"
+    Book:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "The Name of the Wind"
+        author:
+          type: string
+          example: ""
+        cover:
+          type: string
+          format: uri
+          example: "https://assets.hardcover.app/cover.jpg"
+        url:
+          type: string
+          format: uri
+          example: "https://hardcover.app/books/the-name-of-the-wind"
+        rating:
+          type: integer
+          example: 5
+    Anime:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Frieren: Beyond Journey's End"
+        image:
+          type: string
+          format: uri
+          example: "https://s4.anilist.co/file/anilistcdn/media/anime/cover/medium/bx154587.jpg"
+        url:
+          type: string
+          format: uri
+          example: "https://anilist.co/anime/154587"
+        status:
+          type: string
+          enum: [watching, completed]
+          example: "watching"
+        updatedAt:
+          type: string
+          format: date-time
+          example: "2026-07-06T10:30:00Z"
+    Movie:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Spider-Man: Across the Spider-Verse"
+        year:
+          type: string
+          example: "2023"
+        image:
+          type: string
+          format: uri
+          example: "https://a.ltrbxd.com/resized/film-poster.jpg"
+        url:
+          type: string
+          format: uri
+          example: "https://letterboxd.com/nonomino/film/spider-man-across-the-spider-verse/"
+        rating:
+          type: string
+          example: ""

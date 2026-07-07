@@ -1,20 +1,18 @@
-package handlers
+package fetcher
 
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
-	"os"
 	"time"
 
-	"sahil-api/cache"
-	"sahil-api/models"
+	"sahil-api/internal/model"
 )
 
 const anilistEndpoint = "https://graphql.anilist.co"
 
-func FetchLastAnime() (*models.Anime, error) {
-	username := os.Getenv("ANILIST_USERNAME")
+func LastAnime(username string) (*model.Anime, error) {
 	if username == "" {
 		return nil, nil
 	}
@@ -36,7 +34,7 @@ func FetchLastAnime() (*models.Anime, error) {
 
 	resp, err := http.Post(anilistEndpoint, "application/json", bytes.NewReader(b))
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("anilist request: %w", err)
 	}
 	defer resp.Body.Close()
 
@@ -48,7 +46,7 @@ func FetchLastAnime() (*models.Anime, error) {
 	}
 
 	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("anilist decode: %w", err)
 	}
 
 	entry := pickAnimeEntry(result.Data.Current, result.Data.Completed)
@@ -61,8 +59,8 @@ func FetchLastAnime() (*models.Anime, error) {
 		status = "completed"
 	}
 
-	return &models.Anime{
-		Title:     pickAnimeTitle(entry.Media.Title.Romaji, entry.Media.Title.English),
+	return &model.Anime{
+		Title:     pickTitle(entry.Media.Title.Romaji, entry.Media.Title.English),
 		Image:     entry.Media.CoverImage.Medium,
 		Url:       entry.Media.SiteUrl,
 		Status:    status,
@@ -106,26 +104,9 @@ func firstAnimeEntry(c anilistCollection) *anilistEntry {
 	return nil
 }
 
-func pickAnimeTitle(romaji, english string) string {
+func pickTitle(romaji, english string) string {
 	if english != "" {
 		return english
 	}
 	return romaji
-}
-
-
-func AniListHandler(c *cache.Cache) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if cached, ok := c.Get("anilist"); ok {
-			respondJSON(w, http.StatusOK, cached)
-			return
-		}
-		anime, err := FetchLastAnime()
-		if err != nil {
-			respondError(w, http.StatusBadGateway, err.Error())
-			return
-		}
-		c.Set("anilist", anime)
-		respondJSON(w, http.StatusOK, anime)
-	}
 }
