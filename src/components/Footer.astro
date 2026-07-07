@@ -25,7 +25,7 @@ const staticKo = getCurrentKo();
                 >
             </a>
             <span class="text-xs text-muted-foreground">
-                <a href="/credits">CREDITS</a> ● <a href="/license">LICENSE</a> ●
+                <a href="/credits">CREDITS</a> ●
                 <a
                     href="https://github.com/sahilium/www.git"
                     target="_blank"
@@ -42,7 +42,8 @@ const staticKo = getCurrentKo();
             </span>
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex flex-col items-center md:items-end gap-3">
+            <div class="flex items-center gap-4">
             {
                 siteConfig.socials.email && (
                     <a
@@ -130,6 +131,13 @@ const staticKo = getCurrentKo();
                 <Rss size={18} />
             </a>
         </div>
+        <span class="text-xs text-muted-foreground text-center md:text-right inline-flex items-center gap-1">
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer" class="inline-flex">
+                <img src="https://creativecommons.org/wp-content/themes/vocabulary-theme/vocabulary/svg/cc/license_badges/big/by_nc_sa.svg" alt="CC BY-NC-SA" class="cc-badge" />
+            </a>
+            <span>licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer" class="hover:text-accent transition-colors">CC BY-NC-SA 4.0</a></span>
+        </span>
+        </div>
     </div>
 </footer>
 
@@ -149,5 +157,14 @@ const staticKo = getCurrentKo();
         height: 2px;
         background-color: var(--accent);
         transform: scaleX(1);
+    }
+    .cc-badge {
+        height: 1rem;
+        width: auto;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+    }
+    .cc-badge:hover {
+        opacity: 1;
     }
 </style>
