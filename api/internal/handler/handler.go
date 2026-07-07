@@ -43,6 +43,7 @@ func (h *Handler) Now(w http.ResponseWriter, r *http.Request) {
 		{"book", func() (interface{}, error) { return fetcher.LastBook(h.cfg.HardcoverToken) }},
 		{"anime", func() (interface{}, error) { return fetcher.LastAnime(h.cfg.AnilistUser) }},
 		{"movie", func() (interface{}, error) { return fetcher.LastMovie(h.cfg.LetterboxdUser) }},
+		{"commit", func() (interface{}, error) { return fetcher.LastCommit(h.cfg.GitHubUser) }},
 	}
 
 	for _, f := range fns {
@@ -63,6 +64,8 @@ func (h *Handler) Now(w http.ResponseWriter, r *http.Request) {
 				result.LastAnime = v
 			case *model.Movie:
 				result.LastMovie = v
+			case *model.Commit:
+				result.LastCommit = v
 			}
 			mu.Unlock()
 		}(f.name, f.fn)

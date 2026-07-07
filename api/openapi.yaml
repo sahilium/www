@@ -85,6 +85,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Book"
+  /api/github/commits/latest:
+    get:
+      summary: Get latest public commit
+      operationId: getLatestCommit
+      responses:
+        "200":
+          description: Latest commit from recent push
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Commit"
 components:
   schemas:
     HealthResponse:
@@ -104,6 +115,8 @@ components:
           $ref: "#/components/schemas/Anime"
         lastMovie:
           $ref: "#/components/schemas/Movie"
+        lastCommit:
+          $ref: "#/components/schemas/Commit"
     Song:
       type: object
       properties:
@@ -182,6 +195,26 @@ components:
           type: string
           format: date-time
           example: "2026-07-06T10:30:00Z"
+    Commit:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "fix: handle edge case in parser"
+        repo:
+          type: string
+          example: "sahilium/www"
+        url:
+          type: string
+          format: uri
+          example: "https://github.com/sahilium/www/commit/abc123"
+        timestamp:
+          type: string
+          format: date-time
+          example: "2026-07-07T02:51:43Z"
+        timeAgo:
+          type: string
+          example: "10 hours ago"
     Movie:
       type: object
       properties:

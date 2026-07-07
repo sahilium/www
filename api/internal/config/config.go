@@ -18,6 +18,7 @@ type Config struct {
 	AnilistUser    string
 	LetterboxdUser string
 	HardcoverToken string
+	GitHubUser     string
 }
 
 func Load() *Config {
@@ -36,6 +37,7 @@ func FromEnv() *Config {
 		AnilistUser:    os.Getenv("ANILIST_USERNAME"),
 		LetterboxdUser: os.Getenv("LETTERBOXD_USERNAME"),
 		HardcoverToken: os.Getenv("HARDCOVER_TOKEN"),
+		GitHubUser:     os.Getenv("GITHUB_USERNAME"),
 	}
 }
 

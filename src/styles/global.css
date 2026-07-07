@@ -333,7 +333,6 @@ body::after {
         @apply text-foreground;
         font-size: 16px;
         line-height: 1.45;
-        max-width: 68ch;
     }
     .prose-blog p {
         @apply mb-3;

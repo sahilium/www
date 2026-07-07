@@ -30,6 +30,12 @@ func (h *Handler) Hardcover(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func (h *Handler) GitHubCommits(w http.ResponseWriter, r *http.Request) {
+	handleService(w, h.cache, "github:commits", func() (interface{}, error) {
+		return fetcher.LastCommit(h.cfg.GitHubUser)
+	})
+}
+
 func handleService(w http.ResponseWriter, c cacheInterface, key string, fn func() (interface{}, error)) {
 	if cached, ok := c.Get(key); ok {
 		respondJSON(w, http.StatusOK, cached)
