@@ -24,15 +24,9 @@ func (h *Handler) Letterboxd(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (h *Handler) Hardcover(w http.ResponseWriter, r *http.Request) {
-	handleService(w, h.cache, "hardcover", func() (interface{}, error) {
-		return fetcher.LastBook(h.cfg.HardcoverToken)
-	})
-}
-
-func (h *Handler) GitHubCommits(w http.ResponseWriter, r *http.Request) {
-	handleService(w, h.cache, "github:commits", func() (interface{}, error) {
-		return fetcher.LastCommit(h.cfg.GitHubUser)
+func (h *Handler) Goodreads(w http.ResponseWriter, r *http.Request) {
+	handleService(w, h.cache, "goodreads", func() (interface{}, error) {
+		return fetcher.LastBook(h.cfg.GoodreadsUserID)
 	})
 }
 

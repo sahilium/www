@@ -1,19 +1,10 @@
 package model
 
 type NowResponse struct {
-	LastSong   *Song   `json:"lastSong,omitempty"`
-	LastBook   *Book   `json:"lastBook,omitempty"`
-	LastAnime  *Anime  `json:"lastAnime,omitempty"`
-	LastMovie  *Movie  `json:"lastMovie,omitempty"`
-	LastCommit *Commit `json:"lastCommit,omitempty"`
-}
-
-type Commit struct {
-	Message   string `json:"message"`
-	Repo      string `json:"repo"`
-	Url       string `json:"url"`
-	Timestamp string `json:"timestamp"`
-	TimeAgo   string `json:"timeAgo"`
+	LastSong  *Song  `json:"lastSong,omitempty"`
+	LastBook  *Book  `json:"lastBook,omitempty"`
+	LastAnime *Anime `json:"lastAnime,omitempty"`
+	LastMovie *Movie `json:"lastMovie,omitempty"`
 }
 
 type Song struct {

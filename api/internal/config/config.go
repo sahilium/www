@@ -13,12 +13,11 @@ type Config struct {
 	CacheTTL       time.Duration
 	RequestTimeout time.Duration
 
-	LastfmAPIKey   string
-	LastfmUser     string
-	AnilistUser    string
-	LetterboxdUser string
-	HardcoverToken string
-	GitHubUser     string
+	LastfmAPIKey    string
+	LastfmUser      string
+	AnilistUser     string
+	LetterboxdUser  string
+	GoodreadsUserID string
 }
 
 func Load() *Config {
@@ -32,12 +31,11 @@ func FromEnv() *Config {
 		APIBaseURL:     getenv("API_BASE_URL", "http://localhost:8080"),
 		CacheTTL:       5 * time.Minute,
 		RequestTimeout: 10 * time.Second,
-		LastfmAPIKey:   os.Getenv("LASTFM_API_KEY"),
-		LastfmUser:     os.Getenv("LASTFM_USERNAME"),
-		AnilistUser:    os.Getenv("ANILIST_USERNAME"),
-		LetterboxdUser: os.Getenv("LETTERBOXD_USERNAME"),
-		HardcoverToken: os.Getenv("HARDCOVER_TOKEN"),
-		GitHubUser:     os.Getenv("GITHUB_USERNAME"),
+		LastfmAPIKey:    os.Getenv("LASTFM_API_KEY"),
+		LastfmUser:      os.Getenv("LASTFM_USERNAME"),
+		AnilistUser:     os.Getenv("ANILIST_USERNAME"),
+		LetterboxdUser:  os.Getenv("LETTERBOXD_USERNAME"),
+		GoodreadsUserID: os.Getenv("GOODREADS_USER_ID"),
 	}
 }
 

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"log/slog"
 	"net/http"
 	"sync"
 
@@ -40,10 +41,9 @@ func (h *Handler) Now(w http.ResponseWriter, r *http.Request) {
 		fn   func() (interface{}, error)
 	}{
 		{"song", func() (interface{}, error) { return fetcher.LastSong(h.cfg.LastfmAPIKey, h.cfg.LastfmUser) }},
-		{"book", func() (interface{}, error) { return fetcher.LastBook(h.cfg.HardcoverToken) }},
+		{"book", func() (interface{}, error) { return fetcher.LastBook(h.cfg.GoodreadsUserID) }},
 		{"anime", func() (interface{}, error) { return fetcher.LastAnime(h.cfg.AnilistUser) }},
 		{"movie", func() (interface{}, error) { return fetcher.LastMovie(h.cfg.LetterboxdUser) }},
-		{"commit", func() (interface{}, error) { return fetcher.LastCommit(h.cfg.GitHubUser) }},
 	}
 
 	for _, f := range fns {
@@ -51,7 +51,12 @@ func (h *Handler) Now(w http.ResponseWriter, r *http.Request) {
 		go func(name string, fn func() (interface{}, error)) {
 			defer wg.Done()
 			val, err := fn()
-			if err != nil || val == nil {
+			if err != nil {
+				slog.Error("now fetch error", "service", name, "error", err)
+				return
+			}
+			if val == nil {
+				slog.Debug("now fetch empty", "service", name)
 				return
 			}
 			mu.Lock()
@@ -64,8 +69,6 @@ func (h *Handler) Now(w http.ResponseWriter, r *http.Request) {
 				result.LastAnime = v
 			case *model.Movie:
 				result.LastMovie = v
-			case *model.Commit:
-				result.LastCommit = v
 			}
 			mu.Unlock()
 		}(f.name, f.fn)
