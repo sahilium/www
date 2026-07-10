@@ -1,0 +1,3 @@
+[submodule "src/content"]
+	path = src/content
+	url = https://git.sr.ht/~nonomino/ink
