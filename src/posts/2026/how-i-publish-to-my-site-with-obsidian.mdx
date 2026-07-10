@@ -1,0 +1,54 @@
+---
+title: "How I publish to my site with Obsidian"
+date: "07/10/2026"
+frontmatter: "I built a CMS where I write in Obsidian, a plugin pings my Go API, markdown gets stored in Cloudflare D1, and the site updates immediately. It's absurdly overengineered and I love it."
+tags: ["meta", "building", "go", "obsidian"]
+---
+
+I have a confession to make. For the longest time, I managed my website content the old-fashioned way: I SSHed into a server, opened Vim, and edited Markdown files directly. There was something pure about it. The glow of a terminal at 2 AM, the satisfying *thock* of mechanical keys, the quiet certainty that no product manager would ever ask me to add a newsletter popup.
+
+But then I started writing in Obsidian. And I got attached. The graph view, the plugins, the way it makes me feel like a digital wizard arranging knowledge crystals on an ethereal corkboard. I couldn't go back to plain Vim for drafting. And yet, my site remained stubbornly disconnected from this beautiful knowledge garden I was cultivating.
+
+So I did what any reasonable person would do: I built a Rube Goldberg machine to bridge the gap.
+
+## The pipeline of questionable necessity
+
+Here's what happens now when I save a file in Obsidian:
+
+1. **Obsidian notices** — A plugin I wrote watches for file changes. Not just any file changes, mind you. It watches a specific file (`feed.md`) in a specific folder (`site-items/`), because apparently I enjoy adding layers of configuration to problems that didn't exist.
+
+2. **It checks my frontmatter** — If the YAML says `publish: false`, the plugin shrugs and goes back to sleep. This is my digital version of "I'll do it tomorrow," but machine-enforceable.
+
+3. **It fires off an HTTP request** — The plugin squirts the markdown content over to my Go API at `api.sahil.im`, using a bearer token that I generated and promptly forgot, which means it will be a nightmare to rotate. Future me's problem.
+
+4. **The Go API takes over** — It extracts the title from the first `# ` heading (sophisticated, I know), then upserts the entry into a Cloudflare D1 database. If you're wondering why I'm using a globally distributed SQLite database for what amounts to a text file, you're asking the right questions and I don't have good answers.
+
+5. **Cloudflare D1 stores it** — The content lives in a tiny SQLite table with columns for `slug`, `title`, `content`, and `metadata`. The schema is so simple it's almost embarrassing. Almost.
+
+6. **The frontend fetches it** — When you visit `/feed`, your browser makes a client-side request to the same API, gets the markdown back, and renders it with a minimal inline parser I wrote because I refused to add a dependency.
+
+7. **You read it** — Hopefully while thinking something nice about me.
+
+## Why though?
+
+This is where I get philosophical. Or at least, where I pretend my technical overreach has deeper meaning.
+
+The ancient Greeks had a concept called *techne* — the craft, the art, the practical knowledge of how to make things. Aristotle distinguished it from *episteme* (pure knowledge) and *phronesis* (practical wisdom). By Aristotle's taxonomy, this project is pure *techne*: I built a thing because I could, because the act of building taught me something, because the process of connecting these pieces revealed how they work.
+
+Heidegger, that cheery fellow, warned about the danger of *Gestell* — the "enframing" that reduces everything to a standing-reserve to be optimized and controlled. My CMS is definitely a form of enframing. I've taken the simple act of writing and wrapped it in a pipeline of databases, APIs, and authentication tokens. The written word, reduced to a row in a SQLite table. Socrates would be disappointed. Nietzsche would probably call it a power move.
+
+But here's the thing: I enjoy it. The absurdity is part of the appeal. Every layer of indirection I add makes the system more fragile and more *mine*. It's not efficient. It's not practical. It's a sculpture made of duct tape and cloud services, and I'm proud of it.
+
+## The stack, for the curious
+
+- **Writing**: Obsidian (free, not even the sync tier)
+- **Plugin**: TypeScript, esbuild, `requestUrl()`, pure spite
+- **API**: Go 1.26, standard library only, running on Render
+- **Database**: Cloudflare D1 (SQLite at the edge, because why not)
+- **Assets**: Cloudflare R2 (S3-compatible, for when I add images)
+- **Frontend**: Astro, client-side fetch, the world's jankiest markdown parser
+- **Philosophy**: Aristotle, Heidegger, and a dash of DIY absurdism
+
+I'm not saying this is the right way to build a CMS. I'm saying it's *my* way. There's a difference, and that difference is the entire point.
+
+Now if you'll excuse me, I need to go add image upload support. The R2 bucket is ready and waiting. The pipeline must grow. *Gestell* waits for no one.
