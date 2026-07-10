@@ -1,0 +1,9 @@
+{
+  "id": "sahil-cms",
+  "name": "Sahil CMS Sync",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Syncs marked pages to sahil.im",
+  "author": "sahilium",
+  "isDesktopOnly": false
+}

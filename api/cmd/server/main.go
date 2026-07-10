@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"sahil-api/internal/cache"
+	"sahil-api/internal/cms"
 	"sahil-api/internal/config"
 	"sahil-api/internal/handler"
 	"sahil-api/internal/middleware"
@@ -43,6 +44,14 @@ func main() {
 	mux.HandleFunc("GET /api/statuses", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "data/statuses.json")
 	})
+
+	if cfg.CMSAPIToken != "" && cfg.CloudflareAccountID != "" && cfg.D1DatabaseID != "" {
+		d1 := cms.NewD1Client(cfg.CloudflareAccountID, cfg.D1DatabaseID, cfg.CloudflareAPIToken)
+		cm := cms.NewHandler(d1, cfg)
+		mux.HandleFunc("POST /api/cms/feed", cm.PostFeed)
+		mux.HandleFunc("GET /api/cms/feed", cm.GetFeed)
+		slog.Info("cms routes registered")
+	}
 
 	wrapped := middleware.Setup(mux, cfg)
 

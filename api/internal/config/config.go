@@ -18,6 +18,15 @@ type Config struct {
 	AnilistUser     string
 	LetterboxdUser  string
 	GoodreadsUserID string
+
+	CMSAPIToken         string
+	CloudflareAccountID string
+	CloudflareAPIToken  string
+	D1DatabaseID        string
+	R2Endpoint          string
+	R2AccessKeyID       string
+	R2SecretAccessKey   string
+	R2Bucket            string
 }
 
 func Load() *Config {
@@ -36,6 +45,15 @@ func FromEnv() *Config {
 		AnilistUser:     os.Getenv("ANILIST_USERNAME"),
 		LetterboxdUser:  os.Getenv("LETTERBOXD_USERNAME"),
 		GoodreadsUserID: os.Getenv("GOODREADS_USER_ID"),
+
+		CMSAPIToken:         os.Getenv("CMS_API_TOKEN"),
+		CloudflareAccountID: os.Getenv("CLOUDFLARE_ACCOUNT_ID"),
+		CloudflareAPIToken:  os.Getenv("CLOUDFLARE_API_TOKEN"),
+		D1DatabaseID:        os.Getenv("D1_DATABASE_ID"),
+		R2Endpoint:          os.Getenv("R2_ENDPOINT"),
+		R2AccessKeyID:       os.Getenv("R2_ACCESS_KEY_ID"),
+		R2SecretAccessKey:   os.Getenv("R2_SECRET_ACCESS_KEY"),
+		R2Bucket:            os.Getenv("R2_BUCKET"),
 	}
 }
 

@@ -85,6 +85,49 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Book"
+  /api/cms/feed:
+    get:
+      summary: Get feed entry
+      operationId: getFeed
+      parameters:
+        - name: slug
+          in: query
+          schema:
+            type: string
+            default: feed
+      responses:
+        "200":
+          description: Feed entry
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FeedEntry"
+        "404":
+          description: Not found
+    post:
+      summary: Upsert feed entry
+      operationId: postFeed
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slug:
+                  type: string
+                  default: feed
+                content:
+                  type: string
+              required:
+                - content
+      responses:
+        "200":
+          description: Feed entry saved
+        "401":
+          description: Unauthorized
   /api/greetings:
     get:
       summary: Get greetings in 99 languages
@@ -226,3 +269,23 @@ components:
         timeAgo:
           type: string
           example: "5 days ago"
+    FeedEntry:
+      type: object
+      properties:
+        slug:
+          type: string
+          example: "feed"
+        title:
+          type: string
+          example: "My latest update"
+        content:
+          type: string
+          example: "# Hello\n\nThis is my feed entry."
+        updated:
+          type: string
+          format: date-time
+          example: "2026-07-10T10:00:00Z"
+securitySchemes:
+  BearerAuth:
+    type: http
+    scheme: bearer

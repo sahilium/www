@@ -1,0 +1,15 @@
+{
+  "name": "sahil-cms",
+  "version": "1.0.0",
+  "description": "Obsidian plugin for sahil.im CMS",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc -noEmit && esbuild main.ts --bundle --outfile=main.js --external:obsidian --format=cjs --platform=neutral",
+    "dev": "esbuild main.ts --bundle --outfile=main.js --external:obsidian --format=cjs --platform=neutral --watch"
+  },
+  "devDependencies": {
+    "obsidian": "latest",
+    "typescript": "^5.0.0",
+    "esbuild": "^0.20.0"
+  }
+}

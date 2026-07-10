@@ -12,6 +12,8 @@ Live "now" data aggregator for [sahil.im](https://sahil.im). Fetches the latest 
 | GET    | `/api/anilist`                | Last updated anime                   |
 | GET    | `/api/letterboxd`             | Last movie diary entry               |
 | GET    | `/api/goodreads`              | Currently reading book                |
+| GET    | `/api/cms/feed`               | Get feed entry (public)              |
+| POST   | `/api/cms/feed`               | Upsert feed entry (Bearer auth)      |
 | GET    | `/api/greetings`              | Greetings in 99 languages            |
 | GET    | `/api/statuses`               | Random status sentences              |
 | GET    | `/api/openapi.yaml`           | OpenAPI 3.0 specification            |
@@ -39,6 +41,14 @@ All configuration is via environment variables:
 | `ANILIST_USERNAME`   | for anilist   | AniList username                |
 | `LETTERBOXD_USERNAME`| for letterboxd| Letterboxd username             |
 | `GOODREADS_USER_ID`  | for goodreads | Goodreads numeric user ID       |
+| `CMS_API_TOKEN`      | for cms       | Bearer token for Obsidian plugin |
+| `CLOUDFLARE_ACCOUNT_ID`| for cms     | Cloudflare account ID           |
+| `CLOUDFLARE_API_TOKEN` | for cms     | Cloudflare API token            |
+| `D1_DATABASE_ID`     | for cms       | D1 database ID                  |
+| `R2_ENDPOINT`        | for cms       | R2 S3 endpoint                  |
+| `R2_ACCESS_KEY_ID`   | for cms       | R2 S3 access key                |
+| `R2_SECRET_ACCESS_KEY`| for cms      | R2 S3 secret key                |
+| `R2_BUCKET`          | for cms       | R2 bucket name                  |
 
 ## Architecture
 
