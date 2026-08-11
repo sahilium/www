@@ -31,11 +31,13 @@ Personal website built with [Astro](https://astro.build). Features a minimal des
 - **Content:** MDX with custom UI components
 - **Icons:** Lucide
 - **Hosting:** Cloudflare Pages
+- **Content:** [sr.ht submodule](https://git.sr.ht/~nonomino/ink)
 - **IndieWeb:** h-card, webring membership
 
 ## Local dev
 
 ```sh
+git submodule update --init  # clone content from sr.ht
 bun install
 bun run dev
 ```
@@ -52,11 +54,13 @@ src/
 │   └── ko.ts              all 72 Japanese microseasons with dates
 ├── layouts/      Layout.astro
 ├── pages/        routes
-├── posts/        blog content (.mdx)
-├── scripts/      client-side JS/TS
 ├── styles/       global.css
 ├── config.ts     site config
 └── content.config.ts
+
+content/          git submodule → git.sr.ht/~nonomino/ink
+├── posts/        blog content (.mdx)
+└── essays/       essay content (.mdx, coming soon)
 ```
 
 ## Data
