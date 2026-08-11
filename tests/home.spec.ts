@@ -22,6 +22,17 @@ test.describe("home page", () => {
         await expect(page.getByRole("heading", { name: "Sahil A." })).toBeVisible();
     });
 
+    test("home link navigates back from another page", async ({ page }) => {
+        await page.goto("/about");
+        await expect(page).toHaveURL(/\/about$/);
+
+        const homeLink = page.getByRole("link", { name: "home", exact: true });
+        await expect(homeLink).toBeVisible();
+        await homeLink.click();
+
+        await expect(page).toHaveURL(/\/$/);
+    });
+
     test("footer contains copyright and motto", async ({ page }) => {
         await page.goto("/");
 

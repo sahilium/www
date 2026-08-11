@@ -25,5 +25,13 @@ test.describe("command palette", () => {
 
         await page.keyboard.press("Escape");
         await expect(page.locator("#palette-overlay")).toBeHidden();
+        await expect(page.locator("#palette-overlay")).toHaveAttribute(
+            "inert",
+            "",
+        );
+        await expect(page.locator("#palette-overlay")).toHaveAttribute(
+            "aria-hidden",
+            "true",
+        );
     });
 });

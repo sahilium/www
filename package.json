@@ -10,6 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
+    "test": "playwright test",
     "new-post": "node --experimental-strip-types scripts/new-post.ts"
   },
   "dependencies": {
