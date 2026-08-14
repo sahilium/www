@@ -12,6 +12,8 @@ Live "now" data aggregator for [sahil.im](https://sahil.im). Fetches the latest 
 | GET    | `/api/anilist`                | Last updated anime                   |
 | GET    | `/api/letterboxd`             | Last movie diary entry               |
 | GET    | `/api/goodreads`              | Currently reading book                |
+| GET    | `/api/moon`                   | Today's moon phase & illumination     |
+| GET    | `/api/koo-image`              | Openverse image search for a kō (`?q=`) |
 | GET    | `/api/cms/feed`               | Get feed entry (public)              |
 | POST   | `/api/cms/feed`               | Upsert feed entry (Bearer auth)      |
 | GET    | `/api/greetings`              | Greetings in 99 languages            |
@@ -41,6 +43,8 @@ All configuration is via environment variables:
 | `ANILIST_USERNAME`   | for anilist   | AniList username                |
 | `LETTERBOXD_USERNAME`| for letterboxd| Letterboxd username             |
 | `GOODREADS_USER_ID`  | for goodreads | Goodreads numeric user ID       |
+| `MOON_LAT`           | for moon     | Latitude for moon data (default: Tokyo) |
+| `MOON_LNG`           | for moon     | Longitude for moon data (default: Tokyo) |
 | `CMS_API_TOKEN`      | for cms       | Bearer token for Obsidian plugin |
 | `CLOUDFLARE_ACCOUNT_ID`| for cms     | Cloudflare account ID           |
 | `CLOUDFLARE_API_TOKEN` | for cms     | Cloudflare API token            |

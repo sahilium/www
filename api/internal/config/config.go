@@ -18,6 +18,8 @@ type Config struct {
 	AnilistUser     string
 	LetterboxdUser  string
 	GoodreadsUserID string
+	MoonLat         string
+	MoonLng         string
 
 	CMSAPIToken         string
 	CloudflareAccountID string
@@ -36,15 +38,17 @@ func Load() *Config {
 
 func FromEnv() *Config {
 	return &Config{
-		Port:           getenv("PORT", "8080"),
-		APIBaseURL:     getenv("API_BASE_URL", "http://localhost:8080"),
-		CacheTTL:       5 * time.Minute,
-		RequestTimeout: 10 * time.Second,
+		Port:            getenv("PORT", "8080"),
+		APIBaseURL:      getenv("API_BASE_URL", "http://localhost:8080"),
+		CacheTTL:        5 * time.Minute,
+		RequestTimeout:  10 * time.Second,
 		LastfmAPIKey:    os.Getenv("LASTFM_API_KEY"),
 		LastfmUser:      os.Getenv("LASTFM_USERNAME"),
 		AnilistUser:     os.Getenv("ANILIST_USERNAME"),
 		LetterboxdUser:  os.Getenv("LETTERBOXD_USERNAME"),
 		GoodreadsUserID: os.Getenv("GOODREADS_USER_ID"),
+		MoonLat:         getenv("MOON_LAT", "35.6895"),
+		MoonLng:         getenv("MOON_LNG", "139.6917"),
 
 		CMSAPIToken:         os.Getenv("CMS_API_TOKEN"),
 		CloudflareAccountID: os.Getenv("CLOUDFLARE_ACCOUNT_ID"),

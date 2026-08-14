@@ -37,14 +37,37 @@ type Anime struct {
 }
 
 type Movie struct {
-	Title  string `json:"title"`
-	Year   string `json:"year"`
-	Image  string `json:"image"`
-	Url    string `json:"url"`
-	Rating string `json:"rating"`
+	Title   string `json:"title"`
+	Year    string `json:"year"`
+	Image   string `json:"image"`
+	Url     string `json:"url"`
+	Rating  string `json:"rating"`
 	TimeAgo string `json:"timeAgo"`
+}
+
+type Moon struct {
+	Date         string  `json:"date"`
+	PhaseName    string  `json:"phaseName"`
+	Illumination float64 `json:"illumination"`
+	Emoji        string  `json:"emoji"`
+	Moonrise     string  `json:"moonrise,omitempty"`
+	Moonset      string  `json:"moonset,omitempty"`
 }
 
 type ErrorResponse struct {
 	Error string `json:"error"`
+}
+
+type OpenverseImage struct {
+	Title             string `json:"title"`
+	URL               string `json:"url"`
+	DirectURL         string `json:"direct_url"`
+	Thumbnail         string `json:"thumbnail"`
+	ForeignLandingURL string `json:"foreign_landing_url"`
+	Creator           string `json:"creator"`
+	License           string `json:"license"`
+	LicenseURL        string `json:"license_url"`
+	Provider          string `json:"provider"`
+	Width             int    `json:"width"`
+	Height            int    `json:"height"`
 }

@@ -35,6 +35,8 @@ func main() {
 	mux.HandleFunc("GET /api/anilist", h.AniList)
 	mux.HandleFunc("GET /api/letterboxd", h.Letterboxd)
 	mux.HandleFunc("GET /api/goodreads", h.Goodreads)
+	mux.HandleFunc("GET /api/moon", h.Moon)
+	mux.HandleFunc("GET /api/koo-image", h.KooImage)
 	mux.HandleFunc("GET /api/openapi.yaml", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "openapi.yaml")
 	})

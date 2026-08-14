@@ -2,6 +2,8 @@ package handler
 
 import (
 	"net/http"
+	"strings"
+	"time"
 
 	"sahil-api/internal/fetcher"
 )
@@ -28,6 +30,32 @@ func (h *Handler) Goodreads(w http.ResponseWriter, r *http.Request) {
 	handleService(w, h.cache, "goodreads", func() (interface{}, error) {
 		return fetcher.LastBook(h.cfg.GoodreadsUserID)
 	})
+}
+
+func (h *Handler) Moon(w http.ResponseWriter, r *http.Request) {
+	handleService(w, h.cache, "moon", func() (interface{}, error) {
+		return fetcher.MoonPhase(h.cfg.MoonLat, h.cfg.MoonLng, time.Now())
+	})
+}
+
+func (h *Handler) KooImage(w http.ResponseWriter, r *http.Request) {
+	q := strings.TrimSpace(r.URL.Query().Get("q"))
+	if q == "" {
+		respondError(w, http.StatusBadRequest, "missing query parameter")
+		return
+	}
+	key := "kooimage:" + q
+	if cached, ok := h.cache.Get(key); ok {
+		respondJSON(w, http.StatusOK, cached)
+		return
+	}
+	data, err := fetcher.OpenverseImage(q)
+	if err != nil {
+		respondError(w, http.StatusBadGateway, err.Error())
+		return
+	}
+	h.cache.Set(key, data)
+	respondJSON(w, http.StatusOK, data)
 }
 
 func handleService(w http.ResponseWriter, c cacheInterface, key string, fn func() (interface{}, error)) {

@@ -85,6 +85,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Book"
+  /api/moon:
+    get:
+      summary: Get today's moon phase
+      operationId: getMoonPhase
+      responses:
+        "200":
+          description: Current moon phase
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Moon"
+        "502":
+          description: Upstream moon-phase API error
+  /api/koo-image:
+    get:
+      summary: Search Openverse for a kō-themed image
+      operationId: getKooImage
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Image search query, e.g. "evening cicadas"
+      responses:
+        "200":
+          description: Top matching image (null if none)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpenverseImage"
+        "400":
+          description: Missing query parameter
+        "502":
+          description: Upstream Openverse API error
   /api/cms/feed:
     get:
       summary: Get feed entry
@@ -285,6 +320,66 @@ components:
           type: string
           format: date-time
           example: "2026-07-10T10:00:00Z"
+    Moon:
+      type: object
+      properties:
+        date:
+          type: string
+          example: "2026-08-14"
+        phaseName:
+          type: string
+          example: "Waning Gibbous"
+        illumination:
+          type: number
+          format: float
+          example: 87.2
+          description: "Percentage of the moon illuminated, 0–100"
+        emoji:
+          type: string
+          example: "🌖"
+        moonrise:
+          type: string
+          example: "2026-08-14T19:01:00+09:00"
+        moonset:
+          type: string
+          example: "2026-08-15T06:12:00+09:00"
+    OpenverseImage:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Cicada"
+        url:
+          type: string
+          format: uri
+          description: Source page URL
+        direct_url:
+          type: string
+          format: uri
+          description: Direct image file URL
+        thumbnail:
+          type: string
+          format: uri
+        foreign_landing_url:
+          type: string
+          format: uri
+          description: Source page where the image is hosted
+        creator:
+          type: string
+          example: "John Doe"
+        license:
+          type: string
+          example: "by"
+        license_url:
+          type: string
+          format: uri
+        provider:
+          type: string
+          example: "flickr"
+        width:
+          type: integer
+        height:
+          type: integer
 securitySchemes:
   BearerAuth:
     type: http
