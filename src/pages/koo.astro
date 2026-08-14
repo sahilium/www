@@ -2,6 +2,7 @@
 import Layout from "@/layouts/Layout.astro";
 import { siteConfig } from "@/config";
 import { allKo, getCurrentKo, getPreviousKo, getNextKo } from "@/data/ko";
+import { allWashi } from "@/data/washi";
 
 const staticCurrent = getCurrentKo();
 const staticPrevious = getPreviousKo(staticCurrent);
@@ -19,6 +20,7 @@ const allKoJson = JSON.stringify(
         sekkiEn: k.sekkiEn,
         startMonth: k.startMonth,
         startDay: k.startDay,
+        washi: allWashi[k.id] ?? null,
     })),
 );
 ---
@@ -99,6 +101,16 @@ const allKoJson = JSON.stringify(
                             >{staticCurrent.sekkiEn}</span
                         >.
                     </span>
+                </p>
+
+                <p class="koo-now-washi" id="koo-washi">
+                    <span
+                        class="koo-now-washi-swatch"
+                        id="koo-washi-swatch"></span>
+                    <span class="koo-now-washi-name" id="koo-washi-name"
+                        >和色 —</span
+                    >
+                    <span class="koo-now-washi-hex" id="koo-washi-hex"></span>
                 </p>
 
                 <div class="koo-moon" id="koo-moon">
@@ -226,7 +238,10 @@ const allKoJson = JSON.stringify(
 
 <div id="koo-data" hidden>{allKoJson}</div>
 <script define:vars={{ prodApiBaseUrl: siteConfig.apiBaseUrl }}>
-    const allKo = JSON.parse(document.getElementById("koo-data").textContent);
+    function initKoo() {
+        const kooDataEl = document.getElementById("koo-data");
+        if (!kooDataEl) return;
+        const allKo = JSON.parse(kooDataEl.textContent);
 
     const apiBaseUrl =
         location.hostname === "localhost" || location.hostname === "127.0.0.1"
@@ -333,6 +348,16 @@ const allKoJson = JSON.stringify(
         document.getElementById("koo-range").textContent = koRange(ko, next);
         document.getElementById("koo-progress-fill").style.width =
             yearPct + "%";
+
+        const washi = ko.washi;
+        document.documentElement.style.setProperty("--accent", washi.hex);
+        const swatch = document.getElementById("koo-washi-swatch");
+        if (swatch) swatch.style.background = washi.hex;
+        const wname = document.getElementById("koo-washi-name");
+        if (wname) wname.textContent = `和色 ${washi.name}`;
+        const whex = document.getElementById("koo-washi-hex");
+        if (whex) whex.textContent = washi.hex.toUpperCase();
+
         document.getElementById("koo-progress-label").textContent =
             `day ${today} of 365 · ${yearPct}% through the year`;
         document.getElementById("koo-today").textContent =
@@ -416,6 +441,12 @@ const allKoJson = JSON.stringify(
             .catch(() => {
                 banner.hidden = true;
             });
+    }
+    }
+
+    if (!window.__kooInitBound) {
+        window.__kooInitBound = true;
+        document.addEventListener("astro:page-load", initKoo);
     }
 </script>
 
@@ -635,6 +666,32 @@ const allKoJson = JSON.stringify(
         font-family: var(--font-sans);
         font-weight: 600;
         color: var(--foreground);
+    }
+    .koo-now-washi {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem 0.7rem;
+        margin-top: 1rem;
+    }
+    .koo-now-washi-swatch {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 2px;
+        border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+        background: var(--accent);
+        flex: 0 0 auto;
+    }
+    .koo-now-washi-name {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--foreground);
+    }
+    .koo-now-washi-hex {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--muted-foreground);
+        letter-spacing: 0.04em;
     }
     /* ============ moon ============ */
     .koo-moon {
