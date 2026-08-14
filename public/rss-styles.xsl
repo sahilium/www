@@ -9,10 +9,8 @@
         <title><xsl:value-of select="/rss/channel/title"/> — RSS Feed</title>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="preconnect" href="https://fonts.googleapis.com"/>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
         <style>
+          @font-face{font-family:'Inter';font-style:normal;font-weight:400 700;font-display:swap;src:url('/fonts/inter.woff2') format('woff2')}
           *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
           :root{
