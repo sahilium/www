@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "playwright test",
+    "lighthouse:badge": "node scripts/lighthouse-badge.mjs",
     "new-post": "node --experimental-strip-types scripts/new-post.ts"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.5.0",
     "@playwright/test": "^1.62.1",
+    "lighthouse": "^13.4.1",
     "sharp": "^0.35.2"
   }
 }

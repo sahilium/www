@@ -1,0 +1,54 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [main]
+    paths: ["src/**", "public/**", "astro.config.*", "package.json", "bun.lock"]
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lighthouse-ci
+  cancel-in-progress: false
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Run Lighthouse and update badge scores
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+          LIGHTHOUSE_URL: ${{ vars.LIGHTHOUSE_URL || 'https://sahil.im/' }}
+        run: bun run scripts/lighthouse-badge.mjs
+
+      - name: Commit updated badge scores
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add lighthouse/
+          git diff --cached --quiet || git commit -m "chore(lighthouse): update badge scores"
+          git push

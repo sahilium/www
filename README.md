@@ -19,6 +19,17 @@
   <img src="https://img.shields.io/badge/Deployment-Cloudflare_Pages-F38020?style=flat&logo=cloudflarepages&logoColor=white" alt="Cloudflare Pages">
 </p>
 
+## Lighthouse
+
+Live scores, regenerated automatically by [Lighthouse CI](.github/workflows/lighthouse.yml) on every push and weekly.
+
+| | Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|---|
+| **Mobile** | ![Perf](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fperformance-mobile.json) | ![A11y](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Faccessibility-mobile.json) | ![BP](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fbest-practices-mobile.json) | ![SEO](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fseo-mobile.json) |
+| **Desktop** | ![Perf](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fperformance-desktop.json) | ![A11y](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Faccessibility-desktop.json) | ![BP](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fbest-practices-desktop.json) | ![SEO](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fseo-desktop.json) |
+
+CI: ![Lighthouse CI](https://github.com/sahilium/www/actions/workflows/lighthouse.yml/badge.svg)
+
 ---
 
 Personal Indieweb-enabled website built with [Astro](https://astro.build).

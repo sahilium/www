@@ -27,3 +27,6 @@ playwright-report/
 
 # jetbrains setting folder
 .idea/
+
+# lighthouse raw reports (CI artifacts, not badges)
+lighthouse/report-*.json
