@@ -243,7 +243,10 @@ import { siteConfig } from "@/config";
             let prog = "";
 
             if (m.key === "song") {
-                if (entry.artist) meta = esc(entry.artist);
+                if (entry.artist) {
+                    const firstArtist = String(entry.artist).split(",")[0].trim();
+                    meta = esc(firstArtist);
+                }
                 if (entry.album) meta = `${meta} · <span class="now-media-meta-dim">${esc(entry.album)}</span>`;
                 time = esc(entry.timeAgo || "");
             } else if (m.key === "book") {
