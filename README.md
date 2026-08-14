@@ -10,19 +10,18 @@
 
 <p align="center">
   <a href="https://sahil.im"><img src="https://img.shields.io/badge/sahil.im-12100E?style=flat&logo=astro&logoColor=white" alt="Website"></a>
-  <a href="https://github.com/sahilium"><img src="https://img.shields.io/badge/GitHub-sahilium-12100E?style=flat&logo=github" alt="GitHub"></a>
-  <a href="https://linkedin.com/in/sahilium"><img src="https://img.shields.io/badge/LinkedIn-sahilium-12100E?style=flat&logo=linkedin" alt="LinkedIn"></a>
-  <br>
+  <br/>
+
   <img src="https://img.shields.io/badge/Astro-6-FF5D01?style=flat&logo=astro&logoColor=white" alt="Astro">
   <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
   <img src="https://img.shields.io/badge/MDX-2-1B1F24?style=flat&logo=mdx&logoColor=white" alt="MDX">
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript">
-  <img src="https://img.shields.io/badge/Deployed_on-Cloudflare_Pages-F38020?style=flat&logo=cloudflarepages&logoColor=white" alt="Cloudflare Pages">
+  <img src="https://img.shields.io/badge/Deployment-Cloudflare_Pages-F38020?style=flat&logo=cloudflarepages&logoColor=white" alt="Cloudflare Pages">
 </p>
 
 ---
 
-Personal website built with [Astro](https://astro.build). Features a minimal design, multilingual greeting, floating avatar, command palette navigation, dark/light mode, RSS, Japanese 72-microseason calendar, and IndieWeb support.
+Personal Indieweb-enabled website built with [Astro](https://astro.build).
 
 ## Stack
 
@@ -34,13 +33,74 @@ Personal website built with [Astro](https://astro.build). Features a minimal des
 - **Content:** [sr.ht submodule](https://git.sr.ht/~nonomino/ink)
 - **IndieWeb:** h-card, webring membership
 
-## Local dev
+## Development
+
+This repo contains three independently runnable parts: the **Astro site**, the **Go API**, and the **Obsidian plugin**. Tasks for all three are driven by [Task](https://taskfile.dev).
+
+### 1 · Astro site
+
+Requires [Bun](https://bun.sh). Optionally [Task](https://taskfile.dev) for convenience.
 
 ```sh
-git submodule update --init  # clone content from sr.ht
-bun install
-bun run dev
+git submodule update --init   # clone content from sr.ht
+bun install                   # install dependencies
+bun run dev                   # dev server on localhost:4321
 ```
+
+Other commands:
+
+```sh
+bun run build        # production build (outputs dist/)
+bun run preview      # preview the production build
+task test            # run Playwright tests (equivalent: bun run test)
+task dev             # Task alias for bun run dev
+```
+
+### 2 · API
+
+Requires [Go](https://go.dev) 1.26+. Run from the `api/` directory.
+
+```sh
+cd api
+cp .env.example .env   # add your credentials
+task install           # one-time: install air for hot reload
+task dev               # run with hot reload on :8080
+```
+
+Common tasks (run as `task api:<task>` from the repo root, or `task <task>` from `api/`):
+
+| Task        | Description                        |
+| ----------- | ---------------------------------- |
+| `dev`       | Run with hot reload via air on `:8080` |
+| `run`       | Run once, no reload                |
+| `build`     | Compile binary to `bin/server`     |
+| `test`      | Run Go tests                       |
+| `vet`       | Static analysis                    |
+| `fmt`       | Format code                        |
+
+The site talks to the API at `http://localhost:8080` when served from localhost, and `https://api.sahil.im` in production.
+
+### 3 · Obsidian plugin
+
+Requires [Node.js](https://nodejs.org) and npm. Run from the `obsidian-plugin/` directory.
+
+```sh
+cd obsidian-plugin
+npm install
+npm run dev      # build + watch, outputs main.js
+npm run build    # one-off production build
+```
+
+Common tasks (run as `task obsidian:<task>` from the repo root, or `task <task>` from `obsidian-plugin/`):
+
+| Task          | Description                           |
+| ------------- | ------------------------------------- |
+| `install`     | Install dependencies                  |
+| `dev`         | Build `main.js` and watch for changes |
+| `build`       | Type-check and build `main.js`        |
+| `typecheck`   | Run the TypeScript compiler, no emit  |
+
+The plugin posts feed entries to the API's CMS endpoints (`POST /api/cms/feed`) using a Bearer token (`CMS_API_TOKEN`).
 
 ## Structure
 

@@ -82,3 +82,28 @@ tasks:
     dir: "{{.API_DIR}}"
     cmds:
       - go install github.com/air-verse/air@latest
+
+  # ---------------- obsidian plugin ----------------
+  obsidian:install:
+    desc: Install Obsidian plugin dependencies
+    dir: obsidian-plugin
+    cmds:
+      - npm install
+
+  obsidian:dev:
+    desc: Build the Obsidian plugin and watch for changes
+    dir: obsidian-plugin
+    cmds:
+      - npm run dev
+
+  obsidian:build:
+    desc: Type-check and build the Obsidian plugin
+    dir: obsidian-plugin
+    cmds:
+      - npm run build
+
+  obsidian:typecheck:
+    desc: Type-check the Obsidian plugin
+    dir: obsidian-plugin
+    cmds:
+      - tsc -noEmit

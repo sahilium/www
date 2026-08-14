@@ -1,0 +1,32 @@
+# https://taskfile.dev — Obsidian plugin (TypeScript) tasks
+version: "3"
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task: list
+
+  list:
+    desc: List all tasks
+    cmd: task --list-all
+
+  install:
+    desc: Install dependencies
+    cmds:
+      - npm install
+
+  dev:
+    desc: Build main.js and watch for changes
+    cmds:
+      - npm run dev
+
+  build:
+    desc: Type-check and build main.js
+    cmds:
+      - npm run build
+
+  typecheck:
+    desc: Type-check without emitting output
+    cmds:
+      - tsc -noEmit
