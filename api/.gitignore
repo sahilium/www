@@ -1,0 +1,9 @@
+# build output
+bin/
+
+# air hot-reload temp build dir
+tmp/
+
+# environment variables
+.env
+.env.production

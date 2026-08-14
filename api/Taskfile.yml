@@ -1,0 +1,47 @@
+# https://taskfile.dev — API (Go) tasks
+version: "3"
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task: list
+
+  list:
+    desc: List all tasks
+    cmd: task --list-all
+
+  dev:
+    desc: Run the API with hot reload (air) on :8080
+    cmds:
+      - air
+
+  run:
+    desc: Run the API once, no reload
+    cmds:
+      - go run ./cmd/server
+
+  build:
+    desc: Build the API binary
+    cmds:
+      - go build -o bin/server ./cmd/server
+
+  test:
+    desc: Run the API tests
+    cmds:
+      - go test ./...
+
+  vet:
+    desc: Vet the API code
+    cmds:
+      - go vet ./...
+
+  fmt:
+    desc: Format the API code
+    cmds:
+      - gofmt -w .
+
+  install:
+    desc: Install air for hot reload (run once)
+    cmds:
+      - go install github.com/air-verse/air@latest

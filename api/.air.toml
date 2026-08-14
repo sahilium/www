@@ -1,0 +1,24 @@
+root = "."
+tmp_dir = "tmp"
+
+[build]
+  # builds and runs the server from a temp dir so the repo stays clean
+  cmd = "go build -o ./tmp/server ./cmd/server"
+  bin = "./tmp/server"
+  include_ext = ["go"]
+  exclude_dir = ["tmp", "bin", "vendor", "data"]
+  include_file = []
+  exclude_regex = ["_test\\.go$"]
+  exclude_unchanged = true
+  delay = 800
+  stop_on_error = true
+  send_interrupt = true
+  kill_delay = 500
+  full_bin = ""
+
+[log]
+  time = false
+  main_only = false
+
+[misc]
+  clean_on_exit = true
