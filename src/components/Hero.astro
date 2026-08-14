@@ -6,7 +6,14 @@ import { siteConfig } from "@/config";
 
 <div class="hero" id="hero-root">
     <div class="hero-avatar-wrap">
-        <Image src={avatar} alt="Sahil A." class="hero-avatar" />
+        <Image
+            src={avatar}
+            alt="Sahil A."
+            width={72}
+            height={72}
+            densities={[1, 2]}
+            class="hero-avatar"
+        />
     </div>
     <div class="hero-status" id="hero-status">
         <span class="status-name">Sahil</span>
