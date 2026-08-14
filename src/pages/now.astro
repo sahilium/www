@@ -3,389 +3,878 @@ import Layout from "@/layouts/Layout.astro";
 import { siteConfig } from "@/config";
 ---
 
-<Layout title="/now | Sahil A.">
-    <main class="page flex flex-col space-y-10">
-        <section class="relative flex flex-col items-start gap-4">
-            <span class="text-accent uppercase text-xs">// now</span>
-            <h1 class="text-5xl">What I'm doing <em>now</em></h1>
-            <p class="text-sm text-muted-foreground">
+<Layout
+    title="/now | Sahil A."
+    description="A snapshot of what currently occupies my brain — projects, languages, and whatever I happen to be listening to, reading, or watching."
+>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap"
+        rel="stylesheet"
+    />
+    <main class="now-page">
+        <!-- ================= HERO ================= -->
+        <header class="now-hero">
+            <span class="now-kicker"
+                >// now &nbsp;·&nbsp; <span id="now-updated">…</span></span
+            >
+            <h1 class="now-title">
+                What I'm doing <em>now</em>
+            </h1>
+            <p class="now-lede">
+                A snapshot of what currently occupies my brain. Fields update
+                almost in real&nbsp;time, because life refuses to hold still.
+            </p>
+            <div class="now-hero-meta">
+                <span>index of current life</span>
+                <span aria-hidden="true">↳</span>
                 <a
                     href="https://nownownow.com"
                     target="_blank"
                     rel="noreferrer"
-                    class="hover:text-primary">What is this?</a
+                    >what is this?</a
                 >
-                <br />
-                Updated: <span id="now-updated">...</span>
-            </p>
+            </div>
+        </header>
+
+        <!-- ================= 01 RIGHT NOW ================= -->
+        <section class="now-section now-live">
+            <header class="now-section-head">
+                <span class="now-num">01</span>
+                <span class="now-label">Right now</span>
+                <span class="now-rule" aria-hidden="true"></span>
+                <span class="now-side-note">live · auto-updating</span>
+            </header>
+
+            <div id="now-media" class="now-media">
+                <div class="now-media-fallback">
+                    <span class="now-media-fallback-line skeleton-line--l"></span>
+                    <span class="now-media-fallback-line skeleton-line--s"></span>
+                </div>
+            </div>
         </section>
 
-        <section class="prose-blog max-w-none">
-            <div id="now-section">
-                <h2>Live</h2>
-                <div id="now-grid" class="now-grid">
-                    <div class="now-card skeleton" id="card-song">
-                        <div class="now-card-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                ><path d="M9 18V5l12-2v13"></path><circle
-                                    cx="6"
-                                    cy="18"
-                                    r="3"></circle><circle cx="18" cy="16" r="3"
-                                ></circle></svg
-                            >
-                        </div>
-                        <div class="now-card-content">
-                            <span class="now-card-label">Last listened</span>
-                            <span class="skeleton-line skeleton-line--short"
-                                >&nbsp;</span
-                            >
-                            <span class="skeleton-line">&nbsp;</span>
-                        </div>
-                    </div>
-                    <div class="now-card skeleton" id="card-book">
-                        <div class="now-card-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                ><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"
-                                ></path><path
-                                    d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
-                                ></path></svg
-                            >
-                        </div>
-                        <div class="now-card-content">
-                            <span class="now-card-label">Reading</span>
-                            <span class="skeleton-line skeleton-line--short"
-                                >&nbsp;</span
-                            >
-                            <span class="skeleton-line">&nbsp;</span>
-                        </div>
-                    </div>
-                    <div class="now-card skeleton" id="card-movie">
-                        <div class="now-card-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                ><rect
-                                    x="2"
-                                    y="2"
-                                    width="20"
-                                    height="20"
-                                    rx="2.18"
-                                    ry="2.18"></rect><line
-                                    x1="7"
-                                    y1="2"
-                                    x2="7"
-                                    y2="22"></line><line
-                                    x1="17"
-                                    y1="2"
-                                    x2="17"
-                                    y2="22"></line><line
-                                    x1="2"
-                                    y1="12"
-                                    x2="22"
-                                    y2="12"></line><line
-                                    x1="2"
-                                    y1="7"
-                                    x2="7"
-                                    y2="7"></line><line
-                                    x1="2"
-                                    y1="17"
-                                    x2="7"
-                                    y2="17"></line><line
-                                    x1="17"
-                                    y1="7"
-                                    x2="22"
-                                    y2="7"></line><line
-                                    x1="17"
-                                    y1="17"
-                                    x2="22"
-                                    y2="17"></line></svg
-                            >
-                        </div>
-                        <div class="now-card-content">
-                            <span class="now-card-label">Last watched</span>
-                            <span class="skeleton-line skeleton-line--short"
-                                >&nbsp;</span
-                            >
-                            <span class="skeleton-line">&nbsp;</span>
-                        </div>
-                    </div>
-                    <div class="now-card skeleton" id="card-anime">
-                        <div class="now-card-icon">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                ><polygon points="23 7 16 12 23 17 23 7"
-                                ></polygon><rect
-                                    x="1"
-                                    y="5"
-                                    width="15"
-                                    height="14"
-                                    rx="2"
-                                    ry="2"></rect></svg
-                            >
-                        </div>
-                        <div class="now-card-content">
-                            <span class="now-card-label">Last anime</span>
-                            <span class="skeleton-line skeleton-line--short"
-                                >&nbsp;</span
-                            >
-                            <span class="skeleton-line">&nbsp;</span>
-                        </div>
-                    </div>
+        <!-- ================= 02 BUILDING ================= -->
+        <section class="now-section">
+            <header class="now-section-head">
+                <span class="now-num">02</span>
+                <span class="now-label">Building</span>
+                <span class="now-rule" aria-hidden="true"></span>
+                <span class="now-side-note">current pursuits</span>
+            </header>
 
+            <div class="now-pursuits">
+                <div class="now-pursuit">
+                    <h3 class="now-pursuit-title">This site</h3>
+                    <p class="now-pursuit-body">
+                        Building a corner of the internet that actually feels
+                        like mine — one slow, deliberate change at a time.
+                    </p>
+                </div>
+                <div class="now-pursuit">
+                    <h3 class="now-pursuit-title">Relearning</h3>
+                    <p class="now-pursuit-body">
+                        Computers and programming, from the ground up, to get a
+                        deeper and saner grasp of concepts. Tracking the whole
+                        mess
+                        <a
+                            href="https://github.com/sahilium/learn"
+                            target="_blank"
+                            rel="noreferrer"
+                            >here</a
+                        >.
+                    </p>
+                </div>
+                <div class="now-pursuit">
+                    <h3 class="now-pursuit-title">Connecting</h3>
+                    <p class="now-pursuit-body">
+                        Finding and talking to professional developers and other
+                        genuinely interesting people from the tech world.
+                    </p>
                 </div>
             </div>
 
-            <h2>Computer stuff</h2>
-
-            <ul>
-                <li>Working on building this site</li>
-                <li>
-                    I'm relearning everything about computers and programming to
-                    get a better and deeper grasp of concepts, track my progress <a
-                        href="https://github.com/sahilium/learn"
-                        target="_blank"
-                        rel="noreferrer">here</a>
-                </li>
-                <li>
-                    Finding and connecting with professional developers and
-                    other awesome people from the tech world
-                </li>
-                <li>
-                    Oogling at <a
+            <div class="now-font-obsession">
+                <span class="now-font-label">current font obsession</span>
+                <span class="now-font-name">
+                    <a
                         href="https://www.fontsquirrel.com/fonts/comfortaa"
                         target="_blank"
-                        rel="noreferrer">this</a
-                    > font, yes I'm crazy, I'm in love with a font, of all things!
-                </li>
-            </ul>
+                        rel="noreferrer"
+                        >Comfortaa</a
+                    >
+                </span>
+                <span class="now-font-note"
+                    >yes, I'm in love with a font, of all things.</span
+                >
+            </div>
+        </section>
 
-            <h2>Learning</h2>
+        <!-- ================= 03 LEARNING ================= -->
+        <section class="now-section">
+            <header class="now-section-head">
+                <span class="now-num">03</span>
+                <span class="now-label">Learning</span>
+                <span class="now-rule" aria-hidden="true"></span>
+                <span class="now-side-note">languages</span>
+            </header>
 
-            <h3>Languages</h3>
+            <div class="now-langs">
+                <div class="now-lang">
+                    <span class="now-lang-name">Français</span>
+                    <span class="now-lang-flag">🇫🇷</span>
+                    <span class="now-lang-level">B2</span>
+                    <span class="now-lang-desc">getting comfortable</span>
+                </div>
+                <div class="now-lang">
+                    <span class="now-lang-name">Ελληνικά</span>
+                    <span class="now-lang-flag">🇬🇷</span>
+                    <span class="now-lang-level">A2</span>
+                    <span class="now-lang-desc">slowly, gently</span>
+                </div>
+                <div class="now-lang">
+                    <span class="now-lang-name">Bahasa Indonesia</span>
+                    <span class="now-lang-flag">🇮🇩</span>
+                    <span class="now-lang-level">A1</span>
+                    <span class="now-lang-desc">just started</span>
+                </div>
+                <div class="now-lang">
+                    <span class="now-lang-name">Suomi</span>
+                    <span class="now-lang-flag">🇫🇮</span>
+                    <span class="now-lang-level">A1</span>
+                    <span class="now-lang-desc">persistently</span>
+                </div>
+            </div>
 
-            <ul>
-                <li>Français 🇫🇷 (B2)</li>
-                <li>Ελληνικά 🇬🇷 (A2)</li>
-                <li>Bahasa Indonesia 🇮🇩 (A1)</li>
-                <li>Suomi 🇫🇮 (A1)</li>
-            </ul>
+            <p class="now-lang-footnote">
+                <span aria-hidden="true">↳</span> CEFR levels — the small labels
+                mean more to me than the letters.
+            </p>
+        </section>
+
+        <!-- ================= THINKING ABOUT ================= -->
+        <section class="now-section now-thinking">
+            <span class="now-thinking-label">thinking about</span>
+            <p class="now-thinking-text">
+                What makes a life feel like your own.
+            </p>
+            <p class="now-thinking-sub">
+                Currently trying to build a corner of the internet that
+                actually feels like mine — small, honest, and unmistakably me.
+            </p>
+            <!-- ↑ editable by hand: change the two sentences above whenever -->
         </section>
     </main>
 </Layout>
 
 <script define:vars={{ prodApiBaseUrl: siteConfig.apiBaseUrl }}>
-    const nowGrid = document.getElementById("now-grid");
-    if (nowGrid) {
+    const esc = (s) =>
+        String(s ?? "").replace(/[&<>"']/g, (c) =>
+            ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c],
+        );
+
+    const container = document.getElementById("now-media");
+    if (container) {
         const apiBaseUrl =
             location.hostname === "localhost" ||
             location.hostname === "127.0.0.1"
                 ? "http://localhost:8080"
                 : prodApiBaseUrl;
 
-        const updateDate = document.getElementById("now-updated");
-        updateDate &&
-            (updateDate.textContent = new Date().toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-            }));
+        const updated = document.getElementById("now-updated");
+        if (updated) {
+            const d = new Date();
+            updated.textContent = d
+                .toLocaleDateString("en-US", {
+                    month: "short",
+                    year: "numeric",
+                })
+                .toUpperCase();
+        }
+
+        const media = [
+            {
+                key: "song",
+                field: "lastSong",
+                kicker: "Listening",
+                icon: "♪",
+            },
+            {
+                key: "book",
+                field: "lastBook",
+                kicker: "Reading",
+                icon: "✎",
+            },
+            {
+                key: "anime",
+                field: "lastAnime",
+                kicker: "Watching",
+                icon: "▶",
+            },
+            {
+                key: "movie",
+                field: "lastMovie",
+                kicker: "Movie",
+                icon: "▷",
+            },
+        ];
+
+        const art = (img, title, extraClass = "") => {
+            if (img) {
+                return `
+                    <span class="now-art ${extraClass}">
+                        <img src="${esc(img)}" alt="" loading="lazy" width="120" height="120" />
+                    </span>`;
+            }
+            return `
+                <span class="now-art now-art--none ${extraClass}">
+                    <span class="now-art-glyph">${esc((title || "·")[0].toUpperCase())}</span>
+                </span>`;
+        };
+
+        const renderItem = (m, entry) => {
+            if (!entry) return "";
+            const title = entry.title || "—";
+            const url = entry.url || "#";
+
+            let meta = "";
+            let time = "";
+            let prog = "";
+
+            if (m.key === "song") {
+                if (entry.artist) meta = esc(entry.artist);
+                if (entry.album) meta = `${meta} · <span class="now-media-meta-dim">${esc(entry.album)}</span>`;
+                time = esc(entry.timeAgo || "");
+            } else if (m.key === "book") {
+                if (entry.author) meta = esc(entry.author);
+                time = esc(entry.timeAgo || "");
+                if (entry.rating) {
+                    meta += ` <span class="now-media-stars">${"★".repeat(entry.rating)}</span>`;
+                }
+            } else if (m.key === "anime") {
+                const status = entry.status || "";
+                if (entry.totalEpisodes) {
+                    const pct = Math.min(
+                        100,
+                        Math.round((entry.episode / entry.totalEpisodes) * 100),
+                    );
+                    prog = `
+                        <span class="now-media-progress">
+                            <span class="now-media-progress-bar">
+                                <span class="now-media-progress-fill" style="width:${pct}%"></span>
+                            </span>
+                            <span class="now-media-progress-label">EP ${String(entry.episode).padStart(2, "0")} / ${entry.totalEpisodes}</span>
+                        </span>`;
+                } else if (entry.episode) {
+                    prog = `
+                        <span class="now-media-progress">
+                            <span class="now-media-progress-label">EP ${String(entry.episode).padStart(2, "0")}</span>
+                        </span>`;
+                }
+                if (status === "completed") {
+                    time = `<span class="now-media-badge">completed</span>`;
+                }
+            } else if (m.key === "movie") {
+                if (entry.year) meta = esc(entry.year);
+                if (entry.rating) meta = `${meta} · ${"★".repeat(entry.rating)}`;
+                time = esc(entry.timeAgo || "");
+            }
+
+            const listeningNow = m.key === "song" && entry.timeAgo === "listening now";
+            const timeHtml = listeningNow
+                ? `<span class="now-media-time now-media-time--now"><span class="now-dot" aria-hidden="true"></span> listening now</span>`
+                : time
+                  ? `<span class="now-media-time">${time}</span>`
+                  : "";
+
+            return `
+                <article class="now-media-item" data-kind="${m.key}">
+                    <span class="now-media-kicker"><span class="now-media-glyph" aria-hidden="true">${m.icon}</span> ${m.kicker}</span>
+                    <div class="now-media-row">
+                        ${art(entry.image || entry.cover, title)}
+                        <div class="now-media-body">
+                            <a class="now-media-title" href="${esc(url)}" target="_blank" rel="noreferrer">${esc(title)}</a>
+                            ${meta ? `<span class="now-media-meta">${meta}</span>` : ""}
+                            ${prog}
+                            ${timeHtml}
+                        </div>
+                    </div>
+                    <a class="now-media-link" href="${esc(url)}" target="_blank" rel="noreferrer" aria-label="open">↗</a>
+                </article>`;
+        };
+
+        const skeleton = (count) =>
+            Array.from({ length: count })
+                .map(
+                    (_, i) => `
+                <article class="now-media-item is-skeleton">
+                    <span class="now-media-kicker">·</span>
+                    <div class="now-media-row">
+                        <span class="now-art now-art--skeleton"></span>
+                        <div class="now-media-body">
+                            <span class="sk sk--l"></span>
+                            <span class="sk sk--s"></span>
+                        </div>
+                    </div>
+                </article>`,
+                )
+                .join("");
+
+        container.innerHTML = skeleton(4);
 
         fetch(`${apiBaseUrl}/api/now`, { signal: AbortSignal.timeout(8000) })
             .then((r) => (r.ok ? r.json() : null))
             .then((data) => {
                 if (!data) throw new Error("empty");
-
-      const cards = {
-        song: ["song", "song"],
-        book: ["book", "Reading"],
-        movie: ["movie", "movie"],
-        anime: ["anime", "anime"],
-      };
-
-                for (const [key, item] of Object.entries(cards)) {
-                    const entry =
-                        data[
-                            `last${key.charAt(0).toUpperCase() + key.slice(1)}`
-                        ];
-                    const el = document.getElementById(`card-${key}`);
-                    if (!el) continue;
-                    el.classList.remove("skeleton");
-                    const content = el.querySelector(".now-card-content");
-                    if (!content) continue;
-                    if (!entry) {
-                        content.innerHTML = `<span class="now-card-label">Last ${item[0]}</span><span class="now-card-title">—</span>`;
-                        continue;
-                    }
-                    const title = entry.title || "—";
-                    let meta =
-                        entry.artist ||
-                        entry.author ||
-                        (entry.year ? `(${entry.year})` : "");
-                    if (key === "anime" && entry.status) {
-                        const prog = entry.totalEpisodes
-                            ? `ep ${entry.episode}/${entry.totalEpisodes}`
-                            : `ep ${entry.episode}`;
-                        meta =
-                            entry.status === "completed" ? "completed" : prog;
-                    }
-                    if (key === "book" && entry.author) {
-                        meta = entry.author;
-                    }
-                    content.innerHTML = `
-          <span class="now-card-label">${item[1]}</span>
-          <a href="${entry.url || "#"}" target="_blank" rel="noreferrer" class="now-card-title">${title}</a>
-          ${meta ? `<span class="now-card-meta">${meta}</span>` : ""}
-          ${entry.timeAgo ? `<span class="now-card-subtitle">${entry.timeAgo}</span>` : ""}
-        `;
-                    if (entry.image) {
-                        el.style.setProperty(
-                            "--card-image",
-                            `url(${JSON.stringify(entry.image)})`,
-                        );
-                    }
-                }
+                const html = media
+                    .map((m) => renderItem(m, data[m.field]))
+                    .join("");
+                container.innerHTML =
+                    html ||
+                    `<p class="now-media-empty">Nothing to report right now — the slate is momentarily blank.</p>`;
             })
             .catch(() => {
-                document
-                    .querySelectorAll(".now-card.skeleton")
-                    .forEach((el) => {
-                        el.classList.remove("skeleton");
-                        const content = el.querySelector(".now-card-content");
-                        if (content)
-                            content.innerHTML = `<span class="now-card-label">—</span><span class="now-card-title">Unavailable</span>`;
-                    });
+                container.innerHTML = `<p class="now-media-empty">The live feed is being shy right now. The rest of this page stands on its own.</p>`;
             });
     }
 </script>
 
 <style is:global>
-    .now-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-    .now-card {
+    /* ============ page scaffold ============ */
+    .now-page {
+        margin: clamp(2.5rem, 6vw, 5rem) auto;
+        padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+        max-width: 56rem;
         display: flex;
-        align-items: flex-start;
-        gap: 0.75rem;
-        padding: 1rem;
-        border: 1px solid var(--border-color, #e2e8f0);
-        border-radius: 0.5rem;
-        background-size: cover;
-        background-position: center;
+        flex-direction: column;
+        gap: clamp(3rem, 7vw, 5.5rem);
+    }
+
+    /* ============ hero ============ */
+    .now-hero {
+        border-bottom: 1px solid var(--border);
+        padding-bottom: clamp(2rem, 5vw, 3.5rem);
+    }
+    .now-kicker {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--muted-foreground);
+    }
+    .now-title {
+        font-family: var(--font-serif);
+        font-weight: 600;
+        font-size: clamp(2.4rem, 8vw, 4.5rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        margin: 1.25rem 0 1rem;
+        color: var(--foreground);
+    }
+    .now-title em {
+        font-style: italic;
+        color: var(--accent);
+        font-weight: 500;
+    }
+    .now-lede {
+        font-size: clamp(1rem, 2.4vw, 1.15rem);
+        max-width: 34em;
+        color: var(--muted-foreground);
+        line-height: 1.55;
+    }
+    .now-hero-meta {
+        margin-top: 1.75rem;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        color: var(--muted-foreground);
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+    .now-hero-meta a {
+        color: var(--accent);
+        text-decoration: underline;
+        text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+        text-underline-offset: 3px;
+    }
+    .now-hero-meta a:hover {
+        text-decoration-color: var(--accent);
+    }
+
+    /* ============ sections ============ */
+    .now-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+    }
+    .now-section-head {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+    }
+    .now-num {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent);
+        letter-spacing: 0.05em;
+    }
+    .now-label {
+        font-family: var(--font-serif);
+        font-weight: 600;
+        font-size: clamp(1.3rem, 3vw, 1.6rem);
+        color: var(--foreground);
+        letter-spacing: -0.01em;
+    }
+    .now-rule {
+        flex: 1;
+        border-bottom: 1px dashed var(--border);
+        align-self: center;
+        margin-bottom: 0.35em;
+        min-width: 1.5rem;
+    }
+    .now-side-note {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--muted-foreground);
+        white-space: nowrap;
+    }
+
+    /* ============ 01 pursuits ============ */
+    .now-pursuits {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        border-top: 1px solid var(--border);
+    }
+    .now-pursuit {
+        padding: 1.25rem 0;
+        border-bottom: 1px solid var(--border);
+        display: grid;
+        grid-template-columns: 11rem 1fr;
+        gap: 1.5rem;
+        align-items: baseline;
+    }
+    .now-pursuit-title {
+        font-family: var(--font-sans);
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--foreground);
+    }
+    .now-pursuit-title::before {
+        content: "↳ ";
+        color: var(--accent);
+        font-weight: 500;
+    }
+    .now-pursuit-body {
+        font-size: 1rem;
+        line-height: 1.55;
+        color: var(--foreground);
+        max-width: 46em;
+    }
+    .now-pursuit-body a {
+        color: var(--accent);
+        text-decoration: underline;
+        text-decoration-color: color-mix(in srgb, var(--accent) 35%, transparent);
+        text-underline-offset: 3px;
+    }
+    .now-pursuit-body a:hover {
+        text-decoration-color: var(--accent);
+    }
+
+    .now-font-obsession {
+        display: flex;
+        align-items: baseline;
+        gap: 0.9rem;
+        flex-wrap: wrap;
+        padding: 1.25rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+    .now-font-label {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--muted-foreground);
+    }
+    .now-font-name {
+        font-family: "Comfortaa", var(--font-sans);
+        font-size: clamp(1.15rem, 3vw, 1.4rem);
+        font-weight: 700;
+        color: var(--accent);
+    }
+    .now-font-name a {
+        color: inherit;
+        text-decoration: none;
+        border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    }
+    .now-font-name a:hover {
+        border-bottom-color: var(--accent);
+    }
+    .now-font-note {
+        font-size: 0.9rem;
+        font-style: italic;
+        color: var(--muted-foreground);
+    }
+
+    /* ============ 02 languages ============ */
+    .now-langs {
+        border-top: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+    }
+    .now-lang {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 0.5rem 1.5rem;
+        align-items: baseline;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+    .now-lang-name {
+        font-family: var(--font-serif);
+        font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+        font-weight: 600;
+        color: var(--foreground);
+    }
+    .now-lang-flag {
+        font-size: 1rem;
+    }
+    .now-lang-level {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent);
+        letter-spacing: 0.04em;
+    }
+    .now-lang-desc {
+        grid-column: 1 / -1;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--muted-foreground);
+        letter-spacing: 0.03em;
+        margin-top: -0.4rem;
+    }
+    .now-lang-footnote {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--muted-foreground);
+        margin-top: 0.5rem;
+    }
+    .now-lang-footnote span {
+        color: var(--accent);
+    }
+
+    /* ============ 03 live media ============ */
+    .now-media {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.1rem;
+        border-top: 1px solid var(--border);
+    }
+    .now-media-item {
         position: relative;
-        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 1.25rem 0.5rem 1.25rem 0;
+        align-items: flex-start;
+        border-bottom: 1px solid var(--border);
     }
-    .now-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: var(--card-image, none);
-        background-size: cover;
-        background-position: center;
-        opacity: 0.08;
-        pointer-events: none;
+    .now-media-item:nth-child(odd) {
+        padding-right: 1.5rem;
     }
-    .now-card-icon {
+    .now-media-item:nth-child(even) {
+        padding-left: 1.5rem;
+        border-left: 1px solid var(--border);
+    }
+    .now-media-row {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+        min-width: 0;
+        width: 100%;
+    }
+    .now-media-kicker {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--muted-foreground);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+    .now-media-glyph {
+        color: var(--accent);
+        font-size: 0.8rem;
+    }
+    .now-art {
         flex-shrink: 0;
-        width: 2rem;
-        height: 2rem;
+        width: clamp(4rem, 10vw, 5.5rem);
+        aspect-ratio: 1 / 1;
+        border-radius: 0.25rem;
+        overflow: hidden;
+        background: var(--muted);
+        border: 1px solid var(--border);
+        display: block;
+    }
+    .now-art img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    .now-art--none {
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 0.375rem;
-        background: var(--accent, #6b7280);
-        color: #fff;
-        position: relative;
-        z-index: 1;
+        background: color-mix(in srgb, var(--accent) 12%, var(--card));
     }
-    .now-card-content {
+    .now-art-glyph {
+        font-family: var(--font-serif);
+        font-size: 2rem;
+        color: var(--accent);
+        font-style: italic;
+    }
+    .now-art--skeleton {
+        background: linear-gradient(90deg, var(--muted) 25%, var(--card) 50%, var(--muted) 75%);
+        background-size: 200% 100%;
+        animation: now-shimmer 1.5s infinite;
+    }
+    .now-media-body {
         display: flex;
         flex-direction: column;
-        gap: 0.125rem;
+        gap: 0.3rem;
         min-width: 0;
-        position: relative;
-        z-index: 1;
+        padding-top: 0.2rem;
     }
-    .now-card-label {
-        font-size: 0.7rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--muted-foreground, #64748b);
-    }
-    .now-card-title {
-        font-size: 0.875rem;
+    .now-media-title {
+        font-family: var(--font-serif);
         font-weight: 600;
-        color: var(--foreground, #0f172a);
-        white-space: nowrap;
+        font-size: 1.02rem;
+        line-height: 1.3;
+        color: var(--foreground);
+        text-decoration: none;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
         overflow: hidden;
-        text-overflow: ellipsis;
     }
-    .now-card-meta {
+    .now-media-title:hover {
+        color: var(--accent);
+    }
+    .now-media-meta {
+        font-size: 0.86rem;
+        color: var(--muted-foreground);
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .now-media-meta-dim {
+        opacity: 0.7;
+    }
+    .now-media-stars {
+        color: var(--accent);
+        letter-spacing: 0.05em;
         font-size: 0.75rem;
-        color: var(--foreground, #0f172a);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        opacity: 0.75;
     }
-    .now-card-subtitle {
-        font-size: 0.7rem;
-        color: var(--muted-foreground, #64748b);
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .now-media-time {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
         text-transform: uppercase;
-        letter-spacing: 0.03em;
+        letter-spacing: 0.06em;
+        color: var(--muted-foreground);
+        margin-top: 0.15rem;
     }
-    .now-card.skeleton .skeleton-line {
+    .now-media-time--now {
+        color: var(--accent);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    .now-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background: var(--accent);
+        display: inline-block;
+        animation: now-pulse 1.6s ease-in-out infinite;
+    }
+    .now-media-badge {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--muted-foreground);
+        border: 1px solid var(--border);
+        padding: 0.1rem 0.4rem;
+        border-radius: 0.2rem;
+        width: fit-content;
+        margin-top: 0.15rem;
+    }
+    .now-media-progress {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-top: 0.2rem;
+    }
+    .now-media-progress-bar {
+        width: 4.5rem;
+        height: 0.25rem;
+        border-radius: 999px;
+        background: var(--muted);
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+    .now-media-progress-fill {
+        height: 100%;
+        background: var(--accent);
         display: block;
-        height: 0.75rem;
+    }
+    .now-media-progress-label {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        color: var(--muted-foreground);
+        letter-spacing: 0.08em;
+    }
+    .now-media-link {
+        position: absolute;
+        bottom: 1.2rem;
+        right: 0.5rem;
+        font-size: 0.85rem;
+        color: var(--muted-foreground);
+        text-decoration: none;
+        opacity: 0;
+        transition: opacity 0.15s ease;
+    }
+    .now-media-item:hover .now-media-link {
+        opacity: 1;
+        color: var(--accent);
+    }
+    .now-media-empty {
+        grid-column: 1 / -1;
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--muted-foreground);
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    /* skeleton lines */
+    .sk {
+        display: block;
+        height: 0.8rem;
         border-radius: 0.25rem;
-        background: linear-gradient(
-            90deg,
-            #e2e8f0 25%,
-            #f1f5f9 50%,
-            #e2e8f0 75%
-        );
+        background: linear-gradient(90deg, var(--muted) 25%, var(--card) 50%, var(--muted) 75%);
         background-size: 200% 100%;
-        animation: shimmer 1.5s infinite;
+        animation: now-shimmer 1.5s infinite;
     }
-    .now-card.skeleton .skeleton-line--short {
-        width: 40%;
+    .sk--l {
+        width: 85%;
     }
-    @keyframes shimmer {
+    .sk--s {
+        width: 55%;
+        height: 0.65rem;
+    }
+    .now-media-fallback {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        padding: 1.5rem 0;
+    }
+    .skeleton-line--l {
+        width: 60%;
+        height: 0.8rem;
+        border-radius: 0.25rem;
+        background: var(--muted);
+    }
+    .skeleton-line--s {
+        width: 30%;
+        height: 0.65rem;
+        border-radius: 0.25rem;
+        background: var(--muted);
+    }
+
+    @keyframes now-shimmer {
         0% {
             background-position: 200% 0;
         }
         100% {
             background-position: -200% 0;
+        }
+    }
+    @keyframes now-pulse {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.3;
+        }
+    }
+
+    /* ============ thinking ============ */
+    .now-thinking {
+        border-top: 1px solid var(--border);
+        padding-top: 1.75rem;
+        gap: 0.75rem;
+    }
+    .now-thinking-label {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--accent);
+    }
+    .now-thinking-text {
+        font-family: var(--font-serif);
+        font-size: clamp(1.4rem, 4vw, 2rem);
+        font-weight: 500;
+        line-height: 1.25;
+        max-width: 22em;
+        color: var(--foreground);
+    }
+    .now-thinking-text::before {
+        content: "“";
+        color: var(--accent);
+    }
+    .now-thinking-text::after {
+        content: "”";
+        color: var(--accent);
+    }
+    .now-thinking-sub {
+        font-size: 0.95rem;
+        color: var(--muted-foreground);
+        max-width: 40em;
+        line-height: 1.55;
+    }
+
+    /* ============ responsive ============ */
+    @media (max-width: 640px) {
+        .now-media {
+            grid-template-columns: 1fr;
+        }
+        .now-media-item:nth-child(even) {
+            padding-left: 0;
+            border-left: none;
+        }
+        .now-pursuit {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+        .now-pursuit-title {
+            font-size: 0.78rem;
+        }
+        .now-art {
+            width: clamp(3.25rem, 14vw, 4.25rem);
         }
     }
 </style>
