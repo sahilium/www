@@ -35,3 +35,13 @@ tasks:
     desc: Lint (type-check)
     cmds:
       - tsc -noEmit
+
+  test:
+    desc: Run unit tests (vitest)
+    cmds:
+      - npm run test
+
+  coverage:
+    desc: Run tests with coverage
+    cmds:
+      - npm run coverage

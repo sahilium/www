@@ -75,6 +75,13 @@ tasks:
     cmds:
       - go test ./...
 
+  api:coverage:
+    desc: Run the API tests with coverage
+    dir: "{{.API_DIR}}"
+    cmds:
+      - go test -coverprofile=coverage.out ./...
+      - go tool cover -func=coverage.out
+
   api:vet:
     desc: Vet the API code
     dir: "{{.API_DIR}}"
@@ -130,3 +137,15 @@ tasks:
     dir: obsidian-plugin
     cmds:
       - tsc -noEmit
+
+  obsidian:test:
+    desc: Run Obsidian plugin tests (vitest)
+    dir: obsidian-plugin
+    cmds:
+      - npm run test
+
+  obsidian:coverage:
+    desc: Run Obsidian plugin tests with coverage
+    dir: obsidian-plugin
+    cmds:
+      - npm run coverage

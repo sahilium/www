@@ -2,6 +2,10 @@
 dist/
 bin/
 
+# coverage
+api/coverage.out
+obsidian-plugin/coverage/
+
 # generated types
 .astro/
 

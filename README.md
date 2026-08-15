@@ -20,6 +20,7 @@
   <img src="https://github.com/sahilium/www/actions/workflows/lighthouse.yml/badge.svg" alt="Lighthouse CI">
   <img src="https://github.com/sahilium/www/actions/workflows/lint.yml/badge.svg" alt="Lint CI">
   <img src="https://github.com/sahilium/www/actions/workflows/codeql.yml/badge.svg" alt="CodeQL">
+  <img src="https://img.shields.io/codecov/c/github/sahilium/www" alt="Codecov">
 </p>
 
 ## Lighthouse
