@@ -17,10 +17,16 @@
   <img src="https://img.shields.io/badge/MDX-2-1B1F24?style=flat&logo=mdx&logoColor=white" alt="MDX">
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/Deployment-Cloudflare_Pages-F38020?style=flat&logo=cloudflarepages&logoColor=white" alt="Cloudflare Pages">
+  <br/>
+  
   <img src="https://github.com/sahilium/www/actions/workflows/lighthouse.yml/badge.svg" alt="Lighthouse CI">
   <img src="https://github.com/sahilium/www/actions/workflows/lint.yml/badge.svg" alt="Lint CI">
   <img src="https://github.com/sahilium/www/actions/workflows/codeql.yml/badge.svg" alt="CodeQL">
+  <br/>
+  
   <img src="https://img.shields.io/codecov/c/github/sahilium/www" alt="Codecov">
+  <img src="https://img.shields.io/codecov/c/github/sahilium/www?flag=api" alt="API coverage">
+  <img src="https://img.shields.io/codecov/c/github/sahilium/www?flag=obsidian-plugin" alt="Obsidian plugin coverage">
 </p>
 
 ## Lighthouse
