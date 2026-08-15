@@ -40,6 +40,16 @@ tasks:
     cmds:
       - bunx astro check
 
+  lint:
+    desc: Lint the site (Biome)
+    cmds:
+      - bun run lint
+
+  lint:fix:
+    desc: Auto-fix lint issues
+    cmds:
+      - bun run lint:fix
+
   # ---------------- api ----------------
   api:dev:
     desc: Run the API with hot reload (air) on :8080
@@ -70,6 +80,19 @@ tasks:
     dir: "{{.API_DIR}}"
     cmds:
       - go vet ./...
+
+  api:lint:
+    desc: Lint the API (go vet + gofmt check)
+    dir: "{{.API_DIR}}"
+    cmds:
+      - go vet ./...
+      - test -z "$(gofmt -l .)"
+
+  api:lint:fix:
+    desc: Format the API code (gofmt -w)
+    dir: "{{.API_DIR}}"
+    cmds:
+      - gofmt -w .
 
   api:fmt:
     desc: Format the API code

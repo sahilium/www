@@ -85,10 +85,10 @@ func LastMovie(username string) (*model.Movie, error) {
 	}
 
 	return &model.Movie{
-		Title:  title,
-		Year:   year,
-		Image:  image,
-		Url:    item.Link,
+		Title:   title,
+		Year:    year,
+		Image:   image,
+		Url:     item.Link,
 		TimeAgo: ago,
 	}, nil
 }

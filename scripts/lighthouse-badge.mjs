@@ -25,11 +25,11 @@ function run(preset) {
     targetUrl,
     "--quiet",
     "--output=json",
-    "--output-path=" + join(outDir, `report-${preset}.json`),
-    "--only-categories=" + categories.join(","),
+    `--output-path=${join(outDir, `report-${preset}.json`)}`,
+    `--only-categories=${categories.join(",")}`,
     "--chrome-flags=--headless=new --no-sandbox",
   ];
-  if (chromePath) args.push("--chrome-path=" + chromePath);
+  if (chromePath) args.push(`--chrome-path=${chromePath}`);
   if (preset === "desktop") args.push("--preset=desktop");
 
   const r = spawnSync(lighthouseBin, args, { stdio: "inherit" });
@@ -65,11 +65,11 @@ for (const preset of presets) {
       const file = join(outDir, `${cat}-${preset}.json`);
       const payload = {
         schemaVersion: 1,
-        label: `${labels[cat]} (${preset})`,
+        label: labels[cat],
         message: String(score),
         color: colorFor(score),
       };
-      const next = JSON.stringify(payload) + "\n";
+      const next = `${JSON.stringify(payload)}\n`;
       if (!existsSync(file) || readFileSync(file, "utf8") !== next) {
         writeFileSync(file, next);
       }

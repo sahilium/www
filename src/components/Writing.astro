@@ -17,7 +17,7 @@ const allPosts = entries
     .map((entry) => ({
         id: entry.id,
         slug: entry.id,
-        readTime: calcReadTime(entry.body!),
+        readTime: calcReadTime(entry.body ?? ""),
         ...entry.data,
     }))
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

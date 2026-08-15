@@ -36,6 +36,17 @@ tasks:
     cmds:
       - go vet ./...
 
+  lint:
+    desc: Lint the API (go vet + gofmt check)
+    cmds:
+      - go vet ./...
+      - test -z "$(gofmt -l .)"
+
+  lint:fix:
+    desc: Format the API code (gofmt -w)
+    cmds:
+      - gofmt -w .
+
   fmt:
     desc: Format the API code
     cmds:

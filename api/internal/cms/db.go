@@ -32,9 +32,9 @@ type d1Request struct {
 }
 
 type d1Response struct {
-	Result  []d1QueryResult  `json:"result"`
-	Success bool             `json:"success"`
-	Errors  []d1Error        `json:"errors"`
+	Result  []d1QueryResult `json:"result"`
+	Success bool            `json:"success"`
+	Errors  []d1Error       `json:"errors"`
 }
 
 type d1QueryResult struct {

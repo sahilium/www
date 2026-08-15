@@ -788,18 +788,21 @@ const isOnCurrentPath = (path: string) => {
 
                 // magnetic buttons
                 const magneticEls =
-                    document.querySelectorAll("[data-magnetic]");
-                const applyMagnetic = (el, e) => {
+                    document.querySelectorAll<HTMLElement>("[data-magnetic]");
+                const applyMagnetic = (
+                    el: HTMLElement,
+                    e: MouseEvent,
+                ) => {
                     const rect = el.getBoundingClientRect();
                     const x = e.clientX - rect.left - rect.width / 2;
                     const y = e.clientY - rect.top - rect.height / 2;
                     const strength = Math.min(
-                        el.dataset.magneticStrength || 12,
+                        Number(el.dataset.magneticStrength) || 12,
                         20,
                     );
                     el.style.transform = `translate(${x * (strength / (rect.width / 2))}px, ${y * (strength / (rect.height / 2))}px)`;
                 };
-                const removeMagnetic = (el) => {
+                const removeMagnetic = (el: HTMLElement) => {
                     el.style.transform = "translate(0, 0)";
                 };
                 magneticEls.forEach((el) => {
@@ -810,7 +813,7 @@ const isOnCurrentPath = (path: string) => {
                 });
                 document.addEventListener("astro:after-swap", () => {
                     document
-                        .querySelectorAll("[data-magnetic]")
+                        .querySelectorAll<HTMLElement>("[data-magnetic]")
                         .forEach((el) => {
                             el.addEventListener("mousemove", (e) =>
                                 applyMagnetic(el, e),

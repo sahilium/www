@@ -31,13 +31,13 @@ func LastBook(userID string) (*model.Book, error) {
 	var feed struct {
 		Channel struct {
 			Items []struct {
-				Title        string `xml:"title"`
-				Link         string `xml:"link"`
-				PubDate      string `xml:"pubDate"`
-				AuthorName   string `xml:"author_name"`
-				LargeImage   string `xml:"book_large_image_url"`
-				MediumImage  string `xml:"book_medium_image_url"`
-				UserRating   int    `xml:"user_rating"`
+				Title         string `xml:"title"`
+				Link          string `xml:"link"`
+				PubDate       string `xml:"pubDate"`
+				AuthorName    string `xml:"author_name"`
+				LargeImage    string `xml:"book_large_image_url"`
+				MediumImage   string `xml:"book_medium_image_url"`
+				UserRating    int    `xml:"user_rating"`
 				BookPublished string `xml:"book_published"`
 			} `xml:"item"`
 		} `xml:"channel"`
@@ -69,11 +69,11 @@ func LastBook(userID string) (*model.Book, error) {
 	}
 
 	return &model.Book{
-		Title:  item.Title,
-		Author: item.AuthorName,
-		Cover:  image,
-		Url:    item.Link,
-		Rating: item.UserRating,
+		Title:   item.Title,
+		Author:  item.AuthorName,
+		Cover:   image,
+		Url:     item.Link,
+		Rating:  item.UserRating,
 		TimeAgo: ago,
 	}, nil
 }

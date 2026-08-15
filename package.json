@@ -11,6 +11,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "test": "playwright test",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "typecheck": "astro check",
     "lighthouse:badge": "node scripts/lighthouse-badge.mjs",
     "new-post": "node --experimental-strip-types scripts/new-post.ts"
   },
@@ -25,9 +28,11 @@
     "tailwindcss": "4.2.4"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@biomejs/biome": "2.5.0",
     "@playwright/test": "^1.62.1",
     "lighthouse": "^13.4.1",
-    "sharp": "^0.35.2"
+    "sharp": "^0.35.2",
+    "typescript": "^6"
   }
 }

@@ -20,8 +20,8 @@ func NewHandler(d1 *D1Client, cfg *config.Config) *Handler {
 }
 
 type feedRequest struct {
-	Slug     string `json:"slug"`
-	Content  string `json:"content"`
+	Slug    string `json:"slug"`
+	Content string `json:"content"`
 }
 
 type feedResponse struct {

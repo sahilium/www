@@ -228,7 +228,7 @@ const projectIcons = {
             <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-5">
                 {
                     featured.map((project) => {
-                        const Icon = projectIcons[project.icon] || Braces;
+                        const Icon = projectIcons[project.icon as keyof typeof projectIcons] || Braces;
                         return (
                             <article class="relative border-2 border-accent/30 rounded-xl p-6 bg-card hover:border-accent/70 transition-colors group overflow-hidden">
                                 <div class="absolute top-0 right-0 w-32 h-32 bg-accent/5 rounded-bl-full -z-0" />
@@ -319,7 +319,7 @@ const projectIcons = {
                                 .filter((p) => p.category === category)
                                 .map((project) => {
                                     const Icon =
-                                        projectIcons[project.icon] || Braces;
+                                        projectIcons[project.icon as keyof typeof projectIcons] || Braces;
                                     return (
                                         <article class="border border-border rounded-xl p-5 bg-card hover:border-accent/40 transition-colors group">
                                             <div class="flex items-start justify-between gap-3">

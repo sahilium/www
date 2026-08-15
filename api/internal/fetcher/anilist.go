@@ -34,7 +34,7 @@ func LastAnime(username string) (*model.Anime, error) {
 	}`
 
 	body := map[string]interface{}{
-		"query": query,
+		"query":     query,
 		"variables": map[string]string{"username": username},
 	}
 	b, _ := json.Marshal(body)

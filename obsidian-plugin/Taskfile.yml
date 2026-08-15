@@ -30,3 +30,8 @@ tasks:
     desc: Type-check without emitting output
     cmds:
       - tsc -noEmit
+
+  lint:
+    desc: Lint (type-check)
+    cmds:
+      - tsc -noEmit
