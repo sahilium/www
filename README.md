@@ -17,18 +17,17 @@
   <img src="https://img.shields.io/badge/MDX-2-1B1F24?style=flat&logo=mdx&logoColor=white" alt="MDX">
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/Deployment-Cloudflare_Pages-F38020?style=flat&logo=cloudflarepages&logoColor=white" alt="Cloudflare Pages">
+  <img src="https://github.com/sahilium/www/actions/workflows/lighthouse.yml/badge.svg" alt="Lighthouse CI">
 </p>
 
 ## Lighthouse
 
-Live scores, regenerated automatically by [Lighthouse CI](.github/workflows/lighthouse.yml) on every push and weekly.
+Live scores, regenerated automatically by [Lighthouse CI](.github/workflows/lighthouse.yml) every Sunday.
 
 | | Performance | Accessibility | Best Practices | SEO |
 |---|---|---|---|---|
 | **Mobile** | ![Perf](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fperformance-mobile.json) | ![A11y](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Faccessibility-mobile.json) | ![BP](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fbest-practices-mobile.json) | ![SEO](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fseo-mobile.json) |
 | **Desktop** | ![Perf](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fperformance-desktop.json) | ![A11y](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Faccessibility-desktop.json) | ![BP](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fbest-practices-desktop.json) | ![SEO](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsahilium%2Fwww%2Fmain%2Flighthouse%2Fseo-desktop.json) |
-
-CI: ![Lighthouse CI](https://github.com/sahilium/www/actions/workflows/lighthouse.yml/badge.svg)
 
 ---
 
