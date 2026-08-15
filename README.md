@@ -19,6 +19,7 @@
   <img src="https://img.shields.io/badge/Deployment-Cloudflare_Pages-F38020?style=flat&logo=cloudflarepages&logoColor=white" alt="Cloudflare Pages">
   <img src="https://github.com/sahilium/www/actions/workflows/lighthouse.yml/badge.svg" alt="Lighthouse CI">
   <img src="https://github.com/sahilium/www/actions/workflows/lint.yml/badge.svg" alt="Lint CI">
+  <img src="https://github.com/sahilium/www/actions/workflows/codeql.yml/badge.svg" alt="CodeQL">
 </p>
 
 ## Lighthouse
@@ -117,21 +118,51 @@ The plugin posts feed entries to the API's CMS endpoints (`POST /api/cms/feed`) 
 
 ```
 src/
-├── assets/       images
-├── components/   UI components
+├── assets/
+│   ├── background.svg        background pattern
+│   └── images/               avatar + photos
+├── components/
+│   ├── about/                ActivityCard, DecorativeKanji, Timeline
+│   ├── posts/                DesktopTOC, MobileTOC, ShareButtons
+│   ├── ui/                   Badge, Callout, Divider, Figure, LinkCard,
+│   │                         ProsCons, Quote, Separator, Steps, Tabs, YouTube
+│   ├── Author.astro
+│   ├── BackToTop.astro
+│   ├── Footer.astro
+│   ├── Greeting.astro
+│   ├── Hero.astro
+│   ├── ProjectCard.astro
+│   └── Writing.astro
+├── content/                  git submodule → git.sr.ht/~nonomino/ink
+│   ├── posts/                blog content (.mdx)
+│   └── essays/               essay content (.mdx, coming soon)
 ├── data/
-│   ├── greetings.json     multilingual greetings (84 languages)
-│   ├── statuses.json      "Sahil is/verb/sentence" status pairs
-│   └── ko.ts              all 72 Japanese microseasons with dates
-├── layouts/      Layout.astro
-├── pages/        routes
-├── styles/       global.css
-├── config.ts     site config
-└── content.config.ts
+│   ├── greetings.json        multilingual greetings (84 languages)
+│   ├── statuses.json         "Sahil is/verb/sentence" status pairs
+│   ├── ko.ts                 all 72 Japanese microseasons with dates
+│   └── washi.ts              traditional Japanese colors (72)
+├── layouts/                  Layout.astro
+├── pages/                    routes: index, about, now, uses, blog,
+│   │                         portfolio, koo, credits, 404, feed…
+│   ├── essays/               [...slug].astro
+│   ├── page/                 [page].astro (pagination)
+│   ├── posts/                [...slug].astro
+│   ├── tags/                 [tag].astro, index.astro
+│   └── feed.xml.ts / search.json.ts / robots.txt.ts
+├── scripts/                  client-side scripts (cursor.ts, ko.ts)
+├── styles/                   global.css
+├── utils/                    date.ts, reading-time.ts
+├── config.ts                 site config
+├── content.config.ts         content collection schemas
+└── types.ts                  shared TypeScript types
 
-content/          git submodule → git.sr.ht/~nonomino/ink
-├── posts/        blog content (.mdx)
-└── essays/       essay content (.mdx, coming soon)
+api/              Go API (handlers, fetchers, CMS, cache, middleware)
+obsidian-plugin/  Obsidian plugin that posts to the CMS API
+public/           static assets (robots.txt, favicon, fonts, pgp.asc)
+scripts/          build/dev tooling (lighthouse-badge.mjs, new-post.ts)
+tests/            Playwright e2e tests
+lighthouse/       generated Lighthouse badge scores
+.github/          CI workflows (Lint, Lighthouse)
 ```
 
 ## Data
