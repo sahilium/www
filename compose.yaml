@@ -1,0 +1,73 @@
+name: sahil-im
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    image: sahil-im-frontend:latest
+    restart: unless-stopped
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sahil-im-frontend.rule=Host(`staging.sahil.im`)"
+      - "traefik.http.routers.sahil-im-frontend.entrypoints=websecure"
+      - "traefik.http.routers.sahil-im-frontend.tls=true"
+      - "traefik.http.routers.sahil-im-frontend.tls.certresolver=letsencrypt"
+      - "traefik.http.services.sahil-im-frontend.loadbalancer.server.port=8080"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: sahil-im-api:latest
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    stop_grace_period: 35s
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sahil-im-api.rule=Host(`api.staging.sahil.im`)"
+      - "traefik.http.routers.sahil-im-api.entrypoints=websecure"
+      - "traefik.http.routers.sahil-im-api.tls=true"
+      - "traefik.http.routers.sahil-im-api.tls.certresolver=letsencrypt"
+      - "traefik.http.services.sahil-im-api.loadbalancer.server.port=8080"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  proxy:
+    name: proxy
+    external: true

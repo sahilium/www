@@ -1,0 +1,13 @@
+# Build context for api/Dockerfile.
+
+# local secrets — never copy into an image
+.env
+.env.*
+
+# build artifacts and test output
+bin/
+coverage.out
+*.test
+
+# editor / tooling state
+.vscode/

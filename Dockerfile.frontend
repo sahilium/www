@@ -1,0 +1,25 @@
+# syntax=docker/dockerfile:1
+FROM oven/bun:1.4.3-alpine AS build
+
+WORKDIR /app
+
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+
+COPY . .
+RUN bun run build
+
+
+FROM nginxinc/nginx-unprivileged:1.30.6-alpine
+
+COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Drop the stock nginx welcome files so the web root is exactly the Astro
+# build output, then restore the image's non-root user.
+USER root
+RUN find /usr/share/nginx/html -mindepth 1 -delete
+USER nginx
+
+COPY --from=build /app/dist /usr/share/nginx/html/
+
+EXPOSE 8080
